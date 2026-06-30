@@ -1,0 +1,201 @@
+{
+  "Metadata": {
+    "siteName": "Avantika",
+    "title": "Avantika Pharmaceuticals",
+    "description": "Modern pharmaceutical solutions built on quality, science and responsible manufacturing."
+  },
+  "LocaleSwitcher": {
+    "label": "Choose language",
+    "uz": "O‘zbek",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "Navigation": {
+    "label": "Main navigation",
+    "topbar": "Science. Quality. Care.",
+    "home": "Home",
+    "products": "Products",
+    "news": "News",
+    "about": "About us",
+    "contacts": "Contacts",
+    "search": "Search",
+    "menu": "Open menu"
+  },
+  "Home": {
+    "hero": {
+      "label": "Avantika featured stories",
+      "slides": {
+        "manufacturing": {"badge": "Modern manufacturing", "title": "Automated lines and consistent production", "description": "Precision equipment and controlled processes deliver reliable quality at every production stage.", "imageAlt": "Automated pharmaceutical production line in a cleanroom"},
+        "global": {"badge": "International partnership", "title": "An international partner with a growing geography", "description": "We build responsible distribution partnerships and expand access to quality medicines across new markets.", "imageAlt": "Global pharmaceutical distribution network"},
+        "standards": {"badge": "European standards", "title": "Pharmaceutical manufacturing aligned with European standards", "description": "Scientific expertise and strict quality systems support safe, modern and dependable products.", "imageAlt": "Pharmaceutical scientist working in a modern laboratory"}
+      },
+      "badge": "Pharmaceutical solutions",
+      "title": "Quality and trust in one place",
+      "description": "Effective medicines, a modern approach.",
+      "products": "Explore products",
+      "partner": "Become a partner",
+      "imageAlt": "Scientist working in a modern pharmaceutical laboratory",
+      "mediaTitle": "Quality at every stage",
+      "mediaDescription": "From raw materials to the finished product, every process is documented and controlled.",
+      "certified": "Certified quality",
+      "stats": {
+        "years": {"value": "15+", "label": "years of expertise"},
+        "products": {"value": "200+", "label": "medicines"},
+        "markets": {"value": "30+", "label": "international markets"}
+      }
+    },
+    "directions": {
+      "eyebrow": "What we do",
+      "title": "A complete pharmaceutical ecosystem",
+      "description": "Science, manufacturing and quality work as one system to deliver reliable healthcare products.",
+      "items": {
+        "production": {"title": "Manufacturing", "description": "Modern production lines designed around international GMP principles."},
+        "research": {"title": "Research", "description": "Formulation development driven by evidence, accuracy and patient needs."},
+        "quality": {"title": "Quality control", "description": "Multi-stage laboratory testing from incoming materials to final release."},
+        "partnership": {"title": "Partnerships", "description": "Transparent, long-term cooperation with healthcare and distribution partners."}
+      }
+    },
+    "advantages": {
+      "eyebrow": "Why Avantika",
+      "title": "Confidence built into every process",
+      "description": "Our standards are supported by people, technology and a quality culture that never compromises.",
+      "imageAlt": "Research specialist conducting a laboratory analysis",
+      "cardEyebrow": "Responsible science",
+      "cardTitle": "Quality beyond compliance",
+      "cardDescription": "Every batch is supported by documented processes, analytical control and accountable specialists.",
+      "items": {
+        "gmp": {"value": "GMP standards", "label": "Quality systems aligned with international requirements"},
+        "experience": {"value": "15+ years", "label": "Consistent pharmaceutical expertise"},
+        "specialists": {"value": "300+ experts", "label": "A multidisciplinary professional team"},
+        "portfolio": {"value": "200+ products", "label": "A broad therapeutic portfolio"}
+      }
+    },
+    "team": {
+      "eyebrow": "People behind the quality",
+      "title": "Meet our expert team",
+      "description": "Professionals who bring scientific precision, responsibility and care to every stage of our work.",
+      "previous": "Previous team member",
+      "next": "Next team member",
+      "members": {
+        "dilnoza": {"name": "Dilnoza Karimova", "role": "Head of Research"},
+        "nargiza": {"name": "Nargiza Tursunova", "role": "Quality Control Lead"},
+        "aziz": {"name": "Aziz Rakhimov", "role": "Production Director"},
+        "timur": {"name": "Timur Akhmedov", "role": "Laboratory Specialist"},
+        "malika": {"name": "Malika Usmanova", "role": "Regulatory Affairs Manager"}
+      }
+    },
+    "categories": {
+      "eyebrow": "Therapeutic areas",
+      "title": "Find products by category",
+      "description": "A clear catalogue organised around the needs of patients and healthcare professionals.",
+      "view": "View products",
+      "items": {
+        "cardiology": "Cardiology",
+        "gastro": "Gastroenterology",
+        "pediatrics": "Pediatrics",
+        "rheumatology": "Rheumatology",
+        "antibiotics": "Antibiotic therapy",
+        "otc": "OTC products"
+      }
+    },
+    "products": {
+      "eyebrow": "Featured portfolio",
+      "title": "Products for everyday healthcare",
+      "description": "Demo product cards are ready for the client's final packshots and approved medical content.",
+      "all": "All products",
+      "more": "Product details",
+      "items": {
+        "velcluza": {"name": "Velcluza", "form": "28 film-coated tablets", "category": "Virology", "description": "A medicine combining sofosbuvir 400 mg and velpatasvir 100 mg.", "imageAlt": "Velcluza medicine box and bottle"},
+        "ursodox": {"name": "Ursodox", "form": "250 mg, 5 × 10 capsules", "category": "Hepatology", "imageAlt": "Ursodox capsule packaging"},
+        "jaraflu": {"name": "Jaraflu", "form": "10 sachets", "category": "Cold and flu", "imageAlt": "Jaraflu boxes in different flavours"},
+        "aenoxap": {"name": "Aenoxap 40", "form": "Pre-filled syringe", "category": "Anticoagulants", "imageAlt": "Aenoxap 40 syringe and packaging"},
+        "gastrolin": {"name": "Gastrolin", "form": "20 capsules", "category": "Gastroenterology", "description": "A demo card for a gastroenterology product. Replace with validated product information."},
+        "immunex": {"name": "Immunex", "form": "10 sachets", "category": "General health", "description": "A demo card showing how final packaging and approved descriptions will appear."}
+      }
+    },
+    "manufacturing": {
+      "eyebrow": "Manufacturing & infrastructure",
+      "title": "Technology designed around quality",
+      "description": "Production processes are structured to support traceability, precision and consistent product quality.",
+      "points": {
+        "lines": "Dedicated lines for multiple dosage forms",
+        "control": "Documented control at every production stage",
+        "capacity": "Scalable capacity for local and export markets",
+        "laboratory": "Physicochemical and microbiological laboratories"
+      },
+      "cta": "About the company",
+      "imageAlt": "Specialist examining samples in a pharmaceutical laboratory",
+      "statValue": "24/7",
+      "statLabel": "process monitoring"
+    },
+    "gallery": {
+      "eyebrow": "Inside the process",
+      "title": "A closer look at our manufacturing",
+      "description": "Modern production lines, laboratories and quality control operate as one integrated system.",
+      "view": "Open image",
+      "items": {
+        "production": {"eyebrow": "Manufacturing", "title": "Modern pharmaceutical complex", "imageAlt": "Modern Avantika pharmaceutical production line", "open": "Open pharmaceutical complex image"},
+        "automation": {"eyebrow": "Technology", "title": "Automated production lines", "imageAlt": "Automated medicine manufacturing equipment", "open": "Open automated production line image"},
+        "laboratory": {"eyebrow": "Science", "title": "Analytical laboratory", "imageAlt": "Pharmaceutical laboratory specialists", "open": "Open analytical laboratory image"},
+        "quality": {"eyebrow": "Control", "title": "Quality at every stage", "imageAlt": "Quality control in pharmaceutical manufacturing", "open": "Open quality control image"}
+      }
+    },
+    "quality": {
+      "eyebrow": "Quality & safety",
+      "title": "Standards you can verify",
+      "description": "Certificates, licences and quality policies are presented clearly and backed by downloadable documents.",
+      "verified": "Verified",
+      "items": {
+        "gmp": {"title": "GMP system", "description": "Manufacturing and quality processes built around good manufacturing practice requirements."},
+        "iso": {"title": "ISO 9001", "description": "A structured quality management approach supporting consistency and continuous improvement."},
+        "license": {"title": "Licensed operations", "description": "Pharmaceutical activities are conducted under relevant regulatory permissions and controls."}
+      }
+    },
+    "news": {
+      "eyebrow": "Newsroom",
+      "title": "News and events",
+      "description": "Company updates, scientific progress, industry events and product announcements.",
+      "all": "All news",
+      "more": "Read more",
+      "items": {
+        "research": {"category": "Research", "date": "12 June 2026", "title": "A new stage in formulation research", "description": "The research team has expanded its analytical workflow for developing stable and effective formulations.", "imageAlt": "Scientist working with laboratory equipment"},
+        "laboratory": {"category": "Company", "date": "28 May 2026", "title": "Laboratory infrastructure expanded", "description": "New analytical equipment strengthens quality control and supports a broader development programme.", "imageAlt": "Modern medical laboratory specialist"},
+        "quality": {"category": "Quality", "date": "10 May 2026", "title": "Quality management audit completed", "description": "The internal audit programme confirmed consistent process control across key operational areas.", "imageAlt": "Scientist handling samples in a laboratory"}
+      }
+    },
+    "global": {
+      "eyebrow": "Global presence",
+      "title": "Healthcare without borders",
+      "description": "We build responsible relationships with distributors and healthcare partners across growing international markets.",
+      "markets": "registered markets",
+      "partners": "distribution partners",
+      "mapLabel": "Map of Avantika's international presence",
+      "controls": {"zoomIn": "Zoom map in", "zoomOut": "Zoom map out", "reset": "Reset map position"},
+      "types": {"headquarters": "Head office and manufacturing", "office": "Regional representative office", "partner": "Distribution partner"},
+      "locations": {
+        "uzbekistan": {"country": "Uzbekistan", "city": "Tashkent", "region": "Central Asian headquarters"},
+        "kazakhstan": {"country": "Kazakhstan", "city": "Almaty", "region": "Central Asia"},
+        "kyrgyzstan": {"country": "Kyrgyzstan", "city": "Bishkek", "region": "Central Asia"},
+        "tajikistan": {"country": "Tajikistan", "city": "Dushanbe", "region": "Central Asia"},
+        "azerbaijan": {"country": "Azerbaijan", "city": "Baku", "region": "Caucasus market"},
+        "uae": {"country": "UAE", "city": "Dubai", "region": "Middle East"},
+        "ghana": {"country": "Ghana", "city": "Accra", "region": "West Africa"},
+        "philippines": {"country": "Philippines", "city": "Manila", "region": "Southeast Asia"}
+      }
+    },
+    "cta": {
+      "eyebrow": "Let us work together",
+      "title": "Looking for a reliable pharmaceutical partner?",
+      "description": "Tell us about your market and business goals. Our team will route your enquiry to the right specialist.",
+      "button": "Contact our team"
+    }
+  },
+  "Footer": {
+    "description": "A pharmaceutical company focused on responsible science, reliable manufacturing and accessible healthcare.",
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "address": "Tashkent, Republic of Uzbekistan",
+    "rights": "All rights reserved.",
+    "pharmacovigilance": "Report an adverse reaction"
+  }
+}

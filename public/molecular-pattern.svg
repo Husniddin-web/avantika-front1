@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="900" viewBox="0 0 720 900" fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <polygon id="hex" points="18,2 54,2 70,31 54,60 18,60 2,31"/>
+    <linearGradient id="fade-gradient" x1="720" y1="0" x2="260" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="0.42" stop-color="#fff" stop-opacity="0.82"/>
+      <stop offset="0.72" stop-color="#fff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="pattern-fade" maskUnits="userSpaceOnUse" x="0" y="0" width="720" height="900">
+      <rect width="720" height="900" fill="url(#fade-gradient)"/>
+    </mask>
+  </defs>
+  <g mask="url(#pattern-fade)" opacity="0.58" stroke="#E5E8F2" stroke-width="2" stroke-linejoin="round">
+    <use href="#hex" x="584" y="-28"/><use href="#hex" x="638" y="-28"/><use href="#hex" x="692" y="-28"/>
+    <use href="#hex" x="557" y="19"/><use href="#hex" x="611" y="19"/><use href="#hex" x="665" y="19"/>
+    <use href="#hex" x="530" y="66"/><use href="#hex" x="584" y="66"/><use href="#hex" x="638" y="66"/><use href="#hex" x="692" y="66"/>
+    <use href="#hex" x="557" y="113"/><use href="#hex" x="611" y="113"/><use href="#hex" x="665" y="113"/>
+    <use href="#hex" x="530" y="160"/><use href="#hex" x="584" y="160"/><use href="#hex" x="638" y="160"/>
+    <use href="#hex" x="557" y="207"/><use href="#hex" x="611" y="207"/>
+    <use href="#hex" x="638" y="254"/>
+  </g>
+</svg>
