@@ -6,11 +6,22 @@ import {useTranslations} from "next-intl";
 import {useEffect, useState} from "react";
 
 import {teamMembers} from "@/data/team";
+import type {Locale} from "@/i18n/routing";
+import {imageSrc} from "@/lib/image-src";
+import {localize} from "@/lib/localized";
+import type {Worker} from "@/lib/admin/api";
 
 type Position = "center" | "previous" | "next" | "far-previous" | "far-next";
 
-function getPosition(index: number, active: number): Position {
-  const total = teamMembers.length;
+type TeamDisplayMember = {
+  key: string;
+  name: string;
+  role: string;
+  image: string;
+  position: string;
+};
+
+function getPosition(index: number, active: number, total: number): Position {
   const delta = (index - active + total) % total;
 
   if (delta === 0) return "center";
@@ -20,8 +31,23 @@ function getPosition(index: number, active: number): Position {
   return "far-previous";
 }
 
-export function TeamCarousel() {
+export function TeamCarousel({workers = [], locale}: {workers?: Worker[]; locale: Locale}) {
   const t = useTranslations("Home.team");
+  const members: TeamDisplayMember[] = workers.length
+    ? workers.map((worker) => ({
+        key: worker.id,
+        name: localize(worker.fullName, locale),
+        role: localize(worker.role, locale),
+        image: imageSrc(worker.image?.url, "/worker-man.png"),
+        position: "object-center",
+      }))
+    : teamMembers.map((member) => ({
+        key: member.key,
+        name: t(`members.${member.key}.name`),
+        role: t(`members.${member.key}.role`),
+        image: member.image,
+        position: member.position,
+      }));
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -29,14 +55,14 @@ export function TeamCarousel() {
     if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const timer = window.setInterval(() => {
-      setActive((current) => (current + 1) % teamMembers.length);
+      setActive((current) => (current + 1) % members.length);
     }, 5000);
 
     return () => window.clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, members.length]);
 
   const move = (direction: -1 | 1) => {
-    setActive((current) => (current + direction + teamMembers.length) % teamMembers.length);
+    setActive((current) => (current + direction + members.length) % members.length);
   };
 
   return (
@@ -63,8 +89,8 @@ export function TeamCarousel() {
         >
           <div aria-hidden="true" className="absolute left-1/2 top-[58%] h-28 w-[88%] -translate-x-1/2 rounded-[50%] border border-blue-100 bg-blue-50/55 blur-[1px] sm:w-[76%]" />
 
-          {teamMembers.map((member, index) => {
-            const position = getPosition(index, active);
+          {members.map((member, index) => {
+            const position = getPosition(index, active, members.length);
             const isActive = position === "center";
 
             return (
@@ -75,13 +101,13 @@ export function TeamCarousel() {
                 onClick={() => setActive(index)}
                 tabIndex={isActive || position === "previous" || position === "next" ? 0 : -1}
                 aria-current={isActive ? "true" : undefined}
-                aria-label={`${t(`members.${member.key}.name`)} — ${t(`members.${member.key}.role`)}`}
+                aria-label={`${member.name} — ${member.role}`}
                 className="team-orbit-card absolute left-1/2 top-0 w-[250px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white text-left shadow-2xl shadow-blue-950/10 outline-none focus-visible:ring-4 focus-visible:ring-blue-200 sm:w-[310px]"
               >
                 <div className="relative aspect-[4/4.7] overflow-hidden bg-slate-100">
                   <Image
                     src={member.image}
-                    alt={t(`members.${member.key}.name`)}
+                    alt={member.name}
                     fill
                     sizes="310px"
                     className={`object-cover ${member.position}`}
@@ -95,8 +121,8 @@ export function TeamCarousel() {
                 </div>
                 <div className="relative p-5 sm:p-6">
                   <span className="absolute -top-3 left-6 h-1.5 w-12 rounded-full bg-blue-600" />
-                  <h3 className="text-xl font-extrabold text-[#10172b]">{t(`members.${member.key}.name`)}</h3>
-                  <p className="mt-1.5 text-sm font-semibold text-blue-700">{t(`members.${member.key}.role`)}</p>
+                  <h3 className="text-xl font-extrabold text-[#10172b]">{member.name}</h3>
+                  <p className="mt-1.5 text-sm font-semibold text-blue-700">{member.role}</p>
                 </div>
               </button>
             );
@@ -107,12 +133,12 @@ export function TeamCarousel() {
               <ArrowLeft className="size-5" />
             </button>
             <div className="flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2">
-              {teamMembers.map((member, index) => (
+              {members.map((member, index) => (
                 <button
                   key={member.key}
                   type="button"
                   onClick={() => setActive(index)}
-                  aria-label={`${t(`members.${member.key}.name`)} ${index + 1}`}
+                  aria-label={`${member.name} ${index + 1}`}
                   className={`h-2 rounded-full transition-all ${index === active ? "w-7 bg-blue-700" : "w-2 bg-slate-300 hover:bg-blue-300"}`}
                 />
               ))}

@@ -72,12 +72,12 @@ export function HeroSlider() {
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/"
+              href="/products"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-bold text-white shadow-lg shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {t("products")}<ArrowRight className="size-4" />
             </Link>
-            <Link href="/" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/40 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-900">
+            <Link href="/contacts" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/40 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-blue-900">
               {t("partner")}
             </Link>
           </div>

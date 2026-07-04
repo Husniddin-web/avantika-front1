@@ -14,10 +14,10 @@ export function SiteFooter() {
         <div className="max-w-sm">
           <div className="inline-flex rounded-2xl bg-white px-3 py-2">
             <Image
-              src="/logo.webp"
+              src="/about-logo.png"
               alt="Avantika Pharmaceuticals"
               width={207}
-              height={64}
+              height={207}
               className="h-11 w-auto object-contain"
             />
           </div>
@@ -26,10 +26,10 @@ export function SiteFooter() {
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-200">{t("navigation")}</p>
           <div className="mt-5 grid gap-3 text-sm text-blue-100/70">
-            <Link href="/" className="hover:text-white">{nav("products")}</Link>
-            <Link href="/" className="hover:text-white">{nav("news")}</Link>
-            <Link href="/" className="hover:text-white">{nav("about")}</Link>
-            <Link href="/" className="hover:text-white">{nav("contacts")}</Link>
+            <Link href="/products" className="hover:text-white">{nav("products")}</Link>
+            <Link href="/news" className="hover:text-white">{nav("news")}</Link>
+            <Link href="/about" className="hover:text-white">{nav("about")}</Link>
+            <Link href="/contacts" className="hover:text-white">{nav("contacts")}</Link>
           </div>
         </div>
         <div>

@@ -9,15 +9,16 @@ import {Link, usePathname} from "@/i18n/navigation";
 import type {Locale} from "@/i18n/routing";
 
 import {LocaleSwitcher} from "../locale-switcher";
+import {SearchModal} from "./search-modal";
 
 const navItems = ["home", "products", "news", "about", "contacts"] as const;
 
 const hrefs = {
   home: "/",
-  products: "/",
-  news: "/",
-  about: "/",
-  contacts: "/",
+  products: "/products",
+  news: "/news",
+  about: "/about",
+  contacts: "/contacts",
 } as const;
 
 export function SiteHeader({locale}: {locale: Locale}) {
@@ -25,6 +26,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const isTransparent = isHome && !isScrolled;
 
   useEffect(() => {
@@ -65,10 +67,10 @@ export function SiteHeader({locale}: {locale: Locale}) {
       <div className="container-shell flex h-[72px] items-center justify-between gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Avantika">
           <Image
-            src="/logo.webp"
+            src="/about-logo.png"
             alt="Avantika Pharmaceuticals"
             width={250}
-            height={78}
+            height={250}
             priority
             className="h-11 w-auto object-contain sm:h-14"
           />
@@ -79,7 +81,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
             <Link
               key={item}
               href={hrefs[item]}
-              className={`text-sm font-semibold transition ${isTransparent ? "text-white/85 hover:text-white" : "text-slate-600 hover:text-blue-700"}`}
+              className={`relative text-sm font-semibold transition after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:rounded-full after:transition-all ${isActiveNav(pathname, hrefs[item]) ? "after:w-full" : "after:w-0"} ${isTransparent ? (isActiveNav(pathname, hrefs[item]) ? "text-white after:bg-white" : "text-white/85 hover:text-white after:bg-white") : (isActiveNav(pathname, hrefs[item]) ? "text-blue-700 after:bg-blue-700" : "text-slate-600 hover:text-blue-700 after:bg-blue-700")}`}
             >
               {t(item)}
             </Link>
@@ -90,6 +92,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
           <button
             type="button"
             aria-label={t("search")}
+            onClick={() => setSearchOpen(true)}
             className={`grid size-10 place-items-center rounded-full transition ${isTransparent ? "text-white hover:bg-white/10" : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"}`}
           >
             <Search className="size-5" />
@@ -103,7 +106,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
             </summary>
             <nav className="premium-shadow absolute inset-x-4 top-[116px] rounded-3xl border border-slate-100 bg-white p-3">
               {navItems.map((item) => (
-                <Link key={item} href={hrefs[item]} className="block rounded-2xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-800">
+                <Link key={item} href={hrefs[item]} className={`block rounded-2xl px-4 py-3 text-sm font-bold ${isActiveNav(pathname, hrefs[item]) ? "bg-blue-50 text-blue-800" : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"}`}>
                   {t(item)}
                 </Link>
               ))}
@@ -114,6 +117,12 @@ export function SiteHeader({locale}: {locale: Locale}) {
           </details>
         </div>
       </div>
+      <SearchModal open={searchOpen} locale={locale} onClose={() => setSearchOpen(false)} />
     </header>
   );
+}
+
+function isActiveNav(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
 }

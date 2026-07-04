@@ -19,6 +19,10 @@ import {
 } from "react-icons/fa6";
 
 import {Link} from "@/i18n/navigation";
+import type {Locale} from "@/i18n/routing";
+import type {PublicHomeData} from "@/lib/public-api";
+import {localize} from "@/lib/localized";
+import {imageSrc} from "@/lib/image-src";
 
 import {HeroSlider} from "./hero-slider";
 import {TeamCarousel} from "./team-carousel";
@@ -41,7 +45,7 @@ const advantages = [
   {key: "portfolio", icon: PackageCheck},
 ] as const;
 
-const categories = [
+const fallbackCategories = [
   {key: "cardiology", icon: "/cat-2.png"},
   {key: "gastro", icon: "/cat-1.png"},
   {key: "pediatrics", icon: "/cat-3.png"},
@@ -50,7 +54,7 @@ const categories = [
   {key: "otc", icon: "/cat-6.png"},
 ] as const;
 
-const products = [
+const fallbackProducts = [
   {id: "velcluza-01", key: "velcluza", image: "/d1.jpeg", imageClass: "object-cover object-bottom", categoryIcon: "/cat-5.png"},
   {id: "ursodox-01", key: "ursodox", image: "/d2.jpg", imageClass: "object-contain", categoryIcon: "/cat-1.png"},
   {id: "jaraflu-01", key: "jaraflu", image: "/d3.jpg", imageClass: "object-contain", categoryIcon: "/cat-6.png"},
@@ -69,7 +73,7 @@ const certificates = [
   {key: "license", icon: FaCapsules},
 ] as const;
 
-const news = [
+const fallbackNews = [
   {
     key: "research",
     image: "https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1000",
@@ -99,8 +103,75 @@ function ArrowLink({href, children, inverse = false}: {href: string; children: R
   );
 }
 
-export function HomePageContent() {
+function repeatToMinimum<T>(items: T[], minimum: number) {
+  if (items.length === 0) return items;
+  const output = [...items];
+
+  while (output.length < minimum) {
+    output.push(...items);
+  }
+
+  return output.slice(0, Math.max(minimum, items.length));
+}
+
+export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; locale: Locale}) {
   const t = useTranslations("Home");
+  const categoryItems = cmsData?.categories.length
+      ? cmsData.categories.map((category) => ({
+        id: category.id,
+        title: localize(category.title, locale),
+        icon: imageSrc(category.image?.url, "/cat-2.png"),
+      }))
+    : fallbackCategories.map(({key, icon}) => ({
+        id: key,
+        title: t(`categories.items.${key}`),
+        icon,
+      }));
+  const productItems = cmsData?.products.length
+    ? repeatToMinimum(
+        cmsData.products.map((product) => ({
+          id: product.id,
+          href: `/products/${product.id}`,
+          title: localize(product.title, locale),
+          form: localize(product.dosageForm, locale) || product.slug,
+          category: localize(product.category?.title, locale),
+          image: imageSrc(product.images[0]?.url, "/d1.jpeg"),
+          imageClass: "object-cover object-center",
+          categoryIcon: imageSrc(product.category?.image?.url, "/cat-2.png"),
+          imageAlt: localize(product.title, locale),
+        })),
+        10,
+      )
+    : fallbackProducts.map((product) => ({
+        id: product.id,
+        href: "/products",
+        title: t(`products.items.${product.key}.name`),
+        form: t(`products.items.${product.key}.form`),
+        category: t(`products.items.${product.key}.category`),
+        image: product.image,
+        imageClass: product.imageClass,
+        categoryIcon: product.categoryIcon,
+        imageAlt: t(`products.items.${product.key}.imageAlt`),
+      }));
+  const newsItems = cmsData?.news.length
+    ? cmsData.news.slice(0, 3).map((article) => ({
+        id: article.id,
+        title: localize(article.title, locale),
+        description: stripHtml(localize(article.content, locale)),
+        category: article.status === "published" ? t("news.eyebrow") : article.status,
+        date: new Date(article.createdAt).toLocaleDateString(),
+        image: imageSrc(article.images[0]?.url, "https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1000"),
+        imageAlt: localize(article.title, locale),
+      }))
+    : fallbackNews.map(({key, image}) => ({
+        id: key,
+        title: t(`news.items.${key}.title`),
+        description: t(`news.items.${key}.description`),
+        category: t(`news.items.${key}.category`),
+        date: t(`news.items.${key}.date`),
+        image,
+        imageAlt: t(`news.items.${key}.imageAlt`),
+      }));
 
   return (
     <main className="overflow-hidden">
@@ -201,10 +272,10 @@ export function HomePageContent() {
                   aria-hidden={isDuplicate || undefined}
                   className="flex gap-3 sm:gap-5"
                 >
-                  {categories.map(({key, icon}) => (
+                  {categoryItems.map(({id, title, icon}) => (
                     <Link
-                      key={`${isDuplicate ? "duplicate" : "original"}-${key}`}
-                      href="/"
+                      key={`${isDuplicate ? "duplicate" : "original"}-${id}`}
+                      href="/products"
                       tabIndex={isDuplicate ? -1 : undefined}
                       className="group flex min-h-36 w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 flex-col items-center justify-center rounded-[1.15rem] border border-slate-200 bg-white p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-950/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 sm:min-h-60 sm:w-64 sm:rounded-[1.5rem] sm:p-7 lg:w-[280px]"
                     >
@@ -218,7 +289,7 @@ export function HomePageContent() {
                         />
                       </span>
                       <h3 className="mt-4 text-sm font-extrabold leading-5 text-slate-700 transition-colors group-hover:text-blue-800 group-focus-visible:text-blue-800 sm:mt-6 sm:text-xl sm:leading-6">
-                        {t(`categories.items.${key}`)}
+                        {title}
                       </h3>
                     </Link>
                   ))}
@@ -233,32 +304,32 @@ export function HomePageContent() {
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
             <Reveal><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
-            <Reveal><ArrowLink href="/">{t("products.all")}</ArrowLink></Reveal>
+            <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
           </div>
           <Reveal className="product-marquee mt-8 space-y-3 overflow-hidden py-2 sm:mt-12 sm:space-y-5">
-            {[products.slice(0, 5), products.slice(5)].map((row, rowIndex) => (
+            {[productItems.slice(0, 5), productItems.slice(5, 10)].map((row, rowIndex) => (
               <div key={rowIndex} className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${rowIndex === 1 ? "product-marquee-track-reverse" : ""}`}>
                 {[false, true].map((duplicate) => (
                   <div key={duplicate ? "duplicate" : "original"} aria-hidden={duplicate || undefined} className="flex gap-3 sm:gap-5">
                     {row.map((product) => (
                       <Link
                         key={`${product.id}-${duplicate ? "copy" : "main"}`}
-                        href="/"
+                        href={product.href}
                         tabIndex={duplicate ? -1 : undefined}
                       className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:w-[250px] sm:rounded-[1.35rem]"
                       >
                         <div className="relative h-28 overflow-hidden bg-[#f6f8fc] sm:h-40">
                           <Image
                             src={product.image}
-                            alt={t(`products.items.${product.key}.imageAlt`)}
+                            alt={product.imageAlt}
                             fill
                             sizes="(max-width: 640px) 50vw, 285px"
-                            className={`${product.imageClass} p-2 transition duration-500 group-hover:scale-[1.04] sm:p-3`}
+                            className="object-cover transition duration-500 group-hover:scale-[1.04]"
                           />
                         </div>
                         <div className="p-3 sm:p-5">
-                          <h3 className="text-base font-extrabold text-[#10172b] sm:text-xl">{t(`products.items.${product.key}.name`)}</h3>
-                          <p className="mt-1 line-clamp-1 text-xs text-slate-500">{t(`products.items.${product.key}.form`)}</p>
+                          <h3 className="text-base font-extrabold text-[#10172b] sm:text-xl">{product.title}</h3>
+                          <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
                           <div className="mt-4 border-t border-slate-100 pt-3">
                             <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
                               <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
@@ -271,7 +342,7 @@ export function HomePageContent() {
                                 />
                               </span>
                               <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
-                                {t(`products.items.${product.key}.category`)}
+                                {product.category}
                               </span>
                               <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
                             </span>
@@ -335,7 +406,7 @@ export function HomePageContent() {
                 </div>
               ))}
             </div>
-            <div className="mt-8"><ArrowLink href="/" inverse>{t("manufacturing.cta")}</ArrowLink></div>
+            <div className="mt-8"><ArrowLink href="/about" inverse>{t("manufacturing.cta")}</ArrowLink></div>
           </Reveal>
         </div>
       </section>
@@ -410,27 +481,27 @@ export function HomePageContent() {
 
       <GlobalPresence />
 
-      <TeamCarousel />
+      <TeamCarousel workers={cmsData?.workers ?? []} locale={locale} />
 
       <section className="section-space bg-white">
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
             <Reveal><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
-            <Reveal><ArrowLink href="/">{t("news.all")}</ArrowLink></Reveal>
+            <Reveal><ArrowLink href="/news">{t("news.all")}</ArrowLink></Reveal>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {news.map(({key, image}, index) => (
-              <Reveal key={key} delay={index * 90}>
+            {newsItems.map((article, index) => (
+              <Reveal key={article.id} delay={index * 90}>
                 <article className="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                    <Image src={image} alt={t(`news.items.${key}.imageAlt`)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
-                    <span className="absolute bottom-4 left-4 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800">{t(`news.items.${key}.category`)}</span>
+                    <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                    <span className="absolute bottom-4 left-4 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800">{article.category}</span>
                   </div>
                   <div className="p-6">
-                    <p className="text-xs font-semibold text-slate-400">{t(`news.items.${key}.date`)}</p>
-                    <h3 className="mt-3 text-xl font-extrabold leading-7 text-[#10172b]">{t(`news.items.${key}.title`)}</h3>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500">{t(`news.items.${key}.description`)}</p>
-                    <Link href="/" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">{t("news.more")}<ArrowRight className="size-4" /></Link>
+                    <p className="text-xs font-semibold text-slate-400">{article.date}</p>
+                    <h3 className="mt-3 text-xl font-extrabold leading-7 text-[#10172b]">{article.title}</h3>
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500">{article.description}</p>
+                    <Link href="/news" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">{t("news.more")}<ArrowRight className="size-4" /></Link>
                   </div>
                 </article>
               </Reveal>
@@ -449,11 +520,15 @@ export function HomePageContent() {
                 <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
                 <p className="mt-4 text-sm leading-7 text-blue-100/65 sm:text-base">{t("cta.description")}</p>
               </div>
-              <div className="relative mt-8 lg:mt-0"><ArrowLink href="/" inverse>{t("cta.button")}</ArrowLink></div>
+              <div className="relative mt-8 lg:mt-0"><ArrowLink href="/contacts" inverse>{t("cta.button")}</ArrowLink></div>
             </div>
           </Reveal>
         </div>
       </section>
     </main>
   );
+}
+
+function stripHtml(value: string) {
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
