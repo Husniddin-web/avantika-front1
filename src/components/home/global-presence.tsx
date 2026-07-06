@@ -20,8 +20,8 @@ export function GlobalPresence() {
   const t = useTranslations("Home.global");
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#eef3ff] py-12 sm:py-24 lg:py-28">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_15%,rgba(99,102,241,0.14),transparent_32%),radial-gradient(circle_at_12%_88%,rgba(37,99,235,0.10),transparent_30%)]" />
+    <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#cfe0ff] via-[#e7efff] to-[#f8fbff] py-12 sm:py-24 lg:py-28">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_15%,rgba(37,99,235,0.28),transparent_32%),radial-gradient(circle_at_12%_88%,rgba(8,10,75,0.16),transparent_30%)]" />
       <div className="container-shell">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center xl:gap-16">
           <Reveal>
@@ -31,22 +31,22 @@ export function GlobalPresence() {
               description={t("description")}
             />
 
-            <div className="mt-8 grid max-w-md grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-white bg-white/82 p-4 shadow-sm backdrop-blur sm:rounded-3xl sm:p-5">
+            <div className="mt-6 grid max-w-md grid-cols-2 gap-3 sm:mt-8">
+              <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
                 <p className="text-2xl font-extrabold text-blue-800 sm:text-3xl">30+</p>
                 <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("markets")}</p>
               </div>
-              <div className="rounded-2xl border border-white bg-white/82 p-4 shadow-sm backdrop-blur sm:rounded-3xl sm:p-5">
+              <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
                 <p className="text-2xl font-extrabold text-red-500 sm:text-3xl">24</p>
                 <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("partners")}</p>
               </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
               {locations.map((location) => (
                 <span
                   key={location.key}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/82 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm"
+                  className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/78 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm shadow-blue-950/5 backdrop-blur sm:bg-white/82"
                 >
                   <span className={`size-2 rounded-full ${location.key === "uzbekistan" ? "bg-red-500" : "bg-blue-600"}`} />
                   {t(`locations.${location.key}.country`)}
@@ -57,9 +57,9 @@ export function GlobalPresence() {
 
           <Reveal delay={120}>
             <div className="relative overflow-hidden rounded-[1.5rem] bg-[#080a4b] shadow-[0_30px_80px_-32px_rgba(8,10,75,0.65)] sm:rounded-[2rem]">
-              <div className="relative min-h-[380px] sm:min-h-[460px] lg:min-h-[520px]">
+              <div className="relative min-h-[560px] sm:min-h-[460px] lg:min-h-[520px]">
                 <Image
-                  src="/hero-slide-4.webp"
+                  src="/2026-07-06 15.00.12.jpg"
                   alt={t("mapLabel")}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
@@ -73,7 +73,7 @@ export function GlobalPresence() {
                   Global
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 grid gap-3 bg-gradient-to-t from-[#05072f] via-[#05072f]/82 to-transparent p-5 pt-24 sm:grid-cols-2 sm:p-7 sm:pt-28">
+                <div className="absolute bottom-0 left-0 right-0 grid gap-2.5 bg-gradient-to-t from-[#05072f] via-[#05072f]/86 to-transparent p-4 pt-24 sm:grid-cols-2 sm:gap-3 sm:p-7 sm:pt-28">
                   {locations.slice(0, 4).map((location) => {
                     const isHeadquarters = location.key === "uzbekistan";
                     const Icon = isHeadquarters ? Factory : Building2;
@@ -81,7 +81,7 @@ export function GlobalPresence() {
                     return (
                       <div
                         key={location.key}
-                        className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.08] p-3 text-white backdrop-blur-md"
+                        className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.10] p-3 text-white shadow-lg shadow-black/10 backdrop-blur-md"
                       >
                         <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${isHeadquarters ? "bg-red-500" : "bg-blue-100 text-blue-800"}`}>
                           <Icon className="size-5" />

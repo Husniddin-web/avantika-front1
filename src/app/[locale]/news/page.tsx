@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {CalendarDays} from "lucide-react";
 import {hasLocale} from "next-intl";
-import {setRequestLocale} from "next-intl/server";
+import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 
 import {PageHero} from "@/components/shared/page-hero";
@@ -16,18 +16,19 @@ export default async function NewsPage({params}: PageProps<"/[locale]/news">) {
   setRequestLocale(locale);
 
   const currentLocale = locale as Locale;
+  const t = await getTranslations("NewsPage");
   const news = await fetchPublicNews();
 
   return (
     <main className="bg-white">
-      <PageHero title="News" eyebrow="Press center" image="/hero-slide-4.webp" />
+      <PageHero title={t("heroTitle")} eyebrow={t("heroEyebrow")} image="/avantika1.jpg" />
       <section className="section-space bg-[#f7faff]">
         <div className="container-shell">
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {news.map((article) => (
               <article key={article.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm shadow-blue-950/[0.04]">
                 <div className="relative aspect-[16/10] bg-slate-100">
-                  <Image src={imageSrc(article.images[0]?.url, "https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1000")} alt={localize(article.title, currentLocale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" unoptimized />
+                  <Image src={imageSrc(article.images[0]?.url, "/avantika1.jpg")} alt={localize(article.title, currentLocale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" unoptimized />
                 </div>
                 <div className="p-6">
                   <p className="flex items-center gap-2 text-xs font-semibold text-slate-400"><CalendarDays className="size-4" />{new Date(article.createdAt).toLocaleDateString()}</p>

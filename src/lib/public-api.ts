@@ -8,6 +8,55 @@ export type PublicHomeData = {
 };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api";
+const now = new Date().toISOString();
+
+function image(url: string) {
+  return {url, filename: url.split("/").pop() ?? "image.jpg", mimetype: "image/jpeg", size: 0};
+}
+
+const mockCategories: Category[] = [
+  {id: "cat-antiviral", title: {uz: "Virusologiya", ru: "Вирусология", en: "Virology"}, slug: "virology", image: image("/pharm/photo_3_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-gastro", title: {uz: "Gastroenterologiya", ru: "Гастроэнтерология", en: "Gastroenterology"}, slug: "gastroenterology", image: image("/pharm/photo_36_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-cardio", title: {uz: "Kardiologiya", ru: "Кардиология", en: "Cardiology"}, slug: "cardiology", image: image("/pharm/photo_6_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-pain", title: {uz: "Og‘riq va yallig‘lanish", ru: "Боль и воспаление", en: "Pain & inflammation"}, slug: "pain-inflammation", image: image("/pharm/photo_10_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-antibiotic", title: {uz: "Antibiotiklar", ru: "Антибиотики", en: "Antibiotics"}, slug: "antibiotics", image: image("/pharm/photo_19_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-wellness", title: {uz: "Umumiy salomatlik", ru: "Общее здоровье", en: "General health"}, slug: "general-health", image: image("/pharm/photo_9_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+];
+
+const categoryById = Object.fromEntries(mockCategories.map((category) => [category.id, category]));
+
+const mockProductSeeds = [
+  ["velkluza", "Velkluza", "Велклуза", "Velkluza", "cat-antiviral", "28 tablets", "/pharm/photo_3_2026-07-06_12-15-43.jpg"],
+  ["avantovir", "Avantovir", "Авантовир", "Avantovir", "cat-antiviral", "30 tablets", "/pharm/photo_20_2026-07-06_12-15-43.jpg"],
+  ["aviklud", "Aviklud", "Авиклуд", "Aviklud", "cat-antiviral", "30 tablets", "/pharm/photo_33_2026-07-06_12-15-43.jpg"],
+  ["ursodox", "Ursodox", "Урсодокс", "Ursodox", "cat-gastro", "50 capsules", "/pharm/photo_24_2026-07-06_12-15-43.jpg"],
+  ["ailayk", "Aylayk", "Айлайк", "Aylayk", "cat-gastro", "30 sachets", "/pharm/photo_36_2026-07-06_12-15-43.jpg"],
+  ["panten", "Panten", "Пантен", "Panten", "cat-gastro", "20 capsules", "/pharm/photo_39_2026-07-06_12-15-43.jpg"],
+  ["amlodil-ab", "Amlodil-AB", "Амлодил-АБ", "Amlodil-AB", "cat-cardio", "30 tablets", "/pharm/photo_25_2026-07-06_12-15-43.jpg"],
+  ["nevikor-5", "Nevikor-5", "Невикор-5", "Nevikor-5", "cat-cardio", "30 tablets", "/pharm/photo_35_2026-07-06_12-15-43.jpg"],
+  ["butafen", "Butafen", "Бутафен", "Butafen", "cat-pain", "Tablets and powder", "/pharm/photo_10_2026-07-06_12-15-43.jpg"],
+  ["aviten-20", "Aviten 20", "Авитен 20", "Aviten 20", "cat-pain", "Injection powder", "/pharm/photo_28_2026-07-06_12-15-43.jpg"],
+  ["meropenem", "Meropenem Avantika", "Меропенем Авантика", "Meropenem Avantika", "cat-antibiotic", "1000 mg vial", "/pharm/photo_34_2026-07-06_12-15-43.jpg"],
+  ["avifer-forte", "Avifer Forte", "Avifer Forte", "Avifer Forte", "cat-wellness", "30 tablets", "/pharm/photo_9_2026-07-06_12-15-43.jpg"],
+] as const;
+
+export const mockProducts: Product[] = mockProductSeeds.map(([slug, uz, ru, en, categoryId, dosage, imageUrl]) => ({
+  id: slug,
+  title: {uz, ru, en},
+  slug,
+  categoryId,
+  category: categoryById[categoryId] ?? null,
+  dosageForm: {uz: dosage, ru: dosage, en: dosage},
+  therapeuticIndication: {
+    uz: "Avantika portfelidagi namuna preparat. Mahsulot ma’lumotlari tasdiqlangan yo‘riqnoma bilan yangilanadi.",
+    ru: "Демонстрационный препарат из портфеля Avantika. Информация будет обновлена согласно утвержденной инструкции.",
+    en: "A sample medicine from the Avantika portfolio. Product information will be updated with approved instructions.",
+  },
+  status: "published",
+  images: [image(imageUrl)],
+  createdAt: now,
+  updatedAt: now,
+}));
 
 async function publicFetch<T>(path: string): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {
@@ -30,11 +79,16 @@ export async function fetchPublicHomeData(): Promise<PublicHomeData> {
       publicFetch<Worker[]>("/workers"),
     ]);
 
-    return {categories, products, news, workers};
+    return {
+      categories: categories.length ? categories : mockCategories,
+      products: products.length ? products : mockProducts,
+      news,
+      workers,
+    };
   } catch {
     return {
-      categories: [],
-      products: [],
+      categories: mockCategories,
+      products: mockProducts,
       news: [],
       workers: [],
     };
@@ -43,9 +97,10 @@ export async function fetchPublicHomeData(): Promise<PublicHomeData> {
 
 export async function fetchPublicProducts() {
   try {
-    return await publicFetch<Product[]>("/products");
+    const products = await publicFetch<Product[]>("/products");
+    return products.length ? products : mockProducts;
   } catch {
-    return [];
+    return mockProducts;
   }
 }
 
@@ -53,15 +108,16 @@ export async function fetchPublicProduct(id: string) {
   try {
     return await publicFetch<Product>(`/products/${id}`);
   } catch {
-    return null;
+    return mockProducts.find((product) => product.id === id || product.slug === id) ?? null;
   }
 }
 
 export async function fetchPublicCategories() {
   try {
-    return await publicFetch<Category[]>("/categories");
+    const categories = await publicFetch<Category[]>("/categories");
+    return categories.length ? categories : mockCategories;
   } catch {
-    return [];
+    return mockCategories;
   }
 }
 

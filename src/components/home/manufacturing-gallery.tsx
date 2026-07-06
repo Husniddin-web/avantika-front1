@@ -7,25 +7,25 @@ import {SectionHeading} from "../shared/section-heading";
 const galleryItems = [
   {
     key: "production",
-    image: "/hero-slide5.png",
+    image: "/avantika1.jpg",
     layout: "col-span-2 min-h-[280px] sm:col-span-7 sm:row-span-2 sm:min-h-[560px]",
     variant: "wide",
   },
   {
     key: "automation",
-    image: "/hero-slide-1.webp",
+    image: "/2026-07-06 15.00.21.jpg",
     layout: "col-span-2 min-h-[230px] sm:col-span-5 sm:min-h-0",
     variant: "wide",
   },
   {
     key: "laboratory",
-    image: "/rasm.png",
+    image: "/2026-07-06 15.00.31.jpg",
     layout: "col-span-1 min-h-[220px] sm:col-span-2 sm:min-h-0",
     variant: "compact",
   },
   {
     key: "quality",
-    image: "/hero-2.png",
+    image: "/2026-07-06 15.00.24.jpg",
     layout: "col-span-1 min-h-[220px] sm:col-span-3 sm:min-h-0",
     variant: "compact",
   },

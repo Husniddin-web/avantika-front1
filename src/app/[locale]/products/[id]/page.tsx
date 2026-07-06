@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {ChevronRight} from "lucide-react";
 import {hasLocale} from "next-intl";
-import {setRequestLocale} from "next-intl/server";
+import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 
 import {Link} from "@/i18n/navigation";
@@ -19,15 +19,17 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
   if (!product) notFound();
 
   const currentLocale = locale as Locale;
+  const t = await getTranslations("ProductDetailPage");
+  const nav = await getTranslations("Navigation");
   const title = localize(product.title, currentLocale);
 
   return (
     <main className="bg-[#f6f8fc] pb-20 pt-32">
       <div className="container-shell">
         <nav className="mb-8 flex items-center justify-start gap-2 text-sm font-semibold text-slate-500">
-          <Link href="/" className="hover:text-blue-700">Home</Link>
+          <Link href="/" className="hover:text-blue-700">{nav("home")}</Link>
           <ChevronRight className="size-4" />
-          <Link href="/products" className="hover:text-blue-700">Products</Link>
+          <Link href="/products" className="hover:text-blue-700">{nav("products")}</Link>
           <ChevronRight className="size-4" />
           <span className="text-slate-900">{title}</span>
         </nav>
@@ -45,22 +47,22 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           </div>
 
           <div className="border-t border-slate-100 p-7 lg:border-l lg:border-t-0 lg:p-12">
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">{localize(product.category?.title, currentLocale) || "Product"}</p>
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">{localize(product.category?.title, currentLocale) || t("product")}</p>
             <h1 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950">{title}</h1>
 
             <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200">
               <div className="grid grid-cols-[0.9fr_1.1fr] border-b border-slate-200 bg-[#fbf7fb]">
-                <div className="p-4 text-sm font-semibold text-slate-500">Dosage form</div>
+                <div className="p-4 text-sm font-semibold text-slate-500">{t("dosageForm")}</div>
                 <div className="p-4 text-sm font-bold text-slate-800">{localize(product.dosageForm, currentLocale) || "-"}</div>
               </div>
               <div className="grid grid-cols-[0.9fr_1.1fr]">
-                <div className="p-4 text-sm font-semibold text-slate-500">Category</div>
+                <div className="p-4 text-sm font-semibold text-slate-500">{t("category")}</div>
                 <div className="p-4 text-sm font-bold text-slate-800">{localize(product.category?.title, currentLocale) || "-"}</div>
               </div>
             </div>
 
             <div className="prose prose-slate mt-8 max-w-none">
-              <h2 className="text-lg font-extrabold text-slate-950">Therapeutic Indication</h2>
+              <h2 className="text-lg font-extrabold text-slate-950">{t("therapeuticIndication")}</h2>
               <div className="mt-3 text-sm leading-7 text-slate-700" dangerouslySetInnerHTML={{__html: localize(product.therapeuticIndication, currentLocale)}} />
             </div>
           </div>

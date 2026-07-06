@@ -27,6 +27,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isTransparent = isHome && !isScrolled;
 
   useEffect(() => {
@@ -98,15 +99,21 @@ export function SiteHeader({locale}: {locale: Locale}) {
             <Search className="size-5" />
           </button>
           <LocaleSwitcher locale={locale} inverse={isTransparent} />
-          <details className="group lg:hidden">
-            <summary className={`grid size-10 cursor-pointer list-none place-items-center rounded-full border [&::-webkit-details-marker]:hidden ${isTransparent ? "border-white/30 text-white" : "border-slate-200"}`}>
+          <details open={mobileMenuOpen} className="group lg:hidden">
+            <summary
+              onClick={(event) => {
+                event.preventDefault();
+                setMobileMenuOpen((open) => !open);
+              }}
+              className={`grid size-10 cursor-pointer list-none place-items-center rounded-full border [&::-webkit-details-marker]:hidden ${isTransparent ? "border-white/30 text-white" : "border-slate-200"}`}
+            >
               <Menu className="size-5 group-open:hidden" />
               <X className="hidden size-5 group-open:block" />
               <span className="sr-only">{t("menu")}</span>
             </summary>
             <nav className="premium-shadow absolute inset-x-4 top-[116px] rounded-3xl border border-slate-100 bg-white p-3">
               {navItems.map((item) => (
-                <Link key={item} href={hrefs[item]} className={`block rounded-2xl px-4 py-3 text-sm font-bold ${isActiveNav(pathname, hrefs[item]) ? "bg-blue-50 text-blue-800" : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"}`}>
+                <Link key={item} href={hrefs[item]} onClick={() => setMobileMenuOpen(false)} className={`block rounded-2xl px-4 py-3 text-sm font-bold ${isActiveNav(pathname, hrefs[item]) ? "bg-blue-50 text-blue-800" : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"}`}>
                   {t(item)}
                 </Link>
               ))}

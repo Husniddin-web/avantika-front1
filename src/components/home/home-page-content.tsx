@@ -46,25 +46,25 @@ const advantages = [
 ] as const;
 
 const fallbackCategories = [
-  {key: "cardiology", icon: "/cat-2.png"},
-  {key: "gastro", icon: "/cat-1.png"},
-  {key: "pediatrics", icon: "/cat-3.png"},
-  {key: "rheumatology", icon: "/cat-4.png"},
-  {key: "antibiotics", icon: "/cat-5.png"},
-  {key: "otc", icon: "/cat-6.png"},
+  {key: "cardiology", icon: "/pharm/photo_25_2026-07-06_12-15-43.jpg"},
+  {key: "gastro", icon: "/pharm/photo_36_2026-07-06_12-15-43.jpg"},
+  {key: "pediatrics", icon: "/pharm/photo_9_2026-07-06_12-15-43.jpg"},
+  {key: "rheumatology", icon: "/pharm/photo_10_2026-07-06_12-15-43.jpg"},
+  {key: "antibiotics", icon: "/pharm/photo_34_2026-07-06_12-15-43.jpg"},
+  {key: "otc", icon: "/pharm/photo_1_2026-07-06_12-15-43.jpg"},
 ] as const;
 
 const fallbackProducts = [
-  {id: "velcluza-01", key: "velcluza", image: "/d1.jpeg", imageClass: "object-cover object-bottom", categoryIcon: "/cat-5.png"},
-  {id: "ursodox-01", key: "ursodox", image: "/d2.jpg", imageClass: "object-contain", categoryIcon: "/cat-1.png"},
-  {id: "jaraflu-01", key: "jaraflu", image: "/d3.jpg", imageClass: "object-contain", categoryIcon: "/cat-6.png"},
-  {id: "aenoxap-01", key: "aenoxap", image: "/d4.png", imageClass: "object-contain", categoryIcon: "/cat-2.png"},
-  {id: "velcluza-02", key: "velcluza", image: "/d5.jpeg", imageClass: "object-cover object-bottom", categoryIcon: "/cat-5.png"},
-  {id: "jaraflu-02", key: "jaraflu", image: "/d3.jpg", imageClass: "object-contain", categoryIcon: "/cat-6.png"},
-  {id: "ursodox-02", key: "ursodox", image: "/d2.jpg", imageClass: "object-contain", categoryIcon: "/cat-1.png"},
-  {id: "aenoxap-02", key: "aenoxap", image: "/d4.png", imageClass: "object-contain", categoryIcon: "/cat-2.png"},
-  {id: "jaraflu-03", key: "jaraflu", image: "/d3.jpg", imageClass: "object-contain", categoryIcon: "/cat-6.png"},
-  {id: "velcluza-03", key: "velcluza", image: "/d1.jpeg", imageClass: "object-cover object-bottom", categoryIcon: "/cat-5.png"},
+  {id: "velcluza-01", key: "velcluza", image: "/pharm/photo_3_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_3_2026-07-06_12-15-43.jpg"},
+  {id: "ursodox-01", key: "ursodox", image: "/pharm/photo_24_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_24_2026-07-06_12-15-43.jpg"},
+  {id: "jaraflu-01", key: "jaraflu", image: "/pharm/photo_36_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_36_2026-07-06_12-15-43.jpg"},
+  {id: "aenoxap-01", key: "aenoxap", image: "/pharm/photo_25_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_25_2026-07-06_12-15-43.jpg"},
+  {id: "velcluza-02", key: "velcluza", image: "/pharm/photo_20_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_20_2026-07-06_12-15-43.jpg"},
+  {id: "jaraflu-02", key: "jaraflu", image: "/pharm/photo_1_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_1_2026-07-06_12-15-43.jpg"},
+  {id: "ursodox-02", key: "ursodox", image: "/pharm/photo_8_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_8_2026-07-06_12-15-43.jpg"},
+  {id: "aenoxap-02", key: "aenoxap", image: "/pharm/photo_10_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_10_2026-07-06_12-15-43.jpg"},
+  {id: "jaraflu-03", key: "jaraflu", image: "/pharm/photo_34_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_34_2026-07-06_12-15-43.jpg"},
+  {id: "velcluza-03", key: "velcluza", image: "/pharm/photo_35_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_35_2026-07-06_12-15-43.jpg"},
 ] as const;
 
 const certificates = [
@@ -76,15 +76,15 @@ const certificates = [
 const fallbackNews = [
   {
     key: "research",
-    image: "https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    image: "/avantika1.jpg",
   },
   {
     key: "laboratory",
-    image: "https://images.pexels.com/photos/8442512/pexels-photo-8442512.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    image: "/2026-07-06 15.00.21.jpg",
   },
   {
     key: "quality",
-    image: "https://images.pexels.com/photos/3735714/pexels-photo-3735714.jpeg?auto=compress&cs=tinysrgb&w=1000",
+    image: "/2026-07-06 15.00.31.jpg",
   },
 ] as const;
 
@@ -160,7 +160,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         description: stripHtml(localize(article.content, locale)),
         category: article.status === "published" ? t("news.eyebrow") : article.status,
         date: new Date(article.createdAt).toLocaleDateString(),
-        image: imageSrc(article.images[0]?.url, "https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1000"),
+        image: imageSrc(article.images[0]?.url, "/avantika1.jpg"),
         imageAlt: localize(article.title, locale),
       }))
     : fallbackNews.map(({key, image}) => ({
@@ -302,14 +302,14 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="relative isolate min-h-[680px] overflow-hidden bg-[#eef5ff] sm:min-h-[720px]">
         <div className="absolute inset-y-0 right-0 -z-30 w-full lg:w-[62%]">
           <Image
-            src="https://images.pexels.com/photos/4031416/pexels-photo-4031416.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src="/2026-07-06 15.00.28.jpg"
             alt={t("advantages.imageAlt")}
             fill
             sizes="(max-width: 1024px) 100vw, 62vw"
             className="object-cover object-center"
           />
         </div>
-        <div className="absolute inset-0 -z-20 bg-gradient-to-r from-white via-white/92 to-white/20 lg:hidden" />
+        <div className="absolute inset-0 -z-20 bg-gradient-to-r from-white/92 via-white/72 to-white/20 lg:hidden" />
         <svg aria-hidden="true" viewBox="0 0 1600 720" preserveAspectRatio="none" className="absolute inset-0 -z-20 hidden size-full lg:block">
           <defs>
             <linearGradient id="why-surface" x1="0" y1="0" x2="1" y2="1">
@@ -329,7 +329,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-600 sm:text-lg">{t("advantages.description")}</p>
             <div className="mt-9 grid grid-cols-2 gap-3 lg:hidden">
               {advantages.map(({key}) => (
-                <div key={key} className="rounded-2xl border border-blue-100 bg-white/80 p-4 backdrop-blur">
+                <div key={key} className="rounded-2xl border border-blue-100 bg-white/68 p-4 shadow-sm shadow-blue-950/5 backdrop-blur">
                   <p className="font-extrabold text-blue-800">{t(`advantages.items.${key}.value`)}</p>
                   <p className="mt-1 text-xs leading-5 text-slate-500">{t(`advantages.items.${key}.label`)}</p>
                 </div>
