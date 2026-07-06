@@ -46,25 +46,25 @@ const advantages = [
 ] as const;
 
 const fallbackCategories = [
-  {key: "cardiology", icon: "/pharm/photo_25_2026-07-06_12-15-43.jpg"},
-  {key: "gastro", icon: "/pharm/photo_36_2026-07-06_12-15-43.jpg"},
-  {key: "pediatrics", icon: "/pharm/photo_9_2026-07-06_12-15-43.jpg"},
-  {key: "rheumatology", icon: "/pharm/photo_10_2026-07-06_12-15-43.jpg"},
-  {key: "antibiotics", icon: "/pharm/photo_34_2026-07-06_12-15-43.jpg"},
-  {key: "otc", icon: "/pharm/photo_1_2026-07-06_12-15-43.jpg"},
+  {key: "cardiology", icon: "/pharm/amlodil-ab-packshot.jpg"},
+  {key: "gastro", icon: "/pharm/aylayk-packshot.jpg"},
+  {key: "pediatrics", icon: "/pharm/avifer-forte-poster.jpg"},
+  {key: "rheumatology", icon: "/pharm/butafen-poster.jpg"},
+  {key: "antibiotics", icon: "/pharm/meropenem-packshot.jpg"},
+  {key: "otc", icon: "/pharm/aylayk-poster.jpg"},
 ] as const;
 
 const fallbackProducts = [
-  {id: "velcluza-01", key: "velcluza", image: "/pharm/photo_3_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_3_2026-07-06_12-15-43.jpg"},
-  {id: "ursodox-01", key: "ursodox", image: "/pharm/photo_24_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_24_2026-07-06_12-15-43.jpg"},
-  {id: "jaraflu-01", key: "jaraflu", image: "/pharm/photo_36_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_36_2026-07-06_12-15-43.jpg"},
-  {id: "aenoxap-01", key: "aenoxap", image: "/pharm/photo_25_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_25_2026-07-06_12-15-43.jpg"},
-  {id: "velcluza-02", key: "velcluza", image: "/pharm/photo_20_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_20_2026-07-06_12-15-43.jpg"},
-  {id: "jaraflu-02", key: "jaraflu", image: "/pharm/photo_1_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_1_2026-07-06_12-15-43.jpg"},
-  {id: "ursodox-02", key: "ursodox", image: "/pharm/photo_8_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_8_2026-07-06_12-15-43.jpg"},
-  {id: "aenoxap-02", key: "aenoxap", image: "/pharm/photo_10_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_10_2026-07-06_12-15-43.jpg"},
-  {id: "jaraflu-03", key: "jaraflu", image: "/pharm/photo_34_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_34_2026-07-06_12-15-43.jpg"},
-  {id: "velcluza-03", key: "velcluza", image: "/pharm/photo_35_2026-07-06_12-15-43.jpg", imageClass: "object-cover", categoryIcon: "/pharm/photo_35_2026-07-06_12-15-43.jpg"},
+  {id: "velcluza-01", key: "velcluza", image: "/pharm/velkluza-poster.jpg", imageClass: "object-cover", categoryIcon: "/pharm/velkluza-poster.jpg"},
+  {id: "ursodox-01", key: "ursodox", image: "/pharm/ursodox-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/ursodox-packshot.jpg"},
+  {id: "jaraflu-01", key: "jaraflu", image: "/pharm/aylayk-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/aylayk-packshot.jpg"},
+  {id: "aenoxap-01", key: "aenoxap", image: "/pharm/amlodil-ab-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/amlodil-ab-packshot.jpg"},
+  {id: "velcluza-02", key: "velcluza", image: "/pharm/avantovir-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/avantovir-packshot.jpg"},
+  {id: "jaraflu-02", key: "jaraflu", image: "/pharm/aylayk-poster.jpg", imageClass: "object-cover", categoryIcon: "/pharm/aylayk-poster.jpg"},
+  {id: "ursodox-02", key: "ursodox", image: "/pharm/panten-poster.jpg", imageClass: "object-cover", categoryIcon: "/pharm/panten-poster.jpg"},
+  {id: "aenoxap-02", key: "aenoxap", image: "/pharm/butafen-poster.jpg", imageClass: "object-cover", categoryIcon: "/pharm/butafen-poster.jpg"},
+  {id: "jaraflu-03", key: "jaraflu", image: "/pharm/meropenem-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/meropenem-packshot.jpg"},
+  {id: "velcluza-03", key: "velcluza", image: "/pharm/nevikor-5-packshot.jpg", imageClass: "object-cover", categoryIcon: "/pharm/nevikor-5-packshot.jpg"},
 ] as const;
 
 const certificates = [

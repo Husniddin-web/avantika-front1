@@ -15,29 +15,29 @@ function image(url: string) {
 }
 
 const mockCategories: Category[] = [
-  {id: "cat-antiviral", title: {uz: "Virusologiya", ru: "Вирусология", en: "Virology"}, slug: "virology", image: image("/pharm/photo_3_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
-  {id: "cat-gastro", title: {uz: "Gastroenterologiya", ru: "Гастроэнтерология", en: "Gastroenterology"}, slug: "gastroenterology", image: image("/pharm/photo_36_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
-  {id: "cat-cardio", title: {uz: "Kardiologiya", ru: "Кардиология", en: "Cardiology"}, slug: "cardiology", image: image("/pharm/photo_6_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
-  {id: "cat-pain", title: {uz: "Og‘riq va yallig‘lanish", ru: "Боль и воспаление", en: "Pain & inflammation"}, slug: "pain-inflammation", image: image("/pharm/photo_10_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
-  {id: "cat-antibiotic", title: {uz: "Antibiotiklar", ru: "Антибиотики", en: "Antibiotics"}, slug: "antibiotics", image: image("/pharm/photo_19_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
-  {id: "cat-wellness", title: {uz: "Umumiy salomatlik", ru: "Общее здоровье", en: "General health"}, slug: "general-health", image: image("/pharm/photo_9_2026-07-06_12-15-43.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-antiviral", title: {uz: "Virusologiya", ru: "Вирусология", en: "Virology"}, slug: "virology", image: image("/pharm/velkluza-poster.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-gastro", title: {uz: "Gastroenterologiya", ru: "Гастроэнтерология", en: "Gastroenterology"}, slug: "gastroenterology", image: image("/pharm/aylayk-packshot.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-cardio", title: {uz: "Kardiologiya", ru: "Кардиология", en: "Cardiology"}, slug: "cardiology", image: image("/pharm/amlodil-ab-poster.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-pain", title: {uz: "Og‘riq va yallig‘lanish", ru: "Боль и воспаление", en: "Pain & inflammation"}, slug: "pain-inflammation", image: image("/pharm/butafen-poster.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-antibiotic", title: {uz: "Antibiotiklar", ru: "Антибиотики", en: "Antibiotics"}, slug: "antibiotics", image: image("/pharm/meropenem-poster.jpg"), createdAt: now, updatedAt: now},
+  {id: "cat-wellness", title: {uz: "Umumiy salomatlik", ru: "Общее здоровье", en: "General health"}, slug: "general-health", image: image("/pharm/avifer-forte-poster.jpg"), createdAt: now, updatedAt: now},
 ];
 
 const categoryById = Object.fromEntries(mockCategories.map((category) => [category.id, category]));
 
 const mockProductSeeds = [
-  ["velkluza", "Velkluza", "Велклуза", "Velkluza", "cat-antiviral", "28 tablets", "/pharm/photo_3_2026-07-06_12-15-43.jpg"],
-  ["avantovir", "Avantovir", "Авантовир", "Avantovir", "cat-antiviral", "30 tablets", "/pharm/photo_20_2026-07-06_12-15-43.jpg"],
-  ["aviklud", "Aviklud", "Авиклуд", "Aviklud", "cat-antiviral", "30 tablets", "/pharm/photo_33_2026-07-06_12-15-43.jpg"],
-  ["ursodox", "Ursodox", "Урсодокс", "Ursodox", "cat-gastro", "50 capsules", "/pharm/photo_24_2026-07-06_12-15-43.jpg"],
-  ["ailayk", "Aylayk", "Айлайк", "Aylayk", "cat-gastro", "30 sachets", "/pharm/photo_36_2026-07-06_12-15-43.jpg"],
-  ["panten", "Panten", "Пантен", "Panten", "cat-gastro", "20 capsules", "/pharm/photo_39_2026-07-06_12-15-43.jpg"],
-  ["amlodil-ab", "Amlodil-AB", "Амлодил-АБ", "Amlodil-AB", "cat-cardio", "30 tablets", "/pharm/photo_25_2026-07-06_12-15-43.jpg"],
-  ["nevikor-5", "Nevikor-5", "Невикор-5", "Nevikor-5", "cat-cardio", "30 tablets", "/pharm/photo_35_2026-07-06_12-15-43.jpg"],
-  ["butafen", "Butafen", "Бутафен", "Butafen", "cat-pain", "Tablets and powder", "/pharm/photo_10_2026-07-06_12-15-43.jpg"],
-  ["aviten-20", "Aviten 20", "Авитен 20", "Aviten 20", "cat-pain", "Injection powder", "/pharm/photo_28_2026-07-06_12-15-43.jpg"],
-  ["meropenem", "Meropenem Avantika", "Меропенем Авантика", "Meropenem Avantika", "cat-antibiotic", "1000 mg vial", "/pharm/photo_34_2026-07-06_12-15-43.jpg"],
-  ["avifer-forte", "Avifer Forte", "Avifer Forte", "Avifer Forte", "cat-wellness", "30 tablets", "/pharm/photo_9_2026-07-06_12-15-43.jpg"],
+  ["velkluza", "Velkluza", "Велклуза", "Velkluza", "cat-antiviral", "28 tablets", "/pharm/velkluza-poster.jpg"],
+  ["avantovir", "Avantovir", "Авантовир", "Avantovir", "cat-antiviral", "30 tablets", "/pharm/avantovir-packshot.jpg"],
+  ["aviklud", "Aviklud", "Авиклуд", "Aviklud", "cat-antiviral", "30 tablets", "/pharm/butafen-packshot.jpg"],
+  ["ursodox", "Ursodox", "Урсодокс", "Ursodox", "cat-gastro", "50 capsules", "/pharm/ursodox-packshot.jpg"],
+  ["ailayk", "Aylayk", "Айлайк", "Aylayk", "cat-gastro", "30 sachets", "/pharm/aylayk-packshot.jpg"],
+  ["panten", "Panten", "Пантен", "Panten", "cat-gastro", "20 capsules", "/pharm/morecin-packshot.jpg"],
+  ["amlodil-ab", "Amlodil-AB", "Амлодил-АБ", "Amlodil-AB", "cat-cardio", "30 tablets", "/pharm/amlodil-ab-packshot.jpg"],
+  ["nevikor-5", "Nevikor-5", "Невикор-5", "Nevikor-5", "cat-cardio", "30 tablets", "/pharm/nevikor-5-packshot.jpg"],
+  ["butafen", "Butafen", "Бутафен", "Butafen", "cat-pain", "Tablets and powder", "/pharm/butafen-poster.jpg"],
+  ["aviten-20", "Aviten 20", "Авитен 20", "Aviten 20", "cat-pain", "Injection powder", "/pharm/aviten-20-packshot.jpg"],
+  ["meropenem", "Meropenem Avantika", "Меропенем Авантика", "Meropenem Avantika", "cat-antibiotic", "1000 mg vial", "/pharm/meropenem-packshot.jpg"],
+  ["avifer-forte", "Avifer Forte", "Avifer Forte", "Avifer Forte", "cat-wellness", "30 tablets", "/pharm/avifer-forte-poster.jpg"],
 ] as const;
 
 export const mockProducts: Product[] = mockProductSeeds.map(([slug, uz, ru, en, categoryId, dosage, imageUrl]) => ({
