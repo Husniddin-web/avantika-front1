@@ -177,6 +177,103 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
     <main className="overflow-hidden">
       <HeroSlider />
 
+      <section className="section-space bg-[#f3f6fc]">
+        <div className="container-shell">
+          <Reveal><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
+          <Reveal className="category-slider mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3">
+            <div className="category-track flex w-max gap-3 sm:gap-5">
+              {[false, true].map((isDuplicate) => (
+                <div
+                  key={isDuplicate ? "duplicate" : "original"}
+                  aria-hidden={isDuplicate || undefined}
+                  className="flex gap-3 sm:gap-5"
+                >
+                  {categoryItems.map(({id, title, icon}) => (
+                    <Link
+                      key={`${isDuplicate ? "duplicate" : "original"}-${id}`}
+                      href="/products"
+                      tabIndex={isDuplicate ? -1 : undefined}
+                      className="group flex min-h-36 w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 flex-col items-center justify-center rounded-[1.15rem] border border-slate-200 bg-white p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-950/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 sm:min-h-60 sm:w-64 sm:rounded-[1.5rem] sm:p-7 lg:w-[280px]"
+                    >
+                      <span className="relative grid size-16 place-items-center overflow-hidden rounded-full transition duration-300 group-hover:scale-105 sm:size-24">
+                        <Image
+                          src={icon}
+                          alt=""
+                          fill
+                          sizes="96px"
+                          className="object-contain transition duration-300 group-hover:opacity-80 group-focus-visible:opacity-80"
+                        />
+                      </span>
+                      <h3 className="mt-4 text-sm font-extrabold leading-5 text-slate-700 transition-colors group-hover:text-blue-800 group-focus-visible:text-blue-800 sm:mt-6 sm:text-xl sm:leading-6">
+                        {title}
+                      </h3>
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-space bg-white">
+        <div className="container-shell">
+          <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
+            <Reveal><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
+            <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
+          </div>
+          <Reveal className="product-marquee mt-8 space-y-3 overflow-hidden py-2 sm:mt-12 sm:space-y-5">
+            {[productItems.slice(0, 5), productItems.slice(5, 10)].map((row, rowIndex) => (
+              <div key={rowIndex} className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${rowIndex === 1 ? "product-marquee-track-reverse" : ""}`}>
+                {[false, true].map((duplicate) => (
+                  <div key={duplicate ? "duplicate" : "original"} aria-hidden={duplicate || undefined} className="flex gap-3 sm:gap-5">
+                    {row.map((product) => (
+                      <Link
+                        key={`${product.id}-${duplicate ? "copy" : "main"}`}
+                        href={product.href}
+                        tabIndex={duplicate ? -1 : undefined}
+                        className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:w-[250px] sm:rounded-[1.35rem]"
+                      >
+                        <div className="relative h-28 overflow-hidden bg-[#f6f8fc] sm:h-40">
+                          <Image
+                            src={product.image}
+                            alt={product.imageAlt}
+                            fill
+                            sizes="(max-width: 640px) 50vw, 285px"
+                            className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                          />
+                        </div>
+                        <div className="p-3 sm:p-5">
+                          <h3 className="text-base font-extrabold text-[#10172b] sm:text-xl">{product.title}</h3>
+                          <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
+                          <div className="mt-4 border-t border-slate-100 pt-3">
+                            <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
+                              <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+                                <Image
+                                  src={product.categoryIcon}
+                                  alt=""
+                                  fill
+                                  sizes="44px"
+                                  className="object-contain transition duration-300 group-hover:opacity-80"
+                                />
+                              </span>
+                              <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
+                                {product.category}
+                              </span>
+                              <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
       <section
         className="directions-parallax section-space relative isolate overflow-hidden bg-[#080a4b] bg-cover bg-center bg-no-repeat text-white"
         style={{backgroundImage: "url('/info.jpg')"}}
@@ -261,102 +358,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         </Reveal>
       </section>
 
-      <section className="section-space bg-[#f3f6fc]">
-        <div className="container-shell">
-          <Reveal><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
-          <Reveal className="category-slider mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3">
-            <div className="category-track flex w-max gap-3 sm:gap-5">
-              {[false, true].map((isDuplicate) => (
-                <div
-                  key={isDuplicate ? "duplicate" : "original"}
-                  aria-hidden={isDuplicate || undefined}
-                  className="flex gap-3 sm:gap-5"
-                >
-                  {categoryItems.map(({id, title, icon}) => (
-                    <Link
-                      key={`${isDuplicate ? "duplicate" : "original"}-${id}`}
-                      href="/products"
-                      tabIndex={isDuplicate ? -1 : undefined}
-                      className="group flex min-h-36 w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 flex-col items-center justify-center rounded-[1.15rem] border border-slate-200 bg-white p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-950/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 sm:min-h-60 sm:w-64 sm:rounded-[1.5rem] sm:p-7 lg:w-[280px]"
-                    >
-                      <span className="relative grid size-16 place-items-center overflow-hidden rounded-full transition duration-300 group-hover:scale-105 sm:size-24">
-                        <Image
-                          src={icon}
-                          alt=""
-                          fill
-                          sizes="96px"
-                          className="object-contain transition duration-300 group-hover:opacity-80 group-focus-visible:opacity-80"
-                        />
-                      </span>
-                      <h3 className="mt-4 text-sm font-extrabold leading-5 text-slate-700 transition-colors group-hover:text-blue-800 group-focus-visible:text-blue-800 sm:mt-6 sm:text-xl sm:leading-6">
-                        {title}
-                      </h3>
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section-space bg-white">
-        <div className="container-shell">
-          <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
-            <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
-          </div>
-          <Reveal className="product-marquee mt-8 space-y-3 overflow-hidden py-2 sm:mt-12 sm:space-y-5">
-            {[productItems.slice(0, 5), productItems.slice(5, 10)].map((row, rowIndex) => (
-              <div key={rowIndex} className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${rowIndex === 1 ? "product-marquee-track-reverse" : ""}`}>
-                {[false, true].map((duplicate) => (
-                  <div key={duplicate ? "duplicate" : "original"} aria-hidden={duplicate || undefined} className="flex gap-3 sm:gap-5">
-                    {row.map((product) => (
-                      <Link
-                        key={`${product.id}-${duplicate ? "copy" : "main"}`}
-                        href={product.href}
-                        tabIndex={duplicate ? -1 : undefined}
-                      className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:w-[250px] sm:rounded-[1.35rem]"
-                      >
-                        <div className="relative h-28 overflow-hidden bg-[#f6f8fc] sm:h-40">
-                          <Image
-                            src={product.image}
-                            alt={product.imageAlt}
-                            fill
-                            sizes="(max-width: 640px) 50vw, 285px"
-                            className="object-cover transition duration-500 group-hover:scale-[1.04]"
-                          />
-                        </div>
-                        <div className="p-3 sm:p-5">
-                          <h3 className="text-base font-extrabold text-[#10172b] sm:text-xl">{product.title}</h3>
-                          <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
-                          <div className="mt-4 border-t border-slate-100 pt-3">
-                            <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
-                              <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
-                                <Image
-                                  src={product.categoryIcon}
-                                  alt=""
-                                  fill
-                                  sizes="44px"
-                                  className="object-contain transition duration-300 group-hover:opacity-80"
-                                />
-                              </span>
-                              <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
-                                {product.category}
-                              </span>
-                              <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
+      <ManufacturingGallery />
 
       <section className="manufacturing-parallax relative isolate overflow-hidden pb-20 pt-36 text-white sm:pb-28 sm:pt-56 lg:min-h-[820px] lg:pb-32 lg:pt-64">
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#070936]/95 via-[#10156e]/78 to-[#10156e]/35" />
@@ -410,8 +412,6 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
           </Reveal>
         </div>
       </section>
-
-      <ManufacturingGallery />
 
       <section className="section-space bg-[#f4f7fb]">
         <div className="container-shell">

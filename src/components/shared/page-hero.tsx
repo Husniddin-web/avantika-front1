@@ -23,9 +23,13 @@ export function PageHero({title, eyebrow, image = "/hero-slide-1.webp"}: PageHer
           <span className="text-white">{title}</span>
         </div>
       </div>
-      <svg aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-10 w-full text-white sm:h-16">
-        <path fill="currentColor" d="M0 74L80 90C160 106 320 138 480 98C640 58 800-54 960 30C1120 114 1280 114 1360 106L1440 98V120H0Z" />
-      </svg>
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-24 sm:h-32">
+        <div className="absolute inset-x-0 bottom-0 h-20 origin-bottom-right -skew-y-2 bg-white sm:h-28" />
+        <div className="absolute left-1/2 top-6 h-12 w-[72%] -translate-x-1/2 rounded-full bg-blue-300/20 blur-2xl sm:top-8 sm:h-16" />
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="absolute inset-x-0 bottom-8 h-12 w-full text-white/25 sm:bottom-12 sm:h-16">
+          <path fill="none" stroke="currentColor" strokeWidth="2" d="M0 78C190 120 364 116 548 76C769 27 924 11 1116 56C1244 86 1348 91 1440 74" />
+        </svg>
+      </div>
     </section>
   );
 }

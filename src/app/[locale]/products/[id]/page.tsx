@@ -24,7 +24,7 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
   return (
     <main className="bg-[#f6f8fc] pb-20 pt-32">
       <div className="container-shell">
-        <nav className="mb-8 flex items-center justify-center gap-2 text-sm font-semibold text-slate-500">
+        <nav className="mb-8 flex items-center justify-start gap-2 text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-700">Home</Link>
           <ChevronRight className="size-4" />
           <Link href="/products" className="hover:text-blue-700">Products</Link>
