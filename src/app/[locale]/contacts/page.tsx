@@ -7,12 +7,13 @@ import {PageHero} from "@/components/shared/page-hero";
 import {routing} from "@/i18n/routing";
 
 const contacts = [
-  {icon: Phone, key: "phone", value: "+998 90 123 45 67", href: "tel:+998901234567"},
-  {icon: Mail, key: "email", value: "info@avantika.uz", href: "mailto:info@avantika.uz"},
+  {icon: Phone, key: "phone", value: "+998 93 388 88 72", href: "tel:+998933888872"},
+  {icon: Phone, key: "phone2", value: "+998 93 502 12 37", href: "tel:+998935021237"},
+  {icon: Mail, key: "email", value: "infomarketinguz@avantikamedex.com", href: "mailto:infomarketinguz@avantikamedex.com"},
   {icon: MapPin, key: "location", value: "address", href: "https://maps.google.com"},
 ] as const;
-const mapsUrl = "https://www.google.com/maps?q=Tashkent,+Uzbekistan&output=embed";
-const mapsLink = "https://www.google.com/maps/search/?api=1&query=Tashkent%2C%20Uzbekistan";
+const mapsUrl = "https://www.google.com/maps?q=100047%20%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%2C%20%D0%AF%D1%88%D0%BD%D0%B0%D0%B1%D0%B0%D0%B4%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C%20%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%B0%D1%81%D0%BE%D0%B7%D0%BB%D0%B0%D1%80%20%D0%9C%D0%A4%D0%98%2C%20%D1%83%D0%BB.%D0%9B%D1%8F%D0%B4%D0%BE%D0%B2%D0%B0%201-%D1%82%D1%83%D0%BF%D0%B8%D0%BA%2C%20%D0%B4.9&output=embed";
+const mapsLink = "https://www.google.com/maps/search/?api=1&query=100047%20%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%2C%20%D0%AF%D1%88%D0%BD%D0%B0%D0%B1%D0%B0%D0%B4%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%2C%20%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%B0%D1%81%D0%BE%D0%B7%D0%BB%D0%B0%D1%80%20%D0%9C%D0%A4%D0%98%2C%20%D1%83%D0%BB.%D0%9B%D1%8F%D0%B4%D0%BE%D0%B2%D0%B0%201-%D1%82%D1%83%D0%BF%D0%B8%D0%BA%2C%20%D0%B4.9";
 
 export default async function ContactsPage({params}: PageProps<"/[locale]/contacts">) {
   const {locale} = await params;
@@ -51,7 +52,7 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
               <p className="mt-4 max-w-md text-sm leading-7 text-blue-100/75">{t("officeDescription")}</p>
             </div>
             <div className="p-6">
-              <a href="mailto:info@avantika.uz" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800">
+              <a href="mailto:infomarketinguz@avantikamedex.com" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800">
                 {t("sendEmail")} <Send className="size-4" />
               </a>
             </div>

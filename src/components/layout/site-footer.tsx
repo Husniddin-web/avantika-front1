@@ -35,8 +35,9 @@ export function SiteFooter() {
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-200">{t("contact")}</p>
           <div className="mt-5 space-y-4 text-sm text-blue-100/70">
-            <a href="tel:+998901234567" className="flex items-center gap-3 hover:text-white"><Phone className="size-4" />+998 90 123 45 67</a>
-            <a href="mailto:info@avantika.uz" className="flex items-center gap-3 hover:text-white"><Mail className="size-4" />info@avantika.uz</a>
+            <a href="tel:+998933888872" className="flex items-center gap-3 hover:text-white"><Phone className="size-4" />+998 93 388 88 72</a>
+            <a href="tel:+998935021237" className="flex items-center gap-3 hover:text-white"><Phone className="size-4" />+998 93 502 12 37</a>
+            <a href="mailto:infomarketinguz@avantikamedex.com" className="flex items-center gap-3 hover:text-white"><Mail className="size-4" />infomarketinguz@avantikamedex.com</a>
             <p className="flex items-start gap-3"><MapPin className="mt-0.5 size-4 shrink-0" />{t("address")}</p>
           </div>
         </div>

@@ -52,13 +52,13 @@ export function SiteHeader({locale}: {locale: Locale}) {
       >
         <div className="container-shell flex h-9 items-center justify-between text-[11px] font-medium text-blue-100/85 sm:text-xs">
           <div className="flex items-center gap-5">
-            <a href="tel:+998901234567" className="inline-flex items-center gap-2 transition hover:text-white">
+            <a href="tel:+998933888872" className="inline-flex items-center gap-2 transition hover:text-white">
               <Phone className="size-3.5" />
-              +998 90 123 45 67
+              +998 93 388 88 72
             </a>
-            <a href="mailto:info@avantika.uz" className="hidden items-center gap-2 transition hover:text-white sm:inline-flex">
+            <a href="mailto:infomarketinguz@avantikamedex.com" className="hidden items-center gap-2 transition hover:text-white sm:inline-flex">
               <Mail className="size-3.5" />
-              info@avantika.uz
+              infomarketinguz@avantikamedex.com
             </a>
           </div>
           <span className="hidden text-blue-200/70 md:inline">{t("topbar")}</span>
@@ -117,8 +117,8 @@ export function SiteHeader({locale}: {locale: Locale}) {
                   {t(item)}
                 </Link>
               ))}
-              <a href="mailto:info@avantika.uz" className="mt-2 flex items-center gap-2 border-t border-slate-100 px-4 pt-4 text-xs text-slate-500 sm:hidden">
-                <Mail className="size-3.5" /> info@avantika.uz
+              <a href="mailto:infomarketinguz@avantikamedex.com" className="mt-2 flex items-center gap-2 border-t border-slate-100 px-4 pt-4 text-xs text-slate-500 sm:hidden">
+                <Mail className="size-3.5" /> infomarketinguz@avantikamedex.com
               </a>
             </nav>
           </details>
