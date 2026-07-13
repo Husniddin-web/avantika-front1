@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ChevronRight} from "lucide-react";
+import {ChevronRight, Info} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
@@ -8,7 +8,8 @@ import {Link} from "@/i18n/navigation";
 import {routing, type Locale} from "@/i18n/routing";
 import {imageSrc} from "@/lib/image-src";
 import {localize} from "@/lib/localized";
-import {fetchPublicProduct} from "@/lib/public-api";
+import {fetchPublicProduct, fetchPublicProducts} from "@/lib/public-api";
+import {ProductTabs} from "@/components/products/product-tabs";
 
 export default async function ProductDetailPage({params}: PageProps<"/[locale]/products/[id]">) {
   const {locale, id} = await params;
@@ -22,6 +23,17 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
   const t = await getTranslations("ProductDetailPage");
   const nav = await getTranslations("Navigation");
   const title = localize(product.title, currentLocale);
+
+  const allProducts = await fetchPublicProducts();
+  const relatedProducts = allProducts
+    .filter((p) => p.categoryId === product.categoryId && p.id !== product.id)
+    .slice(0, 4);
+
+  const disclaimers = {
+    uz: "Tibbiy ogohlantirish: Saytda keltirilgan barcha ma'lumotlar faqat tanishish maqsadida berilgan va shifokor maslahatini almashtira olmaydi. Dorini qo'llashdan oldin shifokor bilan maslahatlashing va dori qutisidagi rasmiy yo'riqnoma bilan tanishib chiqing.",
+    ru: "Медицинское предупреждение: Вся информация на сайте предоставлена исключительно в ознакомительных целях и не заменяет консультацию врача. Перед использованием проконсультируйтесь со специалистом и ознакомьтесь с официальной инструкцией.",
+    en: "Medical Disclaimer: All information provided on this website is for educational purposes only and does not substitute professional medical advice. Consult a healthcare professional and read the official packaging insert before use.",
+  };
 
   return (
     <main className="bg-[#f6f8fc] pb-20 pt-32">
@@ -47,10 +59,21 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           </div>
 
           <div className="border-t border-slate-100 p-7 lg:border-l lg:border-t-0 lg:p-12">
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">{localize(product.category?.title, currentLocale) || t("product")}</p>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
+                {localize(product.category?.title, currentLocale) || t("product")}
+              </span>
+              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                product.prescriptionType === "rx" 
+                  ? "bg-red-50 text-red-600 border border-red-200" 
+                  : "bg-emerald-50 text-emerald-600 border border-emerald-200"
+              }`}>
+                {product.prescriptionType === "rx" ? "Rx (Retseptli)" : "OTC (Retseptsiz)"}
+              </span>
+            </div>
             <h1 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950">{title}</h1>
 
-            <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200">
+            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
               <div className="grid grid-cols-[0.9fr_1.1fr] border-b border-slate-200 bg-[#fbf7fb]">
                 <div className="p-4 text-sm font-semibold text-slate-500">{t("dosageForm")}</div>
                 <div className="p-4 text-sm font-bold text-slate-800">{localize(product.dosageForm, currentLocale) || "-"}</div>
@@ -61,12 +84,63 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
               </div>
             </div>
 
-            <div className="prose prose-slate mt-8 max-w-none">
-              <h2 className="text-lg font-extrabold text-slate-950">{t("therapeuticIndication")}</h2>
-              <div className="mt-3 text-sm leading-7 text-slate-700" dangerouslySetInnerHTML={{__html: localize(product.therapeuticIndication, currentLocale)}} />
-            </div>
+            {/* Product tabs for composition, indications, storage and documents */}
+            <ProductTabs
+              therapeuticIndication={localize(product.therapeuticIndication, currentLocale)}
+              indications={localize(product.indications, currentLocale)}
+              composition={localize(product.composition, currentLocale)}
+              activeIngredient={localize(product.activeIngredient, currentLocale)}
+              dosage={localize(product.dosage, currentLocale)}
+              usageInstructions={localize(product.usageInstructions, currentLocale)}
+              contraindications={localize(product.contraindications, currentLocale)}
+              storageConditions={localize(product.storageConditions, currentLocale)}
+              packageDescription={localize(product.packageDescription, currentLocale)}
+              instructionPdf={product.instructionPdf ?? null}
+              locale={currentLocale}
+            />
           </div>
         </section>
+
+        {/* Medical disclaimer */}
+        <section className="mt-8 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/55 p-5 text-amber-900 shadow-sm shadow-amber-950/5">
+          <Info className="size-5 shrink-0 mt-0.5" />
+          <p className="text-xs sm:text-sm leading-6 font-medium text-amber-800/90">{disclaimers[currentLocale] || disclaimers.uz}</p>
+        </section>
+
+        {/* Related products */}
+        {relatedProducts.length > 0 && (
+          <section className="mt-16 border-t border-slate-200 pt-16">
+            <h2 className="text-2xl font-extrabold text-slate-950 tracking-tight">
+              {currentLocale === "uz" ? "O'xshash preparatlar" : currentLocale === "ru" ? "Похожие препараты" : "Related Products"}
+            </h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {relatedProducts.map((p) => {
+                const pTitle = localize(p.title, currentLocale);
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.id}`}
+                    className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10"
+                  >
+                    <div className="relative aspect-[4/3] bg-[#f6f8fc]">
+                      <Image
+                        src={imageSrc(p.images[0]?.url, "/d1.jpeg")}
+                        alt={pTitle}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 25vw"
+                        className="object-contain p-4 transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="border-t border-slate-100 p-4">
+                      <h3 className="text-base font-extrabold text-slate-950 line-clamp-1">{pTitle}</h3>
+                      <p className="mt-1 text-xs font-semibold text-slate-400 line-clamp-1">{localize(p.dosageForm, currentLocale)}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </main>
   );

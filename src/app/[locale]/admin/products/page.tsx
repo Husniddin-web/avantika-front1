@@ -9,6 +9,7 @@ import {DeleteAlertDialog} from "@/components/admin/delete-alert-dialog";
 import {ImageUploader} from "@/components/admin/image-uploader";
 import {LanguageTabs, type AdminLanguage} from "@/components/admin/language-tabs";
 import {LocalizedField} from "@/components/admin/localized-field";
+import {FileUploader} from "@/components/admin/file-uploader";
 import {PaginationControls} from "@/components/admin/pagination-controls";
 import {RichTextEditor} from "@/components/admin/rich-text-editor";
 import {Badge} from "@/components/ui/badge";
@@ -37,6 +38,16 @@ type ProductForm = {
   categoryId: string;
   dosageForm: LocalizedText;
   therapeuticIndication: LocalizedText;
+  prescriptionType: "rx" | "otc";
+  activeIngredient: LocalizedText;
+  composition: LocalizedText;
+  dosage: LocalizedText;
+  indications: LocalizedText;
+  contraindications: LocalizedText;
+  usageInstructions: LocalizedText;
+  storageConditions: LocalizedText;
+  packageDescription: LocalizedText;
+  instructionPdf: ImageAsset | null;
   status: PublishStatus;
   images: ImageAsset[];
 };
@@ -46,6 +57,16 @@ const emptyForm: ProductForm = {
   categoryId: "",
   dosageForm: emptyLocalizedText,
   therapeuticIndication: emptyLocalizedText,
+  prescriptionType: "otc",
+  activeIngredient: emptyLocalizedText,
+  composition: emptyLocalizedText,
+  dosage: emptyLocalizedText,
+  indications: emptyLocalizedText,
+  contraindications: emptyLocalizedText,
+  usageInstructions: emptyLocalizedText,
+  storageConditions: emptyLocalizedText,
+  packageDescription: emptyLocalizedText,
+  instructionPdf: null,
   status: "draft",
   images: [],
 };
@@ -99,6 +120,16 @@ export default function ProductsPage() {
       categoryId: form.categoryId,
       dosageForm: form.dosageForm,
       therapeuticIndication: form.therapeuticIndication,
+      prescriptionType: form.prescriptionType,
+      activeIngredient: form.activeIngredient,
+      composition: form.composition,
+      dosage: form.dosage,
+      indications: form.indications,
+      contraindications: form.contraindications,
+      usageInstructions: form.usageInstructions,
+      storageConditions: form.storageConditions,
+      packageDescription: form.packageDescription,
+      instructionPdf: form.instructionPdf,
       status: form.status,
       images: form.images,
     };
@@ -134,6 +165,16 @@ export default function ProductsPage() {
       categoryId: item.categoryId,
       dosageForm: toLocalizedText(item.dosageForm),
       therapeuticIndication: toLocalizedText(item.therapeuticIndication),
+      prescriptionType: item.prescriptionType || "otc",
+      activeIngredient: toLocalizedText(item.activeIngredient),
+      composition: toLocalizedText(item.composition),
+      dosage: toLocalizedText(item.dosage),
+      indications: toLocalizedText(item.indications),
+      contraindications: toLocalizedText(item.contraindications),
+      usageInstructions: toLocalizedText(item.usageInstructions),
+      storageConditions: toLocalizedText(item.storageConditions),
+      packageDescription: toLocalizedText(item.packageDescription),
+      instructionPdf: item.instructionPdf || null,
       status: item.status,
       images: item.images,
     });
@@ -178,8 +219,11 @@ export default function ProductsPage() {
             {error ? <p className="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm font-semibold text-red-700">{error}</p> : null}
             <form className="space-y-4" onSubmit={onSubmit}>
               <LocalizedField label="Product name" value={form.title} language={activeLanguage} onChange={(title) => setForm({...form, title})} required />
-              <LocalizedField label="Dosage form" value={form.dosageForm} language={activeLanguage} onChange={(dosageForm) => setForm({...form, dosageForm})} />
               <div className="grid gap-4 sm:grid-cols-2">
+                <LocalizedField label="Dosage form" value={form.dosageForm} language={activeLanguage} onChange={(dosageForm) => setForm({...form, dosageForm})} />
+                <LocalizedField label="Active ingredient" value={form.activeIngredient} language={activeLanguage} onChange={(activeIngredient) => setForm({...form, activeIngredient})} />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
                   <Label>Category</Label>
                   <select className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm" value={form.categoryId} onChange={(event) => setForm({...form, categoryId: event.target.value})} required>
@@ -193,6 +237,13 @@ export default function ProductsPage() {
                     <option value="published">Published</option>
                   </select>
                 </div>
+                <div className="space-y-2">
+                  <Label>Prescription Type</Label>
+                  <select className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm" value={form.prescriptionType} onChange={(event) => setForm({...form, prescriptionType: event.target.value as "rx" | "otc"})}>
+                    <option value="otc">OTC (Retseptsiz)</option>
+                    <option value="rx">Rx (Retseptli)</option>
+                  </select>
+                </div>
               </div>
               <div className="space-y-2">
                 <Label>Therapeutic Indication</Label>
@@ -201,6 +252,30 @@ export default function ProductsPage() {
                   onChange={(therapeuticIndication) => setForm({...form, therapeuticIndication: {...form.therapeuticIndication, [activeLanguage]: therapeuticIndication}})}
                 />
               </div>
+
+              {/* Localized inputs for detailed information */}
+              <div className="border-t border-slate-100 pt-4 space-y-4">
+                <p className="text-sm font-bold text-slate-800">Detailed Information ({activeLanguage.toUpperCase()})</p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <LocalizedField label="Composition (Tarkibi)" value={form.composition} language={activeLanguage} onChange={(composition) => setForm({...form, composition})} />
+                  <LocalizedField label="Dosage (Dozalash)" value={form.dosage} language={activeLanguage} onChange={(dosage) => setForm({...form, dosage})} />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <LocalizedField label="Indications (Qo'llanilishi)" value={form.indications} language={activeLanguage} onChange={(indications) => setForm({...form, indications})} />
+                  <LocalizedField label="Contraindications (Qarshi ko'rsatmalar)" value={form.contraindications} language={activeLanguage} onChange={(contraindications) => setForm({...form, contraindications})} />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <LocalizedField label="Usage Instructions (Qo'llash usuli)" value={form.usageInstructions} language={activeLanguage} onChange={(usageInstructions) => setForm({...form, usageInstructions})} />
+                  <LocalizedField label="Storage Conditions (Saqlash sharoiti)" value={form.storageConditions} language={activeLanguage} onChange={(storageConditions) => setForm({...form, storageConditions})} />
+                </div>
+                <LocalizedField label="Package Description (Qadoq tavsifi)" value={form.packageDescription} language={activeLanguage} onChange={(packageDescription) => setForm({...form, packageDescription})} />
+              </div>
+
+              <div className="border-t border-slate-100 pt-4 space-y-2">
+                <Label>Instruction PDF (Tibbiy yo'riqnoma)</Label>
+                <FileUploader value={form.instructionPdf} onChange={(pdf) => setForm({...form, instructionPdf: pdf})} />
+              </div>
+
               <div className="space-y-2"><p className="text-sm font-semibold text-slate-700">Product images</p><ImageUploader value={form.images} onChange={(images) => setForm({...form, images})} /></div>
               <div className="flex gap-2">
                 <Button disabled={saving || !categories.length}>{saving ? "Saving..." : "Save product"}</Button>
@@ -252,6 +327,15 @@ function createEmptyForm(categoryId = ""): ProductForm {
     title: {...emptyLocalizedText},
     dosageForm: {...emptyLocalizedText},
     therapeuticIndication: {...emptyLocalizedText},
+    activeIngredient: {...emptyLocalizedText},
+    composition: {...emptyLocalizedText},
+    dosage: {...emptyLocalizedText},
+    indications: {...emptyLocalizedText},
+    contraindications: {...emptyLocalizedText},
+    usageInstructions: {...emptyLocalizedText},
+    storageConditions: {...emptyLocalizedText},
+    packageDescription: {...emptyLocalizedText},
+    instructionPdf: null,
     categoryId,
   };
 }

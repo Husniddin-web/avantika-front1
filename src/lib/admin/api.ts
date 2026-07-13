@@ -33,6 +33,16 @@ export type Product = {
   category?: Category | null;
   dosageForm?: LocalizedText;
   therapeuticIndication?: LocalizedText;
+  prescriptionType: "rx" | "otc";
+  activeIngredient?: LocalizedText;
+  composition?: LocalizedText;
+  dosage?: LocalizedText;
+  indications?: LocalizedText;
+  contraindications?: LocalizedText;
+  usageInstructions?: LocalizedText;
+  storageConditions?: LocalizedText;
+  packageDescription?: LocalizedText;
+  instructionPdf?: ImageAsset | null;
   status: PublishStatus;
   images: ImageAsset[];
   createdAt: string;

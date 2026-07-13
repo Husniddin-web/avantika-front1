@@ -5,6 +5,7 @@ import {notFound} from "next/navigation";
 
 import {PageHero} from "@/components/shared/page-hero";
 import {routing} from "@/i18n/routing";
+import {InquiryForm} from "@/components/forms/inquiry-form";
 
 const contacts = [
   {icon: Phone, key: "phone", value: "+998 93 388 88 72", href: "tel:+998933888872"},
@@ -25,14 +26,16 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
     <main className="bg-white">
       <PageHero title={t("heroTitle")} eyebrow={t("heroEyebrow")} image="/contact-page.jpg" />
       <section className="section-space bg-[#f7faff]">
-        <div className="container-shell grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("eyebrow")}</p>
-            <h2 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
-            <p className="mt-5 text-base leading-8 text-slate-600">{t("description")}</p>
-            <div className="mt-8 grid gap-4">
+        <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("eyebrow")}</p>
+              <h2 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
+              <p className="mt-5 text-base leading-8 text-slate-600">{t("description")}</p>
+            </div>
+            <div className="grid gap-4">
               {contacts.map(({icon: Icon, key, value, href}) => (
-                <a key={key} href={href} className="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-blue-200">
+                <a key={key} href={href} className="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:border-blue-200 hover:shadow-md">
                   <span className="grid size-13 place-items-center rounded-2xl bg-blue-50 text-blue-800"><Icon className="size-6" /></span>
                   <span>
                     <span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
@@ -42,24 +45,11 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
               ))}
             </div>
           </div>
-          <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5">
-            <div
-              className="min-h-[320px] bg-cover bg-center p-8 text-white"
-              style={{backgroundImage: "linear-gradient(135deg,rgba(8,10,75,0.92),rgba(41,72,200,0.76)),url('/hero-slide-4.webp')"}}
-            >
-              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100">{t("officeEyebrow")}</p>
-              <h3 className="mt-4 max-w-sm text-3xl font-extrabold">{t("officeTitle")}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-blue-100/75">{t("officeDescription")}</p>
-            </div>
-            <div className="p-6">
-              <a href="mailto:infomarketinguz@avantikamedex.com" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800">
-                {t("sendEmail")} <Send className="size-4" />
-              </a>
-            </div>
-          </div>
+          <InquiryForm locale={locale} />
         </div>
-        <div className="container-shell mt-10">
-          <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5">
+
+        <div className="container-shell mt-16 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="overflow-hidden rounded-[2.2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5">
             <div className="flex flex-col gap-4 border-b border-slate-100 p-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("mapEyebrow")}</p>
@@ -77,6 +67,22 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
+          </div>
+
+          <div className="overflow-hidden rounded-[2.2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5 flex flex-col justify-between">
+            <div
+              className="min-h-[300px] bg-cover bg-center p-8 text-white flex-1 flex flex-col justify-end"
+              style={{backgroundImage: "linear-gradient(135deg,rgba(8,10,75,0.92),rgba(41,72,200,0.76)),url('/hero-slide-4.webp')"}}
+            >
+              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100">{t("officeEyebrow")}</p>
+              <h3 className="mt-4 max-w-sm text-2xl font-extrabold">{t("officeTitle")}</h3>
+              <p className="mt-4 text-sm leading-6 text-blue-100/75">{t("officeDescription")}</p>
+            </div>
+            <div className="p-6 bg-slate-50 border-t border-slate-100">
+              <a href="mailto:infomarketinguz@avantikamedex.com" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800">
+                {t("sendEmail")} <Send className="size-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
