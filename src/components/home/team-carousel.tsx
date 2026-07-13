@@ -20,14 +20,14 @@ export function TeamCarousel({workers = [], locale}: {workers?: Worker[]; locale
         name: localize(worker.fullName, locale),
         role: localize(worker.role, locale),
         image: imageSrc(worker.image?.url, "/worker-man.png"),
-        position: "object-center",
+        position: "object-top",
       }))
     : teamMembers.map((member) => ({
         key: member.key,
         name: t(`members.${member.key}.name`),
         role: t(`members.${member.key}.role`),
         image: member.image,
-        position: member.position,
+        position: "object-top",
       }));
 
   const displayMembers = allMembers.slice(0, 10);
