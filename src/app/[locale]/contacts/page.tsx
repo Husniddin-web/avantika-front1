@@ -49,21 +49,11 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
         </div>
 
         <div className="container-shell mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] sm:mt-16 sm:gap-8">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-blue-950/5 sm:rounded-[2.2rem]">
-            <div className="flex flex-col gap-4 border-b border-slate-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-              <div>
-                <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("mapEyebrow")}</p>
-                <h2 className="mt-1 text-xl font-extrabold text-slate-950 sm:text-2xl">{t("mapTitle")}</h2>
-                <p className="mt-1 text-xs sm:text-sm text-slate-500">{t("address")}</p>
-              </div>
-              <a href={mapsLink} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 text-xs font-bold text-slate-700 hover:border-blue-300 hover:text-blue-700 sm:min-h-11 sm:px-5 sm:text-sm">
-                {t("openMap")} <ExternalLink className="size-3.5 sm:size-4" />
-              </a>
-            </div>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-blue-950/5 sm:rounded-[2.2rem] h-[320px] sm:h-[450px]">
             <iframe
               title="Avantika location map"
               src={mapsUrl}
-              className="h-[260px] w-full border-0 sm:h-[360px]"
+              className="h-full w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
