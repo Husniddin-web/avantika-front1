@@ -232,7 +232,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
                         key={`${product.id}-${duplicate ? "copy" : "main"}`}
                         href={product.href}
                         tabIndex={duplicate ? -1 : undefined}
-                        className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:w-[250px] sm:rounded-[1.35rem]"
+                        className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 sm:w-[250px] sm:rounded-[1.35rem]"
                       >
                         <div className="relative h-28 overflow-hidden bg-[#f6f8fc] sm:h-40">
                           <Image
@@ -240,7 +240,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
                             alt={product.imageAlt}
                             fill
                             sizes="(max-width: 640px) 50vw, 285px"
-                            className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                            className="object-cover"
                           />
                         </div>
                         <div className="p-3 sm:p-5">
