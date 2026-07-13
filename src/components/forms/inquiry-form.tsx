@@ -124,62 +124,62 @@ export function InquiryForm({locale}: {locale: string}) {
   }
 
   return (
-    <div className="rounded-[2.2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-xl shadow-blue-950/5">
-      <h3 className="text-xl font-extrabold text-slate-905 sm:text-2xl">{t.title}</h3>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xl shadow-blue-950/5 sm:rounded-[2.2rem] sm:p-8 animate-fadeIn">
+      <h3 className="text-lg font-extrabold text-slate-950 sm:text-2xl">{t.title}</h3>
       {error && <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
+      <form onSubmit={onSubmit} className="mt-5 space-y-3 sm:mt-6 sm:space-y-4">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="space-y-1">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.name}</label>
+            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.name}</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white sm:h-12 sm:px-4 sm:text-sm"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.company}</label>
+            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.company}</label>
             <input
               type="text"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white sm:h-12 sm:px-4 sm:text-sm"
             />
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="space-y-1">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.email}</label>
+            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.email}</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white sm:h-12 sm:px-4 sm:text-sm"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.phone}</label>
+            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.phone}</label>
             <input
               type="tel"
               required
               placeholder="+998"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white sm:h-12 sm:px-4 sm:text-sm"
             />
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.type}</label>
+          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.type}</label>
           <select
             value={type}
             onChange={(e) => setType(e.target.value as any)}
-            className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white"
+            className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white sm:h-12 sm:px-4 sm:text-sm"
           >
             <option value="general">{t.types.general}</option>
             <option value="partnership">{t.types.partnership}</option>
@@ -189,20 +189,20 @@ export function InquiryForm({locale}: {locale: string}) {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{t.msg}</label>
+          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.msg}</label>
           <textarea
             required
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-4 text-sm outline-none transition focus:border-blue-600 focus:bg-white resize-none"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3.5 text-xs outline-none transition focus:border-blue-600 focus:bg-white resize-none sm:p-4 sm:text-sm"
           />
         </div>
 
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 font-bold text-white shadow-lg shadow-blue-800/10 transition hover:bg-blue-800 disabled:opacity-50"
+          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 text-sm font-bold text-white shadow-lg shadow-blue-800/10 transition hover:bg-blue-800 disabled:opacity-50 sm:min-h-12"
         >
           {submitting ? t.submitting : t.submit}
           <Send className="size-4" />

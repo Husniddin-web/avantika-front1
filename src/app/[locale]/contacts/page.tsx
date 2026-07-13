@@ -26,20 +26,20 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
     <main className="bg-white">
       <PageHero title={t("heroTitle")} eyebrow={t("heroEyebrow")} image="/contact-page.jpg" />
       <section className="section-space bg-[#f7faff]">
-        <div className="container-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="space-y-6">
+        <div className="container-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-5">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("eyebrow")}</p>
-              <h2 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
-              <p className="mt-5 text-base leading-8 text-slate-600">{t("description")}</p>
+              <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("eyebrow")}</p>
+              <h2 className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
+              <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">{t("description")}</p>
             </div>
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {contacts.map(({icon: Icon, key, value, href}) => (
-                <a key={key} href={href} className="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:border-blue-200 hover:shadow-md">
-                  <span className="grid size-13 place-items-center rounded-2xl bg-blue-50 text-blue-800"><Icon className="size-6" /></span>
-                  <span>
-                    <span className="block text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
-                    <span className="mt-1 block font-bold text-slate-950">{value === "address" ? t("address") : value}</span>
+                <a key={key} href={href} className="flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition duration-300 hover:border-blue-200 hover:shadow-md sm:rounded-3xl sm:p-5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-800 sm:size-13 sm:rounded-2xl"><Icon className="size-5 sm:size-6" /></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
+                    <span className="mt-0.5 block text-sm sm:text-base font-bold text-slate-950 break-words">{value === "address" ? t("address") : value}</span>
                   </span>
                 </a>
               ))}
@@ -48,38 +48,38 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
           <InquiryForm locale={locale} />
         </div>
 
-        <div className="container-shell mt-16 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="overflow-hidden rounded-[2.2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5">
-            <div className="flex flex-col gap-4 border-b border-slate-100 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-shell mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] sm:mt-16 sm:gap-8">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-blue-950/5 sm:rounded-[2.2rem]">
+            <div className="flex flex-col gap-4 border-b border-slate-100 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
               <div>
-                <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("mapEyebrow")}</p>
-                <h2 className="mt-2 text-2xl font-extrabold text-slate-950">{t("mapTitle")}</h2>
-                <p className="mt-2 text-sm text-slate-500">{t("address")}</p>
+                <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("mapEyebrow")}</p>
+                <h2 className="mt-1 text-xl font-extrabold text-slate-950 sm:text-2xl">{t("mapTitle")}</h2>
+                <p className="mt-1 text-xs sm:text-sm text-slate-500">{t("address")}</p>
               </div>
-              <a href={mapsLink} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200 px-5 text-sm font-bold text-slate-700 hover:border-blue-300 hover:text-blue-700">
-                {t("openMap")} <ExternalLink className="size-4" />
+              <a href={mapsLink} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 text-xs font-bold text-slate-700 hover:border-blue-300 hover:text-blue-700 sm:min-h-11 sm:px-5 sm:text-sm">
+                {t("openMap")} <ExternalLink className="size-3.5 sm:size-4" />
               </a>
             </div>
             <iframe
               title="Avantika location map"
               src={mapsUrl}
-              className="h-[360px] w-full border-0"
+              className="h-[260px] w-full border-0 sm:h-[360px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
 
-          <div className="overflow-hidden rounded-[2.2rem] border border-slate-200 bg-white shadow-xl shadow-blue-950/5 flex flex-col justify-between">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-blue-950/5 flex flex-col justify-between sm:rounded-[2.2rem]">
             <div
-              className="min-h-[300px] bg-cover bg-center p-8 text-white flex-1 flex flex-col justify-end"
+              className="min-h-[250px] bg-cover bg-center p-6 text-white flex-1 flex flex-col justify-end sm:min-h-[300px] sm:p-8"
               style={{backgroundImage: "linear-gradient(135deg,rgba(8,10,75,0.92),rgba(41,72,200,0.76)),url('/hero-slide-4.webp')"}}
             >
-              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100">{t("officeEyebrow")}</p>
-              <h3 className="mt-4 max-w-sm text-2xl font-extrabold">{t("officeTitle")}</h3>
-              <p className="mt-4 text-sm leading-6 text-blue-100/75">{t("officeDescription")}</p>
+              <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100">{t("officeEyebrow")}</p>
+              <h3 className="mt-3 max-w-sm text-xl font-extrabold sm:text-2xl">{t("officeTitle")}</h3>
+              <p className="mt-3 text-xs leading-5 text-blue-100/75 sm:text-sm sm:leading-6">{t("officeDescription")}</p>
             </div>
-            <div className="p-6 bg-slate-50 border-t border-slate-100">
-              <a href="mailto:infomarketinguz@avantikamedex.com" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800">
+            <div className="p-5 bg-slate-50 border-t border-slate-100 sm:p-6">
+              <a href="mailto:infomarketinguz@avantikamedex.com" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 text-sm font-bold text-white hover:bg-blue-800 sm:min-h-12">
                 {t("sendEmail")} <Send className="size-4" />
               </a>
             </div>
