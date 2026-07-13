@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import {Poppins} from "next/font/google";
 import {hasLocale, NextIntlClientProvider} from "next-intl";
 import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
@@ -11,6 +12,13 @@ import "flag-icons/css/flag-icons.min.css";
 import "../globals.css";
 
 type LocaleLayoutProps = LayoutProps<"/[locale]">;
+
+const poppins = Poppins({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
@@ -50,7 +58,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="h-full antialiased">
+    <html lang={locale} className={`${poppins.variable} h-full antialiased`}>
       <body className="min-h-full bg-white text-[#10172b]">
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">

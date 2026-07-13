@@ -68,7 +68,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
       <div className="container-shell flex h-[72px] items-center justify-between gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Avantika">
           <Image
-            src="/about-logo.png"
+            src="/main-logo.png"
             alt="Avantika Pharmaceuticals"
             width={250}
             height={250}
@@ -82,7 +82,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
             <Link
               key={item}
               href={hrefs[item]}
-              className={`relative text-sm font-semibold transition after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:rounded-full after:transition-all ${isActiveNav(pathname, hrefs[item]) ? "after:w-full" : "after:w-0"} ${isTransparent ? (isActiveNav(pathname, hrefs[item]) ? "text-white after:bg-white" : "text-white/85 hover:text-white after:bg-white") : (isActiveNav(pathname, hrefs[item]) ? "text-blue-700 after:bg-blue-700" : "text-slate-600 hover:text-blue-700 after:bg-blue-700")}`}
+              className={`relative text-[15px] font-semibold transition after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:rounded-full after:transition-all ${isActiveNav(pathname, hrefs[item]) ? "after:w-full" : "after:w-0"} ${isTransparent ? (isActiveNav(pathname, hrefs[item]) ? "text-white after:bg-white" : "text-white/85 hover:text-white after:bg-white") : (isActiveNav(pathname, hrefs[item]) ? "text-blue-700 after:bg-blue-700" : "text-slate-600 hover:text-blue-700 after:bg-blue-700")}`}
             >
               {t(item)}
             </Link>
@@ -113,7 +113,7 @@ export function SiteHeader({locale}: {locale: Locale}) {
             </summary>
             <nav className="premium-shadow absolute inset-x-4 top-[116px] rounded-3xl border border-slate-100 bg-white p-3">
               {navItems.map((item) => (
-                <Link key={item} href={hrefs[item]} onClick={() => setMobileMenuOpen(false)} className={`block rounded-2xl px-4 py-3 text-sm font-bold ${isActiveNav(pathname, hrefs[item]) ? "bg-blue-50 text-blue-800" : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"}`}>
+                <Link key={item} href={hrefs[item]} onClick={() => setMobileMenuOpen(false)} className={`block rounded-2xl px-4 py-3 text-[15px] font-bold ${isActiveNav(pathname, hrefs[item]) ? "bg-blue-50 text-blue-800" : "text-slate-700 hover:bg-blue-50 hover:text-blue-800"}`}>
                   {t(item)}
                 </Link>
               ))}
