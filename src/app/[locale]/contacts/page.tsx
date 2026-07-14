@@ -33,16 +33,25 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
               <h2 className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
               <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">{t("description")}</p>
             </div>
-            <div className="grid gap-3 sm:gap-4">
-              {contacts.map(({icon: Icon, key, value, href}) => (
-                <a key={key} href={href} className="flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition duration-300 hover:border-blue-200 hover:shadow-md sm:rounded-3xl sm:p-5">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-800 sm:size-13 sm:rounded-2xl"><Icon className="size-5 sm:size-6" /></span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
-                    <span className="mt-0.5 block text-sm sm:text-base font-bold text-slate-950 break-words">{value === "address" ? t("address") : value}</span>
-                  </span>
-                </a>
-              ))}
+            <div className="grid gap-3 grid-cols-2 lg:grid-cols-1 sm:gap-4">
+              {contacts.map(({icon: Icon, key, value, href}) => {
+                const isPhone = key === "phone" || key === "phone2";
+                return (
+                  <a
+                    key={key}
+                    href={href}
+                    className={`flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition duration-300 hover:border-blue-200 hover:shadow-md sm:rounded-2xl sm:p-4 md:p-5 md:gap-4 ${
+                      isPhone ? "col-span-1" : "col-span-2 lg:col-span-1"
+                    }`}
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-800 sm:size-11 sm:rounded-xl md:size-13 md:rounded-2xl"><Icon className="size-4.5 sm:size-5 md:size-6" /></span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
+                      <span className="mt-0.5 block text-xs sm:text-sm md:text-base font-bold text-slate-950 break-words leading-tight">{value === "address" ? t("address") : value}</span>
+                    </span>
+                  </a>
+                );
+              })}
             </div>
           </div>
           <InquiryForm locale={locale} />
