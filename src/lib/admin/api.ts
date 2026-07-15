@@ -203,9 +203,85 @@ export async function login(username: string, password: string) {
 
 export async function uploadImages(files: FileList | File[]) {
   const formData = new FormData();
-  Array.from(files).forEach((file) => formData.append("files", file));
+  const fileArray = Array.from(files);
+
+  const processedFiles = await Promise.all(
+    fileArray.map(async (file) => {
+      // PDF yoki boshqa fayllarni siqmasdan to'g'ridan-to'g'ri yuklaymiz
+      if (file.type.startsWith("image/")) {
+        try {
+          return await compressImage(file);
+        } catch (error) {
+          console.warn("Client-side image compression failed, using original file:", error);
+          return file;
+        }
+      }
+      return file;
+    })
+  );
+
+  processedFiles.forEach((file) => formData.append("files", file));
   return apiFetch<{files: ImageAsset[]}>("/admin/media/upload", {
     method: "POST",
     body: formData,
+  });
+}
+
+function compressImage(file: File, maxWidth = 900, maxHeight = 900, quality = 0.85): Promise<File> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        // Proporsiyani saqlagan holda o'lchamni o'zgartirish
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve(file);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              // Asl nomni olamiz va kengaytmasini .webp ga o'zgartiramiz
+              const cleanName = file.name.substring(0, file.name.lastIndexOf(".")) || file.name;
+              const compressedFile = new File([blob], `${cleanName}.webp`, {
+                type: "image/webp",
+                lastModified: Date.now(),
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(file);
+            }
+          },
+          "image/webp",
+          quality
+        );
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
   });
 }
