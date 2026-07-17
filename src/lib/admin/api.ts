@@ -71,6 +71,20 @@ export type Worker = {
   updatedAt: string;
 };
 
+export type Inquiry = {
+  id: string;
+  name: string;
+  company?: string;
+  email: string;
+  phone: string;
+  type: "general" | "partnership" | "distribution" | "product" | "pharmacovigilance";
+  message: string;
+  status: "new" | "read" | "resolved";
+  locale: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type DashboardStats = {
   totals: {
     products: number;

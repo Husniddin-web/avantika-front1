@@ -1,6 +1,6 @@
 "use client";
 
-import {BarChart3, FolderTree, LogOut, Newspaper, Package, Users} from "lucide-react";
+import {BarChart3, FolderTree, Inbox, LogOut, Newspaper, Package, Users} from "lucide-react";
 import {useEffect, useState, type ReactNode} from "react";
 import {useParams, useRouter} from "next/navigation";
 
@@ -15,6 +15,7 @@ const items = [
   {href: "/admin/news", label: "News", icon: Newspaper},
   {href: "/admin/categories", label: "Categories", icon: FolderTree},
   {href: "/admin/workers", label: "Workers", icon: Users},
+  {href: "/admin/inquiries", label: "Inquiries", icon: Inbox},
 ] as const;
 
 export function AdminShell({children}: {children: ReactNode}) {
