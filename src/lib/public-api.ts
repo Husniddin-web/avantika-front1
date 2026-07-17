@@ -170,8 +170,22 @@ export async function fetchPublicNews() {
 
 export async function fetchPublicNewsArticle(slugOrId: string) {
   try {
+    // Try fetching directly by slug/ID
     return await publicFetch<NewsArticle>(`/news/${slugOrId}`);
-  } catch {
+  } catch (error) {
+    // If backend doesn't support slug lookup (returning 404), fetch all news and match the slug
+    try {
+      const allNews = await fetchPublicNews();
+      const matched = allNews.find((n) => n.slug === slugOrId || n.id === slugOrId);
+      if (matched) {
+        // Fetch full article by MongoDB ID (which is always supported by the backend)
+        return await publicFetch<NewsArticle>(`/news/${matched.id}`);
+      }
+    } catch (innerError) {
+      console.error("Failed slug fallback lookup:", innerError);
+    }
+    
+    // Fallback to mock news
     return mockNews.find((n) => n.id === slugOrId || n.slug === slugOrId) ?? null;
   }
 }
