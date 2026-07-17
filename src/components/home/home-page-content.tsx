@@ -156,6 +156,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
   const newsItems = cmsData?.news.length
     ? cmsData.news.slice(0, 3).map((article) => ({
         id: article.id,
+        slug: article.slug,
         title: localize(article.title, locale),
         description: stripHtml(localize(article.content, locale)),
         category: article.status === "published" ? t("news.eyebrow") : article.status,
@@ -165,6 +166,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       }))
     : fallbackNews.map(({key, image}) => ({
         id: key,
+        slug: key,
         title: t(`news.items.${key}.title`),
         description: t(`news.items.${key}.description`),
         category: t(`news.items.${key}.category`),
@@ -492,16 +494,18 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {newsItems.map((article, index) => (
               <Reveal key={article.id} delay={index * 90}>
-                <article className="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                    <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                <article className="group flex flex-col h-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
+                  <Link href={`/news/${article.slug}`} className="relative aspect-[4/3] overflow-hidden bg-slate-100 block">
+                    <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" unoptimized />
                     <span className="absolute bottom-4 left-4 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800">{article.category}</span>
-                  </div>
-                  <div className="p-6">
+                  </Link>
+                  <div className="p-6 flex flex-col flex-1">
                     <p className="text-xs font-semibold text-slate-400">{article.date}</p>
-                    <h3 className="mt-3 text-xl font-extrabold leading-7 text-[#10172b]">{article.title}</h3>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500">{article.description}</p>
-                    <Link href="/news" className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700">{t("news.more")}<ArrowRight className="size-4" /></Link>
+                    <Link href={`/news/${article.slug}`} className="block">
+                      <h3 className="mt-3 text-xl font-extrabold leading-7 text-[#10172b] group-hover:text-blue-700 transition duration-300 line-clamp-2 min-h-[56px]">{article.title}</h3>
+                    </Link>
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500 flex-1">{article.description}</p>
+                    <Link href={`/news/${article.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 hover:text-blue-800">{t("news.more")}<ArrowRight className="size-4" /></Link>
                   </div>
                 </article>
               </Reveal>

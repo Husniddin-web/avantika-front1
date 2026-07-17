@@ -134,9 +134,9 @@ export async function fetchPublicCategories() {
 }
 
 const mockNewsSeeds = [
-  ["avantika-ishlab-chiqarish-liniyalari-kengaymoqda", "Avantika ishlab chiqarish liniyalari kengaymoqda", "Производственные линии Avantika расширяются", "Avantika production lines are expanding", "/pharm/velkluza-poster.jpg"],
-  ["sifat-nazorati-jarayonlari-kuchaytirildi", "Sifat nazorati jarayonlari kuchaytirildi", "Усилены процессы контроля качества", "Quality control processes strengthened", "/pharm/aylayk-packshot.jpg"],
-  ["yangi-terapevtik-portfel-taqdim-etildi", "Yangi terapevtik portfel taqdim etildi", "Представлен новый терапевтический портфель", "New therapeutic portfolio introduced", "/pharm/amlodil-ab-poster.jpg"],
+  ["research", "Dori shakllari tadqiqotida yangi bosqich", "Новый этап исследований лекарственных форм", "New phase in dosage form research", "/pharm/velkluza-poster.jpg"],
+  ["laboratory", "Laboratoriya infratuzilmasi kengaytirildi", "Расширена инфраструктура лаборатории", "Laboratory infrastructure expanded", "/pharm/aylayk-packshot.jpg"],
+  ["quality", "Sifat boshqaruvi auditi yakunlandi", "Завершен аудит управления качеством", "Quality management audit completed", "/pharm/amlodil-ab-poster.jpg"],
   ["hamkorlar-uchun-mahsulot-treninglari-boshlandi", "Hamkorlar uchun mahsulot treninglari boshlandi", "Начались продуктовые тренинги для партнёров", "Product trainings for partners started", "/pharm/butafen-poster.jpg"],
   ["farmatsevtika-standartlari-bo-yicha-ichki-audit-yakunlandi", "Farmatsevtika standartlari bo‘yicha ichki audit yakunlandi", "Завершён внутренний аудит фармацевтических стандартов", "Internal pharmaceutical standards audit completed", "/pharm/meropenem-poster.jpg"],
   ["laboratoriya-nazorati-bo-yicha-yangi-bosqich", "Laboratoriya nazorati bo‘yicha yangi bosqich", "Новый этап лабораторного контроля", "A new stage in laboratory control", "/pharm/avifer-forte-poster.jpg"],
