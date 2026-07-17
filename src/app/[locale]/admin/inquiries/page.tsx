@@ -53,8 +53,8 @@ export default function InquiriesPage() {
   async function loadInquiries() {
     try {
       setLoading(true);
-      // Fetch a large page limit (e.g., 500) to allow clean client-side instant filter and search
-      const response = await listAdminPage<Inquiry>("inquiries", 1, 500);
+      // Fetch up to the maximum limit of 100 items to allow clean client-side instant filter and search
+      const response = await listAdminPage<Inquiry>("inquiries", 1, 100);
       setItems(response.items || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load inquiries");
