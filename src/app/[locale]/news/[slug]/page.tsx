@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {CalendarDays, ChevronRight, Clock, User, ArrowLeft} from "lucide-react";
+import {CalendarDays, ChevronRight, ArrowLeft} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
@@ -81,54 +81,24 @@ export default async function NewsDetailPage({params}: PageProps<"/[locale]/news
           </div>
 
           <div className="p-6 sm:p-10 lg:p-14">
-            {/* Grid Layout for article body */}
-            <div className="grid gap-10 lg:grid-cols-[280px_1fr]">
-              {/* Sidebar Info */}
-              <div className="space-y-6 lg:border-r lg:border-slate-100 lg:pr-8">
-                <div className="flex items-center gap-3">
-                  <div className="grid size-12 place-items-center rounded-xl bg-slate-50 border border-slate-100 text-slate-600">
-                    <User className="size-5" />
-                  </div>
-                  <div>
-                    <span className="block text-[10px] font-bold text-slate-400 uppercase leading-none">{t("by")}</span>
-                    <span className="mt-1 block text-sm font-extrabold text-slate-900 leading-tight">{t("author")}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500">
-                  <div className="flex items-center gap-2.5">
-                    <CalendarDays className="size-4.5 text-slate-400" />
-                    <span>
-                      {t("publishedAt")}: {new Date(article.createdAt).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Clock className="size-4.5 text-slate-400" />
-                    <span>{t("readTime", {time: readTimeMinutes})}</span>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100">
-                  <ShareButtons
-                    url={shareUrl}
-                    title={title}
-                    labels={{
-                      share: t("share"),
-                      copied: t("copied"),
-                    }}
-                  />
-                </div>
-              </div>
-
+            <div className="max-w-3xl mx-auto space-y-10">
               {/* Main Body text */}
               <div className="prose prose-slate max-w-none text-slate-800 leading-relaxed text-base sm:text-lg">
                 <div className="whitespace-pre-wrap font-medium">
                   {content}
                 </div>
+              </div>
+
+              {/* Share block at the bottom */}
+              <div className="pt-4">
+                <ShareButtons
+                  url={shareUrl}
+                  title={title}
+                  labels={{
+                    share: t("share"),
+                    copied: t("copied"),
+                  }}
+                />
               </div>
             </div>
           </div>

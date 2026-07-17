@@ -29,8 +29,8 @@ export function ShareButtons({url, title, labels}: ShareButtonsProps) {
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-slate-100 bg-slate-50/50 p-5">
-      <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{labels.share}</h3>
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 border-t border-b border-slate-100">
+      <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">{labels.share}</span>
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
