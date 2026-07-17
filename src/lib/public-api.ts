@@ -133,10 +133,45 @@ export async function fetchPublicCategories() {
   }
 }
 
+const mockNewsSeeds = [
+  ["avantika-ishlab-chiqarish-liniyalari-kengaymoqda", "Avantika ishlab chiqarish liniyalari kengaymoqda", "Производственные линии Avantika расширяются", "Avantika production lines are expanding", "/pharm/velkluza-poster.jpg"],
+  ["sifat-nazorati-jarayonlari-kuchaytirildi", "Sifat nazorati jarayonlari kuchaytirildi", "Усилены процессы контроля качества", "Quality control processes strengthened", "/pharm/aylayk-packshot.jpg"],
+  ["yangi-terapevtik-portfel-taqdim-etildi", "Yangi terapevtik portfel taqdim etildi", "Представлен новый терапевтический портфель", "New therapeutic portfolio introduced", "/pharm/amlodil-ab-poster.jpg"],
+  ["hamkorlar-uchun-mahsulot-treninglari-boshlandi", "Hamkorlar uchun mahsulot treninglari boshlandi", "Начались продуктовые тренинги для партнёров", "Product trainings for partners started", "/pharm/butafen-poster.jpg"],
+  ["farmatsevtika-standartlari-bo-yicha-ichki-audit-yakunlandi", "Farmatsevtika standartlari bo‘yicha ichki audit yakunlandi", "Завершён внутренний аудит фармацевтических стандартов", "Internal pharmaceutical standards audit completed", "/pharm/meropenem-poster.jpg"],
+  ["laboratoriya-nazorati-bo-yicha-yangi-bosqich", "Laboratoriya nazorati bo‘yicha yangi bosqich", "Новый этап лабораторного контроля", "A new stage in laboratory control", "/pharm/avifer-forte-poster.jpg"],
+  ["eksport-geografiyasi-bo-yicha-yangi-imkoniyatlar", "Eksport geografiyasi bo‘yicha yangi imkoniyatlar", "Новые возможности экспортной географии", "New export geography opportunities", "/pharm/velkluza-poster.jpg"],
+  ["avantika-jamoasi-sifat-madaniyatini-rivojlantirmoqda", "Avantika jamoasi sifat madaniyatini rivojlantirmoqda", "Команда Avantika развивает культуру качества", "Avantika team develops a quality culture", "/pharm/aylayk-packshot.jpg"],
+];
+
+export const mockNews: NewsArticle[] = mockNewsSeeds.map(([slug, uz, ru, en, imageUrl], index) => ({
+  id: `news-${index + 1}`,
+  slug,
+  title: { uz, ru, en },
+  content: {
+    uz: `${uz} haqida batafsil ma’lumot. Bu Avantika kompaniyasining rasmiy yangiliklari portfelidan olingan maqoladir. Kompaniya sifat standartlari va zamonaviy texnologiyalarni joriy etishda davom etmoqda. Bizning maqsadimiz iste'molchilarga eng sifatli va xavfsiz dori vositalarini yetkazib berishdir.`,
+    ru: `Подробная информация о ${ru}. Это статья из официального портфеля новостей компании Avantika. Компания продолжает внедрять стандарты качества и современные технологии. Наша цель — обеспечение потребителей высококачественными и безопасными препаратами.`,
+    en: `Detailed information about ${en}. This is an article from the official news portfolio of Avantika. The company continues to implement quality standards and modern technologies. Our mission is to provide consumers with premium and safe pharmaceutical products.`,
+  },
+  status: "published",
+  images: [image(imageUrl)],
+  createdAt: now,
+  updatedAt: now,
+}));
+
 export async function fetchPublicNews() {
   try {
-    return await publicFetch<NewsArticle[]>("/news");
+    const news = await publicFetch<NewsArticle[]>("/news");
+    return news.length ? news : mockNews;
   } catch {
-    return [];
+    return mockNews;
+  }
+}
+
+export async function fetchPublicNewsArticle(slugOrId: string) {
+  try {
+    return await publicFetch<NewsArticle>(`/news/${slugOrId}`);
+  } catch {
+    return mockNews.find((n) => n.id === slugOrId || n.slug === slugOrId) ?? null;
   }
 }
