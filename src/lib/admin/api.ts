@@ -31,6 +31,8 @@ export type Product = {
   slug: string;
   categoryId: string;
   category?: Category | null;
+  categoryIds: string[];
+  categories?: Category[];
   dosageForm?: LocalizedText;
   therapeuticIndication?: LocalizedText;
   prescriptionType: "rx" | "otc";

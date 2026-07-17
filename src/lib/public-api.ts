@@ -46,6 +46,8 @@ export const mockProducts: Product[] = mockProductSeeds.map(([slug, uz, ru, en, 
   slug,
   categoryId,
   category: categoryById[categoryId] ?? null,
+  categoryIds: [categoryId],
+  categories: categoryById[categoryId] ? [categoryById[categoryId]] : [],
   dosageForm: {uz: dosage, ru: dosage, en: dosage},
   therapeuticIndication: {
     uz: "Avantika portfelidagi namuna preparat. Mahsulot ma’lumotlari tasdiqlangan yo‘riqnoma bilan yangilanadi.",

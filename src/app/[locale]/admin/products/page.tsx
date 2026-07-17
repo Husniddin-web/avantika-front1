@@ -35,7 +35,7 @@ const pageSize = 12;
 type ProductForm = {
   id?: string;
   title: LocalizedText;
-  categoryId: string;
+  categoryIds: string[];
   dosageForm: LocalizedText;
   therapeuticIndication: LocalizedText;
   prescriptionType: "rx" | "otc";
@@ -54,7 +54,7 @@ type ProductForm = {
 
 const emptyForm: ProductForm = {
   title: emptyLocalizedText,
-  categoryId: "",
+  categoryIds: [],
   dosageForm: emptyLocalizedText,
   therapeuticIndication: emptyLocalizedText,
   prescriptionType: "otc",
@@ -92,8 +92,8 @@ export default function ProductsPage() {
     setItems(productPage.items);
     setMeta(productPage.meta);
     setCategories(categoryList.items);
-    if (!form.categoryId && categoryList.items[0]) {
-      setForm((current) => ({...current, categoryId: categoryList.items[0].id}));
+    if (form.categoryIds.length === 0 && categoryList.items[0]) {
+      setForm((current) => ({...current, categoryIds: [categoryList.items[0].id]}));
     }
   }
 
@@ -106,7 +106,7 @@ export default function ProductsPage() {
       setMeta(productPage.meta);
       setCategories(categoryList.items);
       if (categoryList.items[0]) {
-        setForm((current) => ({...current, categoryId: current.categoryId || categoryList.items[0].id}));
+        setForm((current) => ({...current, categoryIds: current.categoryIds.length > 0 ? current.categoryIds : [categoryList.items[0].id]}));
       }
     }).catch((error: Error) => setError(error.message));
   }, [page]);
@@ -117,7 +117,7 @@ export default function ProductsPage() {
     setError("");
     const payload = {
       title: form.title,
-      categoryId: form.categoryId,
+      categoryIds: form.categoryIds,
       dosageForm: form.dosageForm,
       therapeuticIndication: form.therapeuticIndication,
       prescriptionType: form.prescriptionType,
@@ -139,7 +139,7 @@ export default function ProductsPage() {
       } else {
         await createAdmin<Product, typeof payload>("products", payload);
       }
-      setForm(createEmptyForm(categories[0]?.id));
+      setForm(createEmptyForm(categories[0] ? [categories[0].id] : []));
       setModalOpen(false);
       setPage(1);
       await load();
@@ -152,7 +152,7 @@ export default function ProductsPage() {
 
   function openCreateModal() {
     setError("");
-    setForm(createEmptyForm(categories[0]?.id));
+    setForm(createEmptyForm(categories[0] ? [categories[0].id] : []));
     setActiveLanguage("uz");
     setModalOpen(true);
   }
@@ -162,7 +162,7 @@ export default function ProductsPage() {
     setForm({
       id: item.id,
       title: toLocalizedText(item.title),
-      categoryId: item.categoryId,
+      categoryIds: item.categoryIds || (item.categoryId ? [item.categoryId] : []),
       dosageForm: toLocalizedText(item.dosageForm),
       therapeuticIndication: toLocalizedText(item.therapeuticIndication),
       prescriptionType: item.prescriptionType || "otc",
@@ -184,7 +184,7 @@ export default function ProductsPage() {
 
   function closeModal() {
     setModalOpen(false);
-    setForm(createEmptyForm(categories[0]?.id));
+    setForm(createEmptyForm(categories[0] ? [categories[0].id] : []));
     setError("");
   }
 
@@ -223,13 +223,32 @@ export default function ProductsPage() {
                 <LocalizedField label="Dosage form" value={form.dosageForm} language={activeLanguage} onChange={(dosageForm) => setForm({...form, dosageForm})} />
                 <LocalizedField label="Active ingredient" value={form.activeIngredient} language={activeLanguage} onChange={(activeIngredient) => setForm({...form, activeIngredient})} />
               </div>
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="space-y-2">
-                  <Label>Category</Label>
-                  <select className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm" value={form.categoryId} onChange={(event) => setForm({...form, categoryId: event.target.value})} required>
-                    {categories.map((category) => <option key={category.id} value={category.id}>{localize(category.title, "uz")}</option>)}
-                  </select>
+              <div className="space-y-2">
+                <Label>Categories (Bo'limlar)</Label>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 border border-slate-200 rounded-lg p-3 bg-slate-50/50 max-h-40 overflow-y-auto">
+                  {categories.map((cat) => {
+                    const checked = form.categoryIds.includes(cat.id);
+                    return (
+                      <label key={cat.id} className="flex items-center gap-2 text-sm font-semibold text-slate-700 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          className="rounded border-slate-300 text-blue-700 focus:ring-blue-500 size-4 cursor-pointer"
+                          checked={checked}
+                          onChange={() => {
+                            const newIds = checked
+                              ? form.categoryIds.filter((id) => id !== cat.id)
+                              : [...form.categoryIds, cat.id];
+                            setForm({ ...form, categoryIds: newIds });
+                          }}
+                        />
+                        <span>{localize(cat.title, activeLanguage as any)}</span>
+                      </label>
+                    );
+                  })}
                 </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Status</Label>
                   <select className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm" value={form.status} onChange={(event) => setForm({...form, status: event.target.value as PublishStatus})}>
@@ -321,7 +340,7 @@ export default function ProductsPage() {
   );
 }
 
-function createEmptyForm(categoryId = ""): ProductForm {
+function createEmptyForm(categoryIds: string[] = []): ProductForm {
   return {
     ...emptyForm,
     title: {...emptyLocalizedText},
@@ -336,7 +355,7 @@ function createEmptyForm(categoryId = ""): ProductForm {
     storageConditions: {...emptyLocalizedText},
     packageDescription: {...emptyLocalizedText},
     instructionPdf: null,
-    categoryId,
+    categoryIds,
   };
 }
 

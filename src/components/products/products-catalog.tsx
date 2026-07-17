@@ -24,7 +24,9 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === "all" || product.categoryId === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || 
+      (product.categoryIds && product.categoryIds.includes(selectedCategory)) ||
+      product.categoryId === selectedCategory;
     const haystack = [
       localize(product.title, locale),
       localize(product.category?.title, locale),
@@ -91,7 +93,11 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
               <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" unoptimized />
             </div>
             <div className="p-3 sm:p-6">
-              <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">{localize(product.category?.title, locale) || product.slug}</p>
+              <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">
+                {product.categories && product.categories.length > 0 
+                  ? product.categories.map(c => localize(c.title, locale)).join(", ") 
+                  : (localize(product.category?.title, locale) || product.slug)}
+              </p>
               <h3 className="mt-2 line-clamp-2 text-base font-extrabold leading-5 text-slate-950 sm:text-2xl sm:leading-8">{localize(product.title, locale)}</h3>
               <p className="mt-2 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
               <p className="mt-3 hidden line-clamp-3 text-sm leading-6 text-slate-600 sm:block">{stripHtml(localize(product.therapeuticIndication, locale))}</p>

@@ -26,7 +26,10 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
 
   const allProducts = await fetchPublicProducts();
   const relatedProducts = allProducts
-    .filter((p) => p.categoryId === product.categoryId && p.id !== product.id)
+    .filter((p) => {
+      const shareCategory = p.categoryIds?.some((id) => product.categoryIds?.includes(id)) || p.categoryId === product.categoryId;
+      return shareCategory && p.id !== product.id;
+    })
     .slice(0, 4);
 
   const disclaimers = {
@@ -61,7 +64,9 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           <div className="border-t border-slate-100 p-7 lg:border-l lg:border-t-0 lg:p-12">
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
-                {localize(product.category?.title, currentLocale) || t("product")}
+                {product.categories && product.categories.length > 0 
+                  ? product.categories.map(c => localize(c.title, currentLocale)).join(", ") 
+                  : (localize(product.category?.title, currentLocale) || t("product"))}
               </span>
               <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
                 product.prescriptionType === "rx" 
@@ -80,7 +85,11 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
               </div>
               <div className="grid grid-cols-[0.9fr_1.1fr]">
                 <div className="p-4 text-sm font-semibold text-slate-500">{t("category")}</div>
-                <div className="p-4 text-sm font-bold text-slate-800">{localize(product.category?.title, currentLocale) || "-"}</div>
+                <div className="p-4 text-sm font-bold text-slate-800">
+                  {product.categories && product.categories.length > 0 
+                    ? product.categories.map(c => localize(c.title, currentLocale)).join(", ") 
+                    : (localize(product.category?.title, currentLocale) || "-")}
+                </div>
               </div>
             </div>
 
