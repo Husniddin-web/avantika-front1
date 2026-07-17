@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail, Phone, Calendar, Trash2, Eye, CheckCircle2, MessageSquare, AlertTriangle, Inbox } from "lucide-react";
+import { Mail, Phone, Calendar, Trash2, Eye, CheckCircle2, MessageSquare, AlertTriangle, Inbox, User, Stethoscope, Pill, AlertCircle } from "lucide-react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { DeleteAlertDialog } from "@/components/admin/delete-alert-dialog";
@@ -30,7 +30,7 @@ const typeColors: Record<Inquiry["type"], string> = {
 const statusColors: Record<Inquiry["status"], string> = {
   new: "bg-rose-50 text-rose-700 border-rose-100",
   read: "bg-blue-50 text-blue-700 border-blue-100",
-  resolved: "bg-green-50 text-green-700 border-green-100",
+  archived: "bg-green-50 text-green-700 border-green-100",
 };
 
 export default function InquiriesPage() {
@@ -84,7 +84,7 @@ export default function InquiriesPage() {
   async function handleResolve(id: string) {
     setUpdatingStatus(id);
     try {
-      const updated = await updateAdmin<Inquiry, { status: "resolved" }>("inquiries", id, { status: "resolved" });
+      const updated = await updateAdmin<Inquiry, { status: "archived" }>("inquiries", id, { status: "archived" });
       setItems((prev) => prev.map((x) => (x.id === id ? updated : x)));
       if (viewItem && viewItem.id === id) {
         setViewItem(updated);
@@ -241,7 +241,7 @@ export default function InquiriesPage() {
                         </td>
                         <td className="px-6 py-4">
                           <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold capitalize ${statusColors[item.status]}`}>
-                            {item.status}
+                            {item.status === "archived" ? "resolved" : item.status}
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
@@ -256,7 +256,7 @@ export default function InquiriesPage() {
                             >
                               <Eye className="size-5" />
                             </Button>
-                            {item.status !== "resolved" && (
+                            {item.status !== "archived" && (
                               <Button
                                 type="button"
                                 variant="outline"
@@ -334,7 +334,7 @@ export default function InquiriesPage() {
                     {typeLabels[viewItem.type]}
                   </span>
                   <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold capitalize ${statusColors[viewItem.status]}`}>
-                    {viewItem.status}
+                    {viewItem.status === "archived" ? "resolved" : viewItem.status}
                   </span>
                 </div>
                 <h3 className="text-lg font-extrabold text-slate-900">{viewItem.name}</h3>
@@ -368,15 +368,64 @@ export default function InquiriesPage() {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-400">Message Content</h4>
-                <div className="whitespace-pre-wrap rounded-xl border border-slate-200 bg-white p-4 text-slate-800 leading-relaxed max-h-60 overflow-y-auto">
-                  {viewItem.message}
-                </div>
+                {viewItem.type === "pharmacovigilance" && parsePharmacovigilanceMessage(viewItem.message) ? (
+                  (() => {
+                    const parsed = parsePharmacovigilanceMessage(viewItem.message)!;
+                    return (
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-xl border border-slate-150 bg-slate-50/30 p-3 flex items-start gap-2.5">
+                          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-slate-100 text-slate-600">
+                            <User className="size-4.5" />
+                          </span>
+                          <div>
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase leading-none">Bemor / Patient</span>
+                            <span className="mt-1 block text-sm font-bold text-slate-900 leading-tight">{parsed.patient}</span>
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-slate-150 bg-slate-50/30 p-3 flex items-start gap-2.5">
+                          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-slate-100 text-slate-600">
+                            <Stethoscope className="size-4.5" />
+                          </span>
+                          <div>
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase leading-none">Murojaatchi / Reporter</span>
+                            <span className="mt-1 block text-sm font-bold text-slate-900 leading-tight">{parsed.reporter}</span>
+                          </div>
+                        </div>
+
+                        <div className="col-span-2 rounded-xl border border-blue-150 bg-blue-50/10 p-3.5 flex items-start gap-3">
+                          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-700 border border-blue-100">
+                            <Pill className="size-5" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase leading-none">Preparat / Drug & Dosage</span>
+                            <span className="mt-1.5 block text-sm font-extrabold text-blue-900 leading-tight">{parsed.drug}</span>
+                          </div>
+                        </div>
+
+                        <div className="col-span-2 rounded-xl border border-red-150 bg-red-50/10 p-3.5 flex items-start gap-3">
+                          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-red-50 text-red-700 border border-red-100">
+                            <AlertCircle className="size-5" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <span className="block text-[10px] font-bold text-red-400 uppercase leading-none">Nojo'ya ta'sir / Adverse Reaction</span>
+                            <span className="mt-1.5 block text-sm font-bold text-slate-800 leading-relaxed whitespace-pre-wrap">{parsed.sideEffect}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : (
+                  <div className="whitespace-pre-wrap rounded-xl border border-slate-200 bg-white p-4 text-slate-800 leading-relaxed max-h-60 overflow-y-auto">
+                    {viewItem.message}
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
-                {viewItem.status !== "resolved" && (
+                {viewItem.status !== "archived" && (
                   <Button
                     type="button"
                     onClick={() => handleResolve(viewItem.id)}
@@ -414,4 +463,30 @@ export default function InquiriesPage() {
       </div>
     </AdminShell>
   );
+}
+
+function parsePharmacovigilanceMessage(message: string) {
+  const lines = message.split("\n");
+  let patient = "";
+  let reporter = "";
+  let drug = "";
+  let sideEffect = "";
+
+  for (const line of lines) {
+    if (line.includes("[Bemor / Patient]:")) {
+      patient = line.replace("[Bemor / Patient]:", "").trim();
+    } else if (line.includes("[Shifokor / Reporter]:")) {
+      reporter = line.replace("[Shifokor / Reporter]:", "").trim();
+    } else if (line.includes("[Dori / Drug]:")) {
+      drug = line.replace("[Dori / Drug]:", "").trim();
+    } else if (line.includes("[Nojo'ya ta'sir / Side Effect]:")) {
+      sideEffect = line.replace("[Nojo'ya ta'sir / Side Effect]:", "").trim();
+    }
+  }
+
+  if (!patient && !drug && !sideEffect) {
+    return null;
+  }
+
+  return { patient, reporter, drug, sideEffect };
 }

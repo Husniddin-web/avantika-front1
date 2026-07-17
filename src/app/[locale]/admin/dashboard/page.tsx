@@ -1,6 +1,6 @@
 "use client";
 
-import {Newspaper, Package, Users, FolderTree} from "lucide-react";
+import {Newspaper, Package, Users, FolderTree, Inbox, MessageSquare} from "lucide-react";
 import {useEffect, useState} from "react";
 
 import {AdminShell} from "@/components/admin/admin-shell";
@@ -12,6 +12,8 @@ const cards = [
   {key: "news", label: "News", icon: Newspaper},
   {key: "categories", label: "Categories", icon: FolderTree},
   {key: "workers", label: "Workers", icon: Users},
+  {key: "inquiries", label: "Total Inquiries", icon: Inbox},
+  {key: "newInquiries", label: "New Messages", icon: MessageSquare},
 ] as const;
 
 export default function DashboardPage() {
@@ -33,20 +35,30 @@ export default function DashboardPage() {
         </div>
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm font-semibold text-red-700">{error}</p> : null}
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {cards.map(({key, label, icon: Icon}) => (
-            <Card key={key}>
-              <CardContent className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-slate-500">{label}</p>
-                  <p className="mt-2 text-3xl font-extrabold text-slate-950">{stats?.totals[key] ?? 0}</p>
-                </div>
-                <span className="grid size-12 place-items-center rounded-md bg-blue-50 text-blue-800">
-                  <Icon className="size-5" />
-                </span>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map(({key, label, icon: Icon}) => {
+            const count = stats?.totals[key] ?? 0;
+            const isNewMessagesCard = key === "newInquiries";
+            const hasNewMessages = isNewMessagesCard && count > 0;
+
+            return (
+              <Card key={key}>
+                <CardContent className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-500">{label}</p>
+                    <p className="mt-2 text-3xl font-extrabold text-slate-950">{count}</p>
+                  </div>
+                  <span className={`grid size-12 place-items-center rounded-md transition ${
+                    hasNewMessages
+                      ? "bg-rose-100 text-rose-800 animate-pulse"
+                      : "bg-blue-50 text-blue-800"
+                  }`}>
+                    <Icon className="size-5" />
+                  </span>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </AdminShell>

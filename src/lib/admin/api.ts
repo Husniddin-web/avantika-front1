@@ -79,7 +79,7 @@ export type Inquiry = {
   phone: string;
   type: "general" | "partnership" | "distribution" | "product" | "pharmacovigilance";
   message: string;
-  status: "new" | "read" | "resolved";
+  status: "new" | "read" | "archived";
   locale: string;
   createdAt: string;
   updatedAt: string;
@@ -91,6 +91,8 @@ export type DashboardStats = {
     categories: number;
     news: number;
     workers: number;
+    inquiries: number;
+    newInquiries: number;
   };
   publishing: {
     products: {published: number; draft: number};
