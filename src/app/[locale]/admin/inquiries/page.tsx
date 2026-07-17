@@ -245,39 +245,39 @@ export default function InquiriesPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
+                          <div className="flex items-center justify-end gap-2">
                             <Button
                               type="button"
                               variant="outline"
                               size="sm"
-                              className="size-8 p-0"
+                              className="size-10 p-0 border-slate-200 text-slate-700 hover:bg-slate-50"
                               onClick={() => handleView(item)}
                               title="View details"
                             >
-                              <Eye className="size-3.5" />
+                              <Eye className="size-5" />
                             </Button>
                             {item.status !== "resolved" && (
                               <Button
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                className="size-8 p-0 border-green-200 text-green-700 hover:bg-green-50"
+                                className="size-10 p-0 border-green-200 text-green-700 hover:bg-green-50 hover:text-green-800"
                                 onClick={() => handleResolve(item.id)}
                                 disabled={updatingStatus === item.id}
                                 title="Mark as Resolved"
                               >
-                                <CheckCircle2 className="size-3.5" />
+                                <CheckCircle2 className="size-5" />
                               </Button>
                             )}
                             <Button
                               type="button"
-                              variant="danger"
+                              variant="outline"
                               size="sm"
-                              className="size-8 p-0"
+                              className="size-10 p-0 border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-800"
                               onClick={() => setDeleteTarget(item)}
                               title="Delete"
                             >
-                              <Trash2 className="size-3.5" />
+                              <Trash2 className="size-5" />
                             </Button>
                           </div>
                         </td>
