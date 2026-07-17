@@ -18,6 +18,7 @@
     "news": "News",
     "about": "About us",
     "contacts": "Contacts",
+    "pharmacovigilance": "Pharmacovigilance",
     "search": "Search",
     "menu": "Open menu"
   },
@@ -39,7 +40,7 @@
       "mediaDescription": "From raw materials to the finished product, every process is documented and controlled.",
       "certified": "Certified quality",
       "stats": {
-        "years": {"value": "15+", "label": "years of expertise"},
+        "years": {"value": "18+", "label": "years of expertise"},
         "products": {"value": "200+", "label": "medicines"},
         "markets": {"value": "30+", "label": "international markets"}
       }
@@ -65,7 +66,7 @@
       "cardDescription": "Every batch is supported by documented processes, analytical control and accountable specialists.",
       "items": {
         "gmp": {"value": "GMP standards", "label": "Quality systems aligned with international requirements"},
-        "experience": {"value": "15+ years", "label": "Consistent pharmaceutical expertise"},
+        "experience": {"value": "18+ years", "label": "Consistent pharmaceutical expertise"},
         "specialists": {"value": "300+ experts", "label": "A multidisciplinary professional team"},
         "portfolio": {"value": "200+ products", "label": "A broad therapeutic portfolio"}
       }
@@ -173,14 +174,21 @@
       "controls": {"zoomIn": "Zoom map in", "zoomOut": "Zoom map out", "reset": "Reset map position"},
       "types": {"headquarters": "Head office and manufacturing", "office": "Regional representative office", "partner": "Distribution partner"},
       "locations": {
-        "uzbekistan": {"country": "Uzbekistan", "city": "Tashkent", "region": "Central Asian headquarters"},
-        "kazakhstan": {"country": "Kazakhstan", "city": "Almaty", "region": "Central Asia"},
-        "kyrgyzstan": {"country": "Kyrgyzstan", "city": "Bishkek", "region": "Central Asia"},
+        "uzbekistan": {"country": "Uzbekistan", "city": "Tashkent", "region": "Central Asia"},
         "tajikistan": {"country": "Tajikistan", "city": "Dushanbe", "region": "Central Asia"},
-        "azerbaijan": {"country": "Azerbaijan", "city": "Baku", "region": "Caucasus market"},
-        "uae": {"country": "UAE", "city": "Dubai", "region": "Middle East"},
+        "kyrgyzstan": {"country": "Kyrgyzstan", "city": "Bishkek", "region": "Central Asia"},
+        "poland": {"country": "Poland", "city": "Warsaw", "region": "Europe"},
+        "hungary": {"country": "Hungary", "city": "Budapest", "region": "Europe"},
+        "mauritania": {"country": "Mauritania", "city": "Nouakchott", "region": "West Africa"},
+        "philippines": {"country": "Philippines", "city": "Manila", "region": "Southeast Asia"},
+        "ivory_coast": {"country": "Ivory Coast", "city": "Abidjan", "region": "West Africa"},
+        "togo": {"country": "Togo", "city": "Lome", "region": "West Africa"},
+        "myanmar": {"country": "Myanmar", "city": "Yangon", "region": "Southeast Asia"},
+        "cambodia": {"country": "Cambodia", "city": "Phnom Penh", "region": "Southeast Asia"},
         "ghana": {"country": "Ghana", "city": "Accra", "region": "West Africa"},
-        "philippines": {"country": "Philippines", "city": "Manila", "region": "Southeast Asia"}
+        "ethiopia": {"country": "Ethiopia", "city": "Addis Ababa", "region": "East Africa"},
+        "vietnam": {"country": "Vietnam", "city": "Hanoi", "region": "Southeast Asia"},
+        "yemen": {"country": "Yemen", "city": "Sana'a", "region": "Middle East"}
       }
     },
     "cta": {
@@ -193,8 +201,30 @@
   "ProductsPage": {"heroTitle": "Products", "heroEyebrow": "Avantika catalog", "eyebrow": "Therapeutic portfolio", "title": "Medicines by category", "description": "Browse Avantika products with dosage forms and therapeutic information.", "searchPlaceholder": "Search products...", "allCategories": "All categories", "details": "Details", "empty": "No products found"},
   "ProductDetailPage": {"product": "Product", "dosageForm": "Dosage form", "category": "Category", "therapeuticIndication": "Therapeutic Indication"},
   "NewsPage": {"heroTitle": "News", "heroEyebrow": "Press center"},
-  "AboutPage": {"heroTitle": "About us", "heroEyebrow": "Company profile", "introEyebrow": "Who are we?", "introTitle": "Responsible pharmaceutical growth", "introP1": "Avantika develops, manufactures and promotes pharmaceutical products with a strong focus on quality, accessibility and long-term trust.", "introP2": "Our work connects production discipline, laboratory control and market partnerships into one reliable healthcare ecosystem.", "introP3": "We support healthcare professionals, distributors and patients with clear product information and consistent operational standards.", "stats": {"experience": {"value": "15+", "label": "Years of pharmaceutical expertise"}, "products": {"value": "200+", "label": "Products across therapeutic categories"}, "markets": {"value": "30+", "label": "International markets and partners"}}, "manufacturingEyebrow": "Manufacturing", "manufacturingTitle": "Built around controlled processes", "manufacturingDescription": "Modern production infrastructure, trained specialists and documented workflows help maintain consistent quality from raw material to finished product.", "qualityEyebrow": "Quality", "qualityTitle": "Evidence, control and responsibility", "qualityDescription": "Our quality culture brings together analytical testing, regulatory discipline and a practical commitment to safer everyday healthcare.", "process": {"eyebrow": "Production process", "title": "A controlled path behind every medicine", "description": "From material intake to packaging, each product moves through precision, documentation and quality control.", "mediaTitle": "Controlled manufacturing environment", "steps": {"materials": {"title": "Material control", "description": "Incoming materials are checked against documentation, identity and quality requirements."}, "formulation": {"title": "Formulation", "description": "Process parameters are managed precisely to support a consistent dosage form."}, "production": {"title": "Manufacturing", "description": "Dedicated lines and trained specialists keep the production workflow consistent."}, "quality": {"title": "Quality control", "description": "In-process and final controls confirm product safety and stability."}, "packaging": {"title": "Packaging", "description": "Packaging follows labelling, protection and traceability requirements."}}}, "values": {"quality": {"title": "Quality first", "description": "Every process is built around traceability, compliance and patient safety."}, "science": {"title": "Science-led", "description": "Research, laboratory control and evidence shape our product decisions."}, "global": {"title": "Global mindset", "description": "We build responsible partnerships across regional and international markets."}}},
+  "AboutPage": {"heroTitle": "About us", "heroEyebrow": "Company profile", "introEyebrow": "Who are we?", "introTitle": "Responsible pharmaceutical growth", "introP1": "Avantika develops, manufactures and promotes pharmaceutical products with a strong focus on quality, accessibility and long-term trust.", "introP2": "Our work connects production discipline, laboratory control and market partnerships into one reliable healthcare ecosystem.", "introP3": "We support healthcare professionals, distributors and patients with clear product information and consistent operational standards.", "stats": {"experience": {"value": "18+", "label": "Years of pharmaceutical expertise"}, "products": {"value": "200+", "label": "Products across therapeutic categories"}, "markets": {"value": "30+", "label": "International markets and partners"}}, "manufacturingEyebrow": "Manufacturing", "manufacturingTitle": "Built around controlled processes", "manufacturingDescription": "Modern production infrastructure, trained specialists and documented workflows help maintain consistent quality from raw material to finished product.", "qualityEyebrow": "Quality", "qualityTitle": "Evidence, control and responsibility", "qualityDescription": "Our quality culture brings together analytical testing, regulatory discipline and a practical commitment to safer everyday healthcare.", "process": {"eyebrow": "Production process", "title": "A controlled path behind every medicine", "description": "From material intake to packaging, each product moves through precision, documentation and quality control.", "mediaTitle": "Controlled manufacturing environment", "steps": {"materials": {"title": "Material control", "description": "Incoming materials are checked against documentation, identity and quality requirements."}, "formulation": {"title": "Formulation", "description": "Process parameters are managed precisely to support a consistent dosage form."}, "production": {"title": "Manufacturing", "description": "Dedicated lines and trained specialists keep the production workflow consistent."}, "quality": {"title": "Quality control", "description": "In-process and final controls confirm product safety and stability."}, "packaging": {"title": "Packaging", "description": "Packaging follows labelling, protection and traceability requirements."}}}, "values": {"quality": {"title": "Quality first", "description": "Every process is built around traceability, compliance and patient safety."}, "science": {"title": "Science-led", "description": "Research, laboratory control and evidence shape our product decisions."}, "global": {"title": "Global mindset", "description": "We build responsible partnerships across regional and international markets."}}},
   "ContactPage": {"heroTitle": "Contact us", "heroEyebrow": "We are here to help", "eyebrow": "Contact details", "title": "Let’s connect with the right team", "description": "For partnerships, product information or pharmacovigilance questions, contact Avantika through the channels below.", "contacts": {"phone": "Phone", "phone2": "Phone", "email": "Email", "location": "Location"}, "address": "100047, Tashkent, Yashnabad district, Mashinasozlar MCA, Lyadova street 1st dead-end, house 9", "officeEyebrow": "Avantika office", "officeTitle": "Tashkent, Uzbekistan", "officeDescription": "Our team will route your request to the appropriate department and respond as soon as possible.", "sendEmail": "Send email", "mapEyebrow": "Location", "mapTitle": "Find us on Google Maps", "openMap": "Open in Google Maps"},
+  "PharmacovigilancePage": {
+    "heroTitle": "Pharmacovigilance",
+    "heroEyebrow": "Safety first",
+    "eyebrow": "Pharmacological safety",
+    "title": "Pharmacovigilance Service",
+    "description": "Continuous monitoring of adverse drug reactions, prevention of side effects, and ensuring patient safety when using our medicines is our top priority. If you experience an adverse reaction to any of our products, please fill out the form below.",
+    "company": "Receiving organization",
+    "companyValue": "IP OOO Konark Pharm",
+    "address": "Organization Address",
+    "addressValue": "100047, Tashkent, Yashnabad district, Lyadova street, 1-dead-end, house 9.",
+    "phones": "Phone",
+    "email": "E-mail",
+    "formTitle": "Report an adverse reaction",
+    "formDesc": "Please provide information about the suspected adverse reaction. This information is critical for evaluating medicine safety.",
+    "patientName": "Patient Full Name",
+    "reporterName": "Reporter Name (if doctor/pharmacist)",
+    "drugName": "Drug Name & Dosage",
+    "sideEffect": "Reaction Description",
+    "submit": "Send report",
+    "submitting": "Sending...",
+    "success": "Your report was successfully submitted to the pharmacovigilance department. Thank you!"
+  },
   "Footer": {
     "description": "A pharmaceutical company focused on responsible science, reliable manufacturing and accessible healthcare.",
     "navigation": "Navigation",

@@ -7,13 +7,20 @@ import {SectionHeading} from "../shared/section-heading";
 
 const locations = [
   {key: "uzbekistan", kind: "headquarters"},
-  {key: "kazakhstan", kind: "office"},
-  {key: "kyrgyzstan", kind: "office"},
   {key: "tajikistan", kind: "office"},
-  {key: "azerbaijan", kind: "partner"},
-  {key: "uae", kind: "partner"},
-  {key: "ghana", kind: "partner"},
+  {key: "kyrgyzstan", kind: "office"},
+  {key: "poland", kind: "partner"},
+  {key: "hungary", kind: "partner"},
+  {key: "mauritania", kind: "partner"},
   {key: "philippines", kind: "partner"},
+  {key: "ivory_coast", kind: "partner"},
+  {key: "togo", kind: "partner"},
+  {key: "myanmar", kind: "partner"},
+  {key: "cambodia", kind: "partner"},
+  {key: "ghana", kind: "partner"},
+  {key: "ethiopia", kind: "partner"},
+  {key: "vietnam", kind: "partner"},
+  {key: "yemen", kind: "partner"},
 ] as const;
 
 export function GlobalPresence() {

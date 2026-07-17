@@ -130,7 +130,7 @@ export function InquiryForm({locale}: {locale: string}) {
       <form onSubmit={onSubmit} className="mt-5 space-y-3 sm:mt-6 sm:space-y-4">
         <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="space-y-1">
-            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.name}</label>
+            <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.name}</label>
             <input
               type="text"
               required
@@ -140,7 +140,7 @@ export function InquiryForm({locale}: {locale: string}) {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.company}</label>
+            <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.company}</label>
             <input
               type="text"
               value={company}
@@ -152,7 +152,7 @@ export function InquiryForm({locale}: {locale: string}) {
 
         <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="space-y-1">
-            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.email}</label>
+            <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.email}</label>
             <input
               type="email"
               required
@@ -162,7 +162,7 @@ export function InquiryForm({locale}: {locale: string}) {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.phone}</label>
+            <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.phone}</label>
             <input
               type="tel"
               required
@@ -175,7 +175,7 @@ export function InquiryForm({locale}: {locale: string}) {
         </div>
 
         <div className="space-y-1">
-          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.type}</label>
+          <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.type}</label>
           <select
             value={type}
             onChange={(e) => setType(e.target.value as any)}
@@ -189,7 +189,7 @@ export function InquiryForm({locale}: {locale: string}) {
         </div>
 
         <div className="space-y-1">
-          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 sm:text-xs">{t.msg}</label>
+          <label className="text-[10px] font-bold text-slate-500 sm:text-[11px]">{t.msg}</label>
           <textarea
             required
             rows={4}

@@ -33,7 +33,7 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
               <h2 className="mt-3 text-3xl font-extrabold leading-[1.1] tracking-[-0.04em] text-slate-950 sm:text-5xl">{t("title")}</h2>
               <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">{t("description")}</p>
             </div>
-            <div className="grid gap-3 grid-cols-2 lg:grid-cols-1 sm:gap-4">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 sm:gap-4">
               {contacts.map(({icon: Icon, key, value, href}) => {
                 const isPhone = key === "phone" || key === "phone2";
                 return (
@@ -46,8 +46,8 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
                   >
                     <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-800 sm:size-11 sm:rounded-xl md:size-13 md:rounded-2xl"><Icon className="size-4.5 sm:size-5 md:size-6" /></span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">{t(`contacts.${key}`)}</span>
-                      <span className="mt-0.5 block text-xs sm:text-sm md:text-base font-bold text-slate-950 break-words leading-tight">{value === "address" ? t("address") : value}</span>
+                      <span className="block text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">{t(`contacts.${key}`)}</span>
+                      <span className="mt-0.5 block text-[11px] sm:text-xs md:text-sm font-bold text-slate-950 break-words leading-tight">{value === "address" ? t("address") : value}</span>
                     </span>
                   </a>
                 );

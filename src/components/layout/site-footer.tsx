@@ -45,7 +45,7 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="container-shell flex flex-col gap-3 py-5 text-xs text-blue-100/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Avantika Pharmaceuticals. {t("rights")}</p>
-          <Link href="/" className="inline-flex items-center gap-1 text-blue-100/70 hover:text-white">{t("pharmacovigilance")}<ArrowUpRight className="size-3.5" /></Link>
+          <Link href="/pharmacovigilance" className="inline-flex items-center gap-1 text-blue-100/70 hover:text-white">{t("pharmacovigilance")}<ArrowUpRight className="size-3.5" /></Link>
         </div>
       </div>
     </footer>

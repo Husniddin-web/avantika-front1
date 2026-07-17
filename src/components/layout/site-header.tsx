@@ -6,12 +6,18 @@ import {useTranslations} from "next-intl";
 import {useEffect, useState} from "react";
 
 import {Link, usePathname} from "@/i18n/navigation";
-import type {Locale} from "@/i18n/routing";
+import {routing, type Locale} from "@/i18n/routing";
 
 import {LocaleSwitcher} from "../locale-switcher";
 import {SearchModal} from "./search-modal";
 
-const navItems = ["home", "products", "news", "about", "contacts"] as const;
+const flagCodes: Record<Locale, string> = {
+  uz: "uz",
+  ru: "ru",
+  en: "gb",
+};
+
+const navItems = ["home", "products", "news", "about", "contacts", "pharmacovigilance"] as const;
 
 const hrefs = {
   home: "/",
@@ -19,6 +25,7 @@ const hrefs = {
   news: "/news",
   about: "/about",
   contacts: "/contacts",
+  pharmacovigilance: "/pharmacovigilance",
 } as const;
 
 export function SiteHeader({locale}: {locale: Locale}) {
@@ -98,7 +105,9 @@ export function SiteHeader({locale}: {locale: Locale}) {
           >
             <Search className="size-5" />
           </button>
-          <LocaleSwitcher locale={locale} inverse={isTransparent} />
+          <div className="hidden lg:block">
+            <LocaleSwitcher locale={locale} inverse={isTransparent} />
+          </div>
           <details open={mobileMenuOpen} className="group lg:hidden">
             <summary
               onClick={(event) => {
@@ -117,6 +126,30 @@ export function SiteHeader({locale}: {locale: Locale}) {
                   {t(item)}
                 </Link>
               ))}
+
+              <div className="mt-2 flex items-center justify-between border-t border-slate-100 px-4 pt-4">
+                <span className="text-xs font-bold text-slate-400">Til / Язык / Language</span>
+                <div className="flex gap-1.5">
+                  {routing.locales.map((item) => (
+                    <Link
+                      key={item}
+                      href={pathname}
+                      locale={item}
+                      hrefLang={item}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-bold transition ${
+                        item === locale
+                          ? "border-blue-200 bg-blue-50 text-blue-800"
+                          : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                      }`}
+                    >
+                      <span className={`fi fi-${flagCodes[item]} fis rounded-full shadow-sm ring-1 ring-slate-100 size-3.5`} />
+                      {item.toUpperCase()}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
               <a href="mailto:infomarketinguz@avantikamedex.com" className="mt-2 flex items-center gap-2 border-t border-slate-100 px-4 pt-4 text-xs text-slate-500 sm:hidden">
                 <Mail className="size-3.5" /> infomarketinguz@avantikamedex.com
               </a>
