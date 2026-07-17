@@ -22,6 +22,44 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [dragged, setDragged] = useState(false);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDown(true);
+    setDragged(false);
+    setStartX(e.pageX - e.currentTarget.offsetLeft);
+    setScrollLeft(e.currentTarget.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDown) return;
+    const x = e.pageX - e.currentTarget.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(x - startX) > 5) {
+      setDragged(true);
+    }
+    e.currentTarget.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleCategoryClick = (id: string, e: React.MouseEvent) => {
+    if (dragged) {
+      e.preventDefault();
+      return;
+    }
+    setSelectedCategory(id);
+  };
+
   const normalizedQuery = query.trim().toLowerCase();
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === "all" || 
@@ -57,32 +95,31 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
       </div>
 
       {categories.length ? (
-        <div className="category-slider mt-8 overflow-hidden py-2">
-          <div className="category-track flex w-max gap-3">
-            {[false, true].map((duplicate) => (
-              <div key={duplicate ? "duplicate" : "original"} aria-hidden={duplicate || undefined} className="flex gap-3">
-                <button
-                  type="button"
-                  tabIndex={duplicate ? -1 : undefined}
-                  onClick={() => setSelectedCategory("all")}
-                  className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${selectedCategory === "all" ? "border-blue-700 bg-blue-700 text-white" : "border-blue-100 bg-blue-50 text-blue-800 hover:border-blue-300"}`}
-                >
-                  {t("allCategories")}
-                </button>
-                {categories.map((category) => (
-                  <button
-                    key={`${duplicate ? "duplicate" : "original"}-${category.id}`}
-                    type="button"
-                    tabIndex={duplicate ? -1 : undefined}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${selectedCategory === category.id ? "border-blue-700 bg-blue-700 text-white" : "border-blue-100 bg-blue-50 text-blue-800 hover:border-blue-300"}`}
-                  >
-                    {localize(category.title, locale)}
-                  </button>
-                ))}
-              </div>
-            ))}
-          </div>
+        <div 
+          className="mt-8 flex overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none gap-3 py-2 scroll-smooth"
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          <button
+            type="button"
+            onClick={(e) => handleCategoryClick("all", e)}
+            className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${selectedCategory === "all" ? "border-blue-700 bg-blue-700 text-white" : "border-blue-100 bg-blue-50 text-blue-800 hover:border-blue-300"}`}
+          >
+            {t("allCategories")}
+          </button>
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              type="button"
+              onClick={(e) => handleCategoryClick(category.id, e)}
+              className={`shrink-0 rounded-full border px-5 py-2 text-sm font-bold transition ${selectedCategory === category.id ? "border-blue-700 bg-blue-700 text-white" : "border-blue-100 bg-blue-50 text-blue-800 hover:border-blue-300"}`}
+            >
+              {localize(category.title, locale)}
+            </button>
+          ))}
         </div>
       ) : null}
 
