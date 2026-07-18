@@ -83,10 +83,11 @@ export default function ProductsPage() {
   const [deleting, setDeleting] = useState(false);
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<PaginationMeta | null>(null);
+  const [search, setSearch] = useState("");
 
   async function load() {
     const [productPage, categoryList] = await Promise.all([
-      listAdminPage<Product>("products", page, pageSize),
+      listAdminPage<Product>("products", page, pageSize, search),
       listAdminPage<Category>("categories", 1, 100),
     ]);
     setItems(productPage.items);
@@ -98,18 +99,27 @@ export default function ProductsPage() {
   }
 
   useEffect(() => {
-    void Promise.all([
-      listAdminPage<Product>("products", page, pageSize),
-      listAdminPage<Category>("categories", 1, 100),
-    ]).then(([productPage, categoryList]) => {
-      setItems(productPage.items);
-      setMeta(productPage.meta);
-      setCategories(categoryList.items);
-      if (categoryList.items[0]) {
-        setForm((current) => ({...current, categoryIds: current.categoryIds.length > 0 ? current.categoryIds : [categoryList.items[0].id]}));
-      }
-    }).catch((error: Error) => setError(error.message));
-  }, [page]);
+    const timer = setTimeout(() => {
+      Promise.all([
+        listAdminPage<Product>("products", page, pageSize, search),
+        listAdminPage<Category>("categories", 1, 100),
+      ]).then(([productPage, categoryList]) => {
+        setItems(productPage.items);
+        setMeta(productPage.meta);
+        setCategories(categoryList.items);
+        if (categoryList.items[0]) {
+          setForm((current) => ({...current, categoryIds: current.categoryIds.length > 0 ? current.categoryIds : [categoryList.items[0].id]}));
+        }
+      }).catch((error: Error) => setError(error.message));
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [page, search]);
+
+  const handleSearchChange = (val: string) => {
+    setSearch(val);
+    setPage(1);
+  };
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -304,7 +314,23 @@ export default function ProductsPage() {
         </AdminModal>
 
         <Card className="overflow-hidden">
-          <CardHeader><CardTitle>Products</CardTitle></CardHeader>
+          <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <CardTitle>Products</CardTitle>
+            <div className="relative w-full max-w-xs">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg className="size-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="h-9 w-full rounded-md border border-slate-200 bg-white pl-9 pr-3 text-sm placeholder-slate-400 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+          </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {items.map((item) => (
               <article key={item.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">

@@ -183,8 +183,9 @@ export function listAdmin<T>(resource: string) {
   return apiFetch<T[]>(`/admin/${resource}`);
 }
 
-export function listAdminPage<T>(resource: string, page: number, limit: number) {
+export function listAdminPage<T>(resource: string, page: number, limit: number, search?: string) {
   const params = new URLSearchParams({page: String(page), limit: String(limit)});
+  if (search) params.set("search", search);
   return apiFetch<PaginatedResponse<T>>(`/admin/${resource}?${params.toString()}`);
 }
 
