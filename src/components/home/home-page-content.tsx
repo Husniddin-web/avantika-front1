@@ -289,7 +289,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-600 sm:text-lg">{t("advantages.description")}</p>
             <div className="mt-9 grid grid-cols-2 gap-3 lg:hidden">
               {advantages.map(({key}) => (
-                <div key={key} className="rounded-2xl border border-blue-100 bg-white/68 p-4 shadow-sm shadow-blue-950/5 backdrop-blur">
+                <div key={key} className="rounded-2xl border border-blue-100 bg-white/95 p-4 shadow-sm shadow-blue-950/5 sm:backdrop-blur">
                   <p className="font-extrabold text-blue-800">{t(`advantages.items.${key}.value`)}</p>
                   <p className="mt-1 text-xs leading-5 text-slate-500">{t(`advantages.items.${key}.label`)}</p>
                 </div>
@@ -320,21 +320,9 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
       <ManufacturingGallery />
 
-      <section className="manufacturing-parallax relative isolate overflow-hidden pb-20 pt-36 text-white sm:pb-28 sm:pt-56 lg:min-h-[820px] lg:pb-32 lg:pt-64">
+      <section className="manufacturing-parallax relative isolate overflow-hidden py-16 text-white sm:pb-28 sm:pt-56 lg:min-h-[820px] lg:pb-32 lg:pt-64">
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#070936]/95 via-[#10156e]/78 to-[#10156e]/35" />
         <div className="absolute inset-0 -z-10 bg-[#080a4b]/25" />
-
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 1440 110"
-          preserveAspectRatio="none"
-          className="absolute inset-x-0 top-0 z-10 h-24 w-full sm:hidden"
-        >
-          <path
-            d="M0 0H1440V42C1288 96 1150 82 1018 52C856 16 746 34 616 82C472 136 312 132 164 92C82 70 34 48 0 30Z"
-            fill="#ffffff"
-          />
-        </svg>
 
         <svg
           aria-hidden="true"
@@ -350,7 +338,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
         <div className="container-shell relative z-20">
           <Reveal className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-[9px] font-extrabold uppercase tracking-[0.16em] text-blue-100 backdrop-blur sm:px-4 sm:text-[10px] sm:tracking-[0.2em]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-[9px] font-extrabold uppercase tracking-[0.16em] text-blue-100 sm:backdrop-blur sm:px-4 sm:text-[10px] sm:tracking-[0.2em]">
               <Factory className="size-4" />
               {t("manufacturing.eyebrow")}
             </div>
@@ -362,7 +350,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             </p>
             <div className="mt-6 grid gap-3 sm:mt-9 sm:grid-cols-2">
               {(["lines", "control", "capacity", "laboratory"] as const).map((item, index) => (
-                <div key={item} className={`${index > 1 ? "hidden sm:flex" : "flex"} items-start gap-3 rounded-2xl border border-white/15 bg-[#080a4b]/55 p-3 backdrop-blur-md sm:p-4`}>
+                <div key={item} className={`${index > 1 ? "hidden sm:flex" : "flex"} items-start gap-3 rounded-2xl border border-white/15 bg-[#080a4b]/85 sm:bg-[#080a4b]/55 p-3 sm:backdrop-blur-md sm:p-4`}>
                   <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-red-500"><Check className="size-4" /></span>
                   <p className="text-xs font-semibold leading-5 text-blue-50/90 sm:text-sm sm:leading-6">{t(`manufacturing.points.${item}`)}</p>
                 </div>
