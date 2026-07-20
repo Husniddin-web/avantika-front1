@@ -228,7 +228,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
           </div>
           <Reveal className="mt-8 space-y-4 sm:mt-12 sm:space-y-6">
-            <ProductSliderRow items={productItems} />
+            <ProductSliderRow items={productItems.slice(0, 5)} />
+            <ProductSliderRow items={productItems.slice(5, 10)} reverse />
           </Reveal>
         </div>
       </section>
@@ -505,7 +506,7 @@ type ProductSliderItem = {
   categoryIcon: string;
 };
 
-function ProductSliderRow({ items }: { items: ProductSliderItem[] }) {
+function ProductSliderRow({ items, reverse = false }: { items: ProductSliderItem[]; reverse?: boolean }) {
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -532,55 +533,64 @@ function ProductSliderRow({ items }: { items: ProductSliderItem[] }) {
   };
 
   return (
-    <div
-      className="flex overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none gap-3 sm:gap-5 py-2 scroll-smooth touch-pan-x"
-      onMouseDown={handleMouseDown}
-      onMouseLeave={handleMouseLeave}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-    >
-      {items.map((product) => (
-        <Link
-          key={product.id}
-          href={product.href}
-          onClick={(e) => {
-            if (dragged) e.preventDefault();
-          }}
-          className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
-        >
-          <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
-            <Image
-              src={product.image}
-              alt={product.imageAlt}
-              fill
-              sizes="(max-width: 640px) 50vw, 285px"
-              className="object-cover transition duration-300 group-hover:scale-105"
-            />
-          </div>
-          <div className="p-3 sm:p-5">
-            <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
-            <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
-            <div className="mt-4 border-t border-slate-100 pt-3">
-              <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
-                <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+    <div className="product-marquee overflow-hidden py-1">
+      <div className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${reverse ? "product-marquee-track-reverse" : ""}`}>
+        {[false, true].map((duplicate) => (
+          <div
+            key={duplicate ? "duplicate" : "original"}
+            aria-hidden={duplicate || undefined}
+            className="flex gap-3 sm:gap-5 overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none touch-pan-x"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {items.map((product) => (
+              <Link
+                key={`${product.id}-${duplicate ? "copy" : "main"}`}
+                href={product.href}
+                onClick={(e) => {
+                  if (dragged) e.preventDefault();
+                }}
+                tabIndex={duplicate ? -1 : undefined}
+                className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
+              >
+                <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
                   <Image
-                    src={product.categoryIcon}
-                    alt=""
+                    src={product.image}
+                    alt={product.imageAlt}
                     fill
-                    sizes="44px"
-                    className="object-contain transition duration-300 group-hover:opacity-80"
+                    sizes="(max-width: 640px) 50vw, 285px"
+                    className="object-cover transition duration-300 group-hover:scale-105"
                   />
-                </span>
-                <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
-                  {product.category}
-                </span>
-                <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
-              </span>
-            </div>
+                </div>
+                <div className="p-3 sm:p-5">
+                  <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
+                  <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
+                  <div className="mt-4 border-t border-slate-100 pt-3">
+                    <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
+                      <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+                        <Image
+                          src={product.categoryIcon}
+                          alt=""
+                          fill
+                          sizes="44px"
+                          className="object-contain transition duration-300 group-hover:opacity-80"
+                        />
+                      </span>
+                      <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
+                        {product.category}
+                      </span>
+                      <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
-        </Link>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

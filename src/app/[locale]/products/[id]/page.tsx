@@ -78,18 +78,18 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
             </div>
             <h1 className="mt-2 sm:mt-4 text-xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl text-slate-950 leading-tight">{title}</h1>
 
-            <div className="mt-4 sm:mt-6 overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200">
-              <div className="grid grid-cols-[0.9fr_1.1fr] border-b border-slate-200 bg-[#fbf7fb]">
-                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-semibold text-slate-500">{t("dosageForm")}</div>
-                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-bold text-slate-800">{localize(product.dosageForm, currentLocale) || "-"}</div>
+            <div className="mt-4 sm:mt-6 rounded-2xl bg-slate-50/80 p-3.5 sm:p-5 border border-slate-200/80 space-y-2.5">
+              <div className="flex items-start justify-between gap-3 text-xs sm:text-sm">
+                <span className="font-semibold text-slate-500 shrink-0">{t("dosageForm")}:</span>
+                <span className="font-extrabold text-slate-900 text-right">{localize(product.dosageForm, currentLocale) || "-"}</span>
               </div>
-              <div className="grid grid-cols-[0.9fr_1.1fr]">
-                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-semibold text-slate-500">{t("category")}</div>
-                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-bold text-slate-800">
+              <div className="flex items-start justify-between gap-3 text-xs sm:text-sm border-t border-slate-200/60 pt-2.5">
+                <span className="font-semibold text-slate-500 shrink-0">{t("category")}:</span>
+                <span className="font-extrabold text-blue-700 text-right">
                   {product.categories && product.categories.length > 0 
                     ? product.categories.map(c => localize(c.title, currentLocale)).join(", ") 
                     : (localize(product.category?.title, currentLocale) || "-")}
-                </div>
+                </span>
               </div>
             </div>
 

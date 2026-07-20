@@ -96,16 +96,16 @@ export function ProductTabs({
   return (
     <div className="mt-4 sm:mt-8 space-y-4 sm:space-y-6">
       {/* Tab Selectors */}
-      <div className="flex border-b border-slate-200 overflow-x-auto scrollbar-none gap-1 sm:gap-0">
+      <div className="flex rounded-xl bg-slate-100/90 p-1 gap-1 overflow-x-auto scrollbar-none">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`whitespace-nowrap pb-2.5 sm:pb-4 px-3 sm:px-6 text-xs sm:text-sm font-bold border-b-2 transition-all duration-200 ${
+            className={`flex-1 min-w-max py-2 px-3 sm:px-5 text-xs sm:text-sm font-bold rounded-lg transition-all duration-200 ${
               activeTab === tab.id
-                ? "border-blue-700 text-blue-700"
-                : "border-transparent text-slate-500 hover:text-slate-900"
+                ? "bg-white text-blue-700 shadow-sm"
+                : "text-slate-500 hover:text-slate-900"
             }`}
           >
             {tab.label}
