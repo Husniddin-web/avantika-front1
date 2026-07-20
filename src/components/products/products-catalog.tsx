@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {ArrowRight, Search} from "lucide-react";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 
 import {Link} from "@/i18n/navigation";
@@ -21,6 +21,8 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
   const t = useTranslations("ProductsPage");
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [visibleCount, setVisibleCount] = useState(12);
+  const observerTarget = useRef<HTMLDivElement>(null);
 
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -58,6 +60,12 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
       return;
     }
     setSelectedCategory(id);
+    setVisibleCount(12);
+  };
+
+  const handleQueryChange = (val: string) => {
+    setQuery(val);
+    setVisibleCount(12);
   };
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -75,6 +83,28 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
     return matchesCategory && (!normalizedQuery || haystack.includes(normalizedQuery));
   });
 
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+
+  useEffect(() => {
+    const target = observerTarget.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => prev + 12);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [filteredProducts.length]);
+
   return (
     <div className="container-shell">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
@@ -87,7 +117,7 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
           <Search className="size-5 shrink-0 text-slate-400" />
           <input
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => handleQueryChange(event.target.value)}
             placeholder={t("searchPlaceholder")}
             className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-950 outline-none placeholder:text-slate-400"
           />
@@ -124,7 +154,7 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
       ) : null}
 
       <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-        {filteredProducts.length ? filteredProducts.map((product) => (
+        {visibleProducts.length ? visibleProducts.map((product) => (
           <article key={product.id} className="overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-sm shadow-blue-950/[0.04] sm:rounded-3xl">
             <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
               <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" unoptimized />
@@ -137,7 +167,6 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
               </p>
               <h3 className="mt-2 line-clamp-2 text-base font-extrabold leading-5 text-slate-950 sm:text-2xl sm:leading-8">{localize(product.title, locale)}</h3>
               <p className="mt-2 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
-              <p className="mt-3 hidden line-clamp-3 text-sm leading-6 text-slate-600 sm:block">{stripHtml(localize(product.therapeuticIndication, locale))}</p>
               <Link href={`/products/${product.id}`} className="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 sm:mt-5 sm:gap-2 sm:text-sm">{t("details")} <ArrowRight className="size-3.5 sm:size-4" /></Link>
             </div>
           </article>
@@ -145,6 +174,12 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
           <p className="col-span-full rounded-3xl border border-slate-200 bg-white p-10 text-center text-sm font-bold text-slate-400">{t("empty")}</p>
         )}
       </div>
+
+      {visibleCount < filteredProducts.length ? (
+        <div ref={observerTarget} className="my-8 flex h-12 w-full items-center justify-center">
+          <div className="size-6 animate-spin rounded-full border-2 border-blue-700 border-t-transparent" />
+        </div>
+      ) : null}
     </div>
   );
 }
