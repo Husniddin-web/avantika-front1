@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -495,88 +495,124 @@ type ProductSliderItem = {
 };
 
 function ProductSliderRow({ items, reverse = false }: { items: ProductSliderItem[]; reverse?: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [dragged, setDragged] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    if (reverse && el.scrollLeft === 0) {
+      el.scrollLeft = el.scrollWidth - el.clientWidth;
+    }
+
+    let animationFrameId: number;
+
+    const step = () => {
+      if (!isPaused && !isDown && el) {
+        if (reverse) {
+          el.scrollLeft -= 0.6;
+          if (el.scrollLeft <= 0) {
+            el.scrollLeft = el.scrollWidth - el.clientWidth;
+          }
+        } else {
+          el.scrollLeft += 0.6;
+          if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 1) {
+            el.scrollLeft = 0;
+          }
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused, isDown, reverse]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDown(true);
     setDragged(false);
-    setStartX(e.pageX - e.currentTarget.offsetLeft);
-    setScrollLeft(e.currentTarget.scrollLeft);
+    setStartX(e.pageX - (containerRef.current?.offsetLeft || 0));
+    setScrollLeft(containerRef.current?.scrollLeft || 0);
   };
 
-  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseLeave = () => {
+    setIsDown(false);
+    setIsPaused(false);
+  };
+
   const handleMouseUp = () => setIsDown(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDown) return;
-    const x = e.pageX - e.currentTarget.offsetLeft;
+    if (!isDown || !containerRef.current) return;
+    const x = e.pageX - containerRef.current.offsetLeft;
     const walk = (x - startX) * 1.5;
     if (Math.abs(x - startX) > 5) {
       setDragged(true);
     }
-    e.currentTarget.scrollLeft = scrollLeft - walk;
+    containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  const displayItems = [...items, ...items, ...items];
+
   return (
-    <div className="product-marquee overflow-hidden py-1">
-      <div className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${reverse ? "product-marquee-track-reverse" : ""}`}>
-        {[false, true].map((duplicate) => (
-          <div
-            key={duplicate ? "duplicate" : "original"}
-            aria-hidden={duplicate || undefined}
-            className="flex gap-3 sm:gap-5 overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none touch-pan-x"
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    <div className="relative py-1 overflow-hidden">
+      <div
+        ref={containerRef}
+        className="flex gap-3 sm:gap-5 overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none touch-pan-x py-1"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsPaused(true)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {displayItems.map((product, idx) => (
+          <Link
+            key={`${product.id}-${idx}`}
+            href={product.href}
+            onClick={(e) => {
+              if (dragged) e.preventDefault();
+            }}
+            className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
           >
-            {items.map((product) => (
-              <Link
-                key={`${product.id}-${duplicate ? "copy" : "main"}`}
-                href={product.href}
-                onClick={(e) => {
-                  if (dragged) e.preventDefault();
-                }}
-                tabIndex={duplicate ? -1 : undefined}
-                className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
-              >
-                <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
-                  <Image
-                    src={product.image}
-                    alt={product.imageAlt}
-                    fill
-                    sizes="(max-width: 640px) 50vw, 285px"
-                    className="object-cover transition duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-3 sm:p-5">
-                  <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
-                  <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
-                  <div className="mt-4 border-t border-slate-100 pt-3">
-                    <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
-                      <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
-                        <Image
-                          src={product.categoryIcon}
-                          alt=""
-                          fill
-                          sizes="44px"
-                          className="object-contain transition duration-300 group-hover:opacity-80"
-                        />
-                      </span>
-                      <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
-                        {product.category}
-                      </span>
-                      <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+            <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
+              <Image
+                src={product.image}
+                alt={product.imageAlt}
+                fill
+                sizes="(max-width: 640px) 50vw, 285px"
+                className="object-cover transition duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-3 sm:p-5">
+              <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
+              <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
+              <div className="mt-4 border-t border-slate-100 pt-3">
+                <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
+                  <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+                    <Image
+                      src={product.categoryIcon}
+                      alt=""
+                      fill
+                      sizes="44px"
+                      className="object-contain transition duration-300 group-hover:opacity-80"
+                    />
+                  </span>
+                  <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
+                    {product.category}
+                  </span>
+                  <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
