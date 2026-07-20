@@ -246,7 +246,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
                           />
                         </div>
                         <div className="p-3 sm:p-5">
-                          <h3 className="text-base font-extrabold text-[#10172b] sm:text-xl">{product.title}</h3>
+                          <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
                           <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
                           <div className="mt-4 border-t border-slate-100 pt-3">
                             <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">

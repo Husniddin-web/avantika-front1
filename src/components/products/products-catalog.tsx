@@ -155,9 +155,13 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
 
       <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
         {visibleProducts.length ? visibleProducts.map((product) => (
-          <article key={product.id} className="overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-sm shadow-blue-950/[0.04] sm:rounded-3xl">
+          <Link 
+            key={product.id} 
+            href={`/products/${product.id}`}
+            className="group block overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-3xl"
+          >
             <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
-              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" unoptimized />
+              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-300 group-hover:scale-105" unoptimized />
             </div>
             <div className="p-3 sm:p-6">
               <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">
@@ -165,11 +169,13 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
                   ? product.categories.map(c => localize(c.title, locale)).join(", ") 
                   : (localize(product.category?.title, locale) || product.slug)}
               </p>
-              <h3 className="mt-2 line-clamp-2 text-base font-extrabold leading-5 text-slate-950 sm:text-2xl sm:leading-8">{localize(product.title, locale)}</h3>
-              <p className="mt-2 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
-              <Link href={`/products/${product.id}`} className="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 sm:mt-5 sm:gap-2 sm:text-sm">{t("details")} <ArrowRight className="size-3.5 sm:size-4" /></Link>
+              <h3 className="mt-2 line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-xl">{localize(product.title, locale)}</h3>
+              <p className="mt-1 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 transition-transform group-hover:translate-x-1 sm:mt-5 sm:gap-2 sm:text-sm">
+                {t("details")} <ArrowRight className="size-3.5 sm:size-4" />
+              </span>
             </div>
-          </article>
+          </Link>
         )) : (
           <p className="col-span-full rounded-3xl border border-slate-200 bg-white p-10 text-center text-sm font-bold text-slate-400">{t("empty")}</p>
         )}
