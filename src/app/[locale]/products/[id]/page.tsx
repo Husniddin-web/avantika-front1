@@ -39,36 +39,36 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
   };
 
   return (
-    <main className="bg-[#f6f8fc] pb-20 pt-32">
+    <main className="bg-[#f6f8fc] pb-10 sm:pb-20 pt-20 sm:pt-32">
       <div className="container-shell">
-        <nav className="mb-8 flex items-center justify-start gap-2 text-sm font-semibold text-slate-500">
+        <nav className="mb-4 sm:mb-8 flex flex-wrap items-center justify-start gap-1.5 text-xs sm:text-sm font-semibold text-slate-500">
           <Link href="/" className="hover:text-blue-700">{nav("home")}</Link>
-          <ChevronRight className="size-4" />
+          <ChevronRight className="size-3.5 sm:size-4" />
           <Link href="/products" className="hover:text-blue-700">{nav("products")}</Link>
-          <ChevronRight className="size-4" />
-          <span className="text-slate-900">{title}</span>
+          <ChevronRight className="size-3.5 sm:size-4" />
+          <span className="text-slate-900 line-clamp-1">{title}</span>
         </nav>
 
-        <section className="overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative min-h-[420px] bg-white">
+        <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="relative min-h-[240px] sm:min-h-[350px] lg:min-h-[420px] bg-white">
             <div className="absolute left-0 top-0 hidden h-full w-24 border-r border-slate-100 bg-white lg:block">
               <div className="mx-auto mt-20 size-16 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
                 <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} width={64} height={64} className="size-full object-cover" unoptimized />
               </div>
             </div>
-            <div className="relative h-[420px] lg:ml-24 lg:h-full">
-              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain p-8" unoptimized />
+            <div className="relative h-[240px] sm:h-[350px] lg:ml-24 lg:h-full">
+              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain p-4 sm:p-8" unoptimized />
             </div>
           </div>
 
-          <div className="border-t border-slate-100 p-7 lg:border-l lg:border-t-0 lg:p-12">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-700">
+          <div className="border-t border-slate-100 p-4 sm:p-7 lg:border-l lg:border-t-0 lg:p-12">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-blue-700">
                 {product.categories && product.categories.length > 0 
                   ? product.categories.map(c => localize(c.title, currentLocale)).join(", ") 
                   : (localize(product.category?.title, currentLocale) || t("product"))}
               </span>
-              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
+              <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] sm:text-xs font-bold ${
                 product.prescriptionType === "rx" 
                   ? "bg-red-50 text-red-600 border border-red-200" 
                   : "bg-emerald-50 text-emerald-600 border border-emerald-200"
@@ -76,16 +76,16 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
                 {product.prescriptionType === "rx" ? "Rx (Retseptli)" : "OTC (Retseptsiz)"}
               </span>
             </div>
-            <h1 className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-slate-950">{title}</h1>
+            <h1 className="mt-2 sm:mt-4 text-xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl text-slate-950 leading-tight">{title}</h1>
 
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+            <div className="mt-4 sm:mt-6 overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200">
               <div className="grid grid-cols-[0.9fr_1.1fr] border-b border-slate-200 bg-[#fbf7fb]">
-                <div className="p-4 text-sm font-semibold text-slate-500">{t("dosageForm")}</div>
-                <div className="p-4 text-sm font-bold text-slate-800">{localize(product.dosageForm, currentLocale) || "-"}</div>
+                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-semibold text-slate-500">{t("dosageForm")}</div>
+                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-bold text-slate-800">{localize(product.dosageForm, currentLocale) || "-"}</div>
               </div>
               <div className="grid grid-cols-[0.9fr_1.1fr]">
-                <div className="p-4 text-sm font-semibold text-slate-500">{t("category")}</div>
-                <div className="p-4 text-sm font-bold text-slate-800">
+                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-semibold text-slate-500">{t("category")}</div>
+                <div className="p-2.5 sm:p-4 text-xs sm:text-sm font-bold text-slate-800">
                   {product.categories && product.categories.length > 0 
                     ? product.categories.map(c => localize(c.title, currentLocale)).join(", ") 
                     : (localize(product.category?.title, currentLocale) || "-")}

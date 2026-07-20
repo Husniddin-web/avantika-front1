@@ -94,15 +94,15 @@ export function ProductTabs({
     : "";
 
   return (
-    <div className="mt-8 space-y-6">
+    <div className="mt-4 sm:mt-8 space-y-4 sm:space-y-6">
       {/* Tab Selectors */}
-      <div className="flex border-b border-slate-200 overflow-x-auto scrollbar-none">
+      <div className="flex border-b border-slate-200 overflow-x-auto scrollbar-none gap-1 sm:gap-0">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`whitespace-nowrap pb-4 px-6 text-sm font-bold border-b-2 transition-all duration-200 ${
+            className={`whitespace-nowrap pb-2.5 sm:pb-4 px-3 sm:px-6 text-xs sm:text-sm font-bold border-b-2 transition-all duration-200 ${
               activeTab === tab.id
                 ? "border-blue-700 text-blue-700"
                 : "border-transparent text-slate-500 hover:text-slate-900"
@@ -114,20 +114,20 @@ export function ProductTabs({
       </div>
 
       {/* Tab Panels */}
-      <div className="min-h-[220px]">
+      <div className="min-h-[140px] sm:min-h-[220px]">
         {/* Tab 1: Description & Indications */}
         {activeTab === 0 && (
-          <div className="space-y-5 animate-fadeIn">
+          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
             {therapeuticIndication && (
               <div>
-                <p className="text-xs font-extrabold uppercase tracking-wider text-slate-400">Therapeutic Indication</p>
-                <div className="mt-2 text-sm leading-7 text-slate-600 prose prose-blue max-w-none" dangerouslySetInnerHTML={{__html: therapeuticIndication}} />
+                <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-400">Therapeutic Indication</p>
+                <div className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 prose prose-blue max-w-none" dangerouslySetInnerHTML={{__html: therapeuticIndication}} />
               </div>
             )}
             {indications && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-slate-800">{t.indications}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{indications}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.indications}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{indications}</p>
               </div>
             )}
           </div>
@@ -135,23 +135,23 @@ export function ProductTabs({
 
         {/* Tab 2: Composition & Dosage */}
         {activeTab === 1 && (
-          <div className="space-y-5 animate-fadeIn">
+          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
             {activeIngredient && (
               <div>
-                <h4 className="text-sm font-extrabold text-slate-800">{t.activeIngredient}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{activeIngredient}</p>
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.activeIngredient}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{activeIngredient}</p>
               </div>
             )}
             {composition && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-slate-800">Composition</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{composition}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">Composition</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{composition}</p>
               </div>
             )}
             {dosage && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-slate-800">{t.dosage}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{dosage}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.dosage}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{dosage}</p>
               </div>
             )}
           </div>
@@ -159,29 +159,29 @@ export function ProductTabs({
 
         {/* Tab 3: Usage & Storage */}
         {activeTab === 2 && (
-          <div className="space-y-5 animate-fadeIn">
+          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
             {usageInstructions && (
               <div>
-                <h4 className="text-sm font-extrabold text-slate-800">Usage Instructions</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{usageInstructions}</p>
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">Usage Instructions</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{usageInstructions}</p>
               </div>
             )}
             {contraindications && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-red-600">{t.contra}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{contraindications}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-red-600">{t.contra}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{contraindications}</p>
               </div>
             )}
             {storageConditions && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-slate-800">{t.storage}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{storageConditions}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.storage}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{storageConditions}</p>
               </div>
             )}
             {packageDescription && (
-              <div className="border-t border-slate-100 pt-4">
-                <h4 className="text-sm font-extrabold text-slate-800">{t.package}</h4>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{packageDescription}</p>
+              <div className="border-t border-slate-100 pt-3 sm:pt-4">
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.package}</h4>
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{packageDescription}</p>
               </div>
             )}
           </div>
@@ -191,28 +191,28 @@ export function ProductTabs({
         {activeTab === 3 && (
           <div className="animate-fadeIn">
             {pdfUrl ? (
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl border border-slate-200 p-5 bg-slate-50/50">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-slate-200 p-3.5 sm:p-5 bg-slate-50/50">
                 <div className="flex items-center gap-3">
-                  <span className="grid size-12 place-items-center rounded-xl bg-red-50 text-red-600 shadow-sm">
-                    <FileText className="size-6" />
+                  <span className="grid size-10 sm:size-12 place-items-center rounded-xl bg-red-50 text-red-600 shadow-sm">
+                    <FileText className="size-5 sm:size-6" />
                   </span>
                   <div>
-                    <p className="text-sm font-bold text-slate-900">{instructionPdf?.filename || "Instruction.pdf"}</p>
-                    <p className="text-xs text-slate-400">PDF Document • Instruction for use</p>
+                    <p className="text-xs sm:text-sm font-bold text-slate-900">{instructionPdf?.filename || "Instruction.pdf"}</p>
+                    <p className="text-[10px] sm:text-xs text-slate-400">PDF Document • Instruction for use</p>
                   </div>
                 </div>
                 <a
                   href={pdfUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-6 text-sm font-bold text-white shadow-md shadow-blue-800/10 transition hover:-translate-y-0.5 hover:bg-blue-800 focus-visible:outline-blue-700"
+                  className="inline-flex min-h-10 sm:min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-800/10 transition hover:-translate-y-0.5 hover:bg-blue-800 focus-visible:outline-blue-700"
                 >
                   <FileDown className="size-4" />
                   {t.download}
                 </a>
               </div>
             ) : (
-              <p className="text-sm text-slate-400 italic">{t.noDoc}</p>
+              <p className="text-xs sm:text-sm text-slate-400 italic">{t.noDoc}</p>
             )}
           </div>
         )}
