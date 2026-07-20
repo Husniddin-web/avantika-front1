@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -224,54 +225,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             <Reveal><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
             <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
           </div>
-          <Reveal className="product-marquee mt-8 space-y-3 overflow-hidden py-2 sm:mt-12 sm:space-y-5">
-            {[productItems.slice(0, 5), productItems.slice(5, 10)].map((row, rowIndex) => (
-              <div key={rowIndex} className={`product-marquee-track flex w-max gap-3 sm:gap-5 ${rowIndex === 1 ? "product-marquee-track-reverse" : ""}`}>
-                {[false, true].map((duplicate) => (
-                  <div key={duplicate ? "duplicate" : "original"} aria-hidden={duplicate || undefined} className="flex gap-3 sm:gap-5">
-                    {row.map((product) => (
-                      <Link
-                        key={`${product.id}-${duplicate ? "copy" : "main"}`}
-                        href={product.href}
-                        tabIndex={duplicate ? -1 : undefined}
-                        className="group w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 sm:w-[250px] sm:rounded-[1.35rem]"
-                      >
-                        <div className="relative h-28 overflow-hidden bg-[#f6f8fc] sm:h-40">
-                          <Image
-                            src={product.image}
-                            alt={product.imageAlt}
-                            fill
-                            sizes="(max-width: 640px) 50vw, 285px"
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="p-3 sm:p-5">
-                          <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
-                          <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
-                          <div className="mt-4 border-t border-slate-100 pt-3">
-                            <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
-                              <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
-                                <Image
-                                  src={product.categoryIcon}
-                                  alt=""
-                                  fill
-                                  sizes="44px"
-                                  className="object-contain transition duration-300 group-hover:opacity-80"
-                                />
-                              </span>
-                              <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
-                                {product.category}
-                              </span>
-                              <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ))}
+          <Reveal className="mt-8 space-y-4 sm:mt-12 sm:space-y-6">
+            <ProductSliderRow items={productItems} />
           </Reveal>
         </div>
       </section>
@@ -535,4 +490,95 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
 function stripHtml(value: string) {
   return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+type ProductSliderItem = {
+  id: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+  title: string;
+  form: string;
+  category: string;
+  categoryIcon: string;
+};
+
+function ProductSliderRow({ items }: { items: ProductSliderItem[] }) {
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [dragged, setDragged] = useState(false);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDown(true);
+    setDragged(false);
+    setStartX(e.pageX - e.currentTarget.offsetLeft);
+    setScrollLeft(e.currentTarget.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDown) return;
+    const x = e.pageX - e.currentTarget.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(x - startX) > 5) {
+      setDragged(true);
+    }
+    e.currentTarget.scrollLeft = scrollLeft - walk;
+  };
+
+  return (
+    <div
+      className="flex overflow-x-auto select-none cursor-grab active:cursor-grabbing scrollbar-none gap-3 sm:gap-5 py-2 scroll-smooth touch-pan-x"
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
+      {items.map((product) => (
+        <Link
+          key={product.id}
+          href={product.href}
+          onClick={(e) => {
+            if (dragged) e.preventDefault();
+          }}
+          className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
+        >
+          <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              fill
+              sizes="(max-width: 640px) 50vw, 285px"
+              className="object-cover transition duration-300 group-hover:scale-105"
+            />
+          </div>
+          <div className="p-3 sm:p-5">
+            <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{product.title}</h3>
+            <p className="mt-1 line-clamp-1 text-xs text-slate-500">{product.form}</p>
+            <div className="mt-4 border-t border-slate-100 pt-3">
+              <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
+                <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+                  <Image
+                    src={product.categoryIcon}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className="object-contain transition duration-300 group-hover:opacity-80"
+                  />
+                </span>
+                <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
+                  {product.category}
+                </span>
+                <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
+              </span>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
 }
