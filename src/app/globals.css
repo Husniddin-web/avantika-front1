@@ -345,3 +345,16 @@ summary {
   background: #9aa7f5;
   color: #080a4b;
 }
+
+/* Custom cursor — only on pointer:fine devices (desktop) */
+@media (pointer: fine) {
+  .custom-cursor-active,
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    will-change: transform;
+  }
+}

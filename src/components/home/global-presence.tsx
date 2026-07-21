@@ -2,6 +2,7 @@ import Image from "next/image";
 import {Building2, Factory, Globe2, MapPin} from "lucide-react";
 import {useTranslations} from "next-intl";
 
+import {CountUp} from "../ui/count-up";
 import {Reveal} from "../shared/reveal";
 import {SectionHeading} from "../shared/section-heading";
 
@@ -40,11 +41,15 @@ export function GlobalPresence() {
 
             <div className="mt-6 grid max-w-md grid-cols-2 gap-3 sm:mt-8">
               <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
-                <p className="text-2xl font-extrabold text-blue-800 sm:text-3xl">30+</p>
+                <p className="text-2xl font-extrabold text-blue-800 sm:text-3xl">
+                  <CountUp target={30} suffix="+" duration={2000} />
+                </p>
                 <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("markets")}</p>
               </div>
               <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
-                <p className="text-2xl font-extrabold text-red-500 sm:text-3xl">24</p>
+                <p className="text-2xl font-extrabold text-red-500 sm:text-3xl">
+                  <CountUp target={24} duration={2000} />
+                </p>
                 <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("partners")}</p>
               </div>
             </div>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import {Mail, Menu, Phone, Search, X} from "lucide-react";
 import {useTranslations} from "next-intl";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import {Link, usePathname} from "@/i18n/navigation";
 import {routing, type Locale} from "@/i18n/routing";
@@ -33,12 +33,29 @@ export function SiteHeader({locale}: {locale: Locale}) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isTransparent = isHome && !isScrolled;
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const updateHeader = () => setIsScrolled(window.scrollY > 32);
+    const updateHeader = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+
+      setIsScrolled(currentY > 32);
+
+      // Hide when scrolling down past hero, show when scrolling up
+      if (currentY > 120) {
+        if (delta > 6) setIsHidden(true);   // scrolling down → hide
+        if (delta < -4) setIsHidden(false); // scrolling up → show
+      } else {
+        setIsHidden(false);
+      }
+
+      lastScrollY.current = currentY;
+    };
     updateHeader();
     window.addEventListener("scroll", updateHeader, {passive: true});
     return () => window.removeEventListener("scroll", updateHeader);
@@ -46,9 +63,11 @@ export function SiteHeader({locale}: {locale: Locale}) {
 
   return (
     <header className={`${isHome ? "fixed inset-x-0 top-0" : "sticky top-0"} z-40 transition-all duration-300 ${
+      isHidden ? "-translate-y-full" : "translate-y-0"
+    } ${
       isTransparent
         ? "bg-[#06132f]/32 text-white"
-        : "bg-white text-slate-900 shadow-sm"
+        : "bg-white/95 text-slate-900 shadow-sm backdrop-blur-md"
     }`}>
       <div
         aria-hidden={isHome && !isScrolled}

@@ -10,6 +10,7 @@ import {imageSrc} from "@/lib/image-src";
 import {localize} from "@/lib/localized";
 import {fetchPublicProduct, fetchPublicProducts} from "@/lib/public-api";
 import {ProductTabs} from "@/components/products/product-tabs";
+import {ProductLightbox} from "@/components/ui/product-lightbox";
 
 export default async function ProductDetailPage({params}: PageProps<"/[locale]/products/[id]">) {
   const {locale, id} = await params;
@@ -57,7 +58,10 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
               </div>
             </div>
             <div className="relative h-[240px] sm:h-[350px] lg:ml-24 lg:h-full">
-              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain p-4 sm:p-8" unoptimized />
+              <ProductLightbox
+                src={imageSrc(product.images[0]?.url, "/d1.jpeg")}
+                alt={title}
+              />
             </div>
           </div>
 
