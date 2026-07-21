@@ -184,8 +184,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
       <section className="section-space bg-[#f3f6fc]">
         <div className="container-shell">
-          <Reveal variant="clip"><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
-          <div className="category-fog relative mt-8 [overflow-x:clip] py-4 sm:mt-12 sm:py-5" style={{"--fog-color": "#f3f6fc"} as React.CSSProperties}>
+          <Reveal variant="up"><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
+          <div className="category-fog relative mt-6 overflow-hidden py-6 -my-3 sm:mt-10 sm:py-8 sm:-my-4" style={{"--fog-color": "#f3f6fc"} as React.CSSProperties}>
           <Reveal className="category-slider">
             <div className="category-track flex w-max gap-3 sm:gap-5">
               {[false, true].map((isDuplicate) => (
@@ -226,7 +226,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-white">
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal variant="clip"><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
+            <Reveal variant="up"><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
             <Reveal variant="right" delay={120}><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
           </div>
           <Reveal className="mt-8 space-y-4 sm:mt-12 sm:space-y-6">
@@ -243,7 +243,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#05072f]/95 via-[#080a4b]/78 to-[#080a4b]/35" />
         <div className="absolute inset-0 z-0 bg-[#080a4b]/20" />
         <div className="container-shell relative z-10">
-          <Reveal variant="clip"><SectionHeading eyebrow={t("directions.eyebrow")} title={t("directions.title")} description={t("directions.description")} inverse /></Reveal>
+          <Reveal variant="up"><SectionHeading eyebrow={t("directions.eyebrow")} title={t("directions.title")} description={t("directions.description")} inverse /></Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {directions.map(({key, icon: Icon}, index) => (
               <Reveal key={key} variant="spring" delay={index * 110}>
@@ -436,7 +436,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-white">
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal variant="clip"><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
+            <Reveal variant="up"><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
             <Reveal variant="right" delay={120}><ArrowLink href="/news">{t("news.all")}</ArrowLink></Reveal>
           </div>
           {/* Featured editorial layout: 1 big + 2 small */}

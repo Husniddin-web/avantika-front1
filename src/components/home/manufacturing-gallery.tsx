@@ -37,7 +37,7 @@ export function ManufacturingGallery() {
   return (
     <section className="bg-white py-20 sm:py-28">
       <div className="container-shell">
-        <Reveal variant="clip">
+        <Reveal variant="up">
           <SectionHeading
             eyebrow={t("eyebrow")}
             title={t("title")}

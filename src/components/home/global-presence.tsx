@@ -34,40 +34,46 @@ export function GlobalPresence() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_15%,rgba(37,99,235,0.28),transparent_32%),radial-gradient(circle_at_12%_88%,rgba(8,10,75,0.16),transparent_30%)]" />
       <div className="container-shell">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center xl:gap-16">
-          <Reveal variant="clip">
-            <SectionHeading
-              eyebrow={t("eyebrow")}
-              title={t("title")}
-              description={t("description")}
-            />
+          <div>
+            <Reveal variant="left">
+              <SectionHeading
+                eyebrow={t("eyebrow")}
+                title={t("title")}
+                description={t("description")}
+              />
+            </Reveal>
 
-            <div className="mt-6 grid max-w-md grid-cols-2 gap-3 sm:mt-8">
-              <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
-                <p className="text-2xl font-extrabold text-blue-800 sm:text-3xl">
-                  <CountUp target={30} suffix="+" duration={2000} />
-                </p>
-                <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("markets")}</p>
+            <Reveal variant="up" delay={100}>
+              <div className="mt-6 grid max-w-md grid-cols-2 gap-3 sm:mt-8">
+                <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
+                  <p className="text-2xl font-extrabold text-blue-800 sm:text-3xl">
+                    <CountUp target={30} suffix="+" duration={2000} />
+                  </p>
+                  <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("markets")}</p>
+                </div>
+                <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
+                  <p className="text-2xl font-extrabold text-red-500 sm:text-3xl">
+                    <CountUp target={24} duration={2000} />
+                  </p>
+                  <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("partners")}</p>
+                </div>
               </div>
-              <div className="rounded-2xl border border-blue-100 bg-white/78 p-4 shadow-sm shadow-blue-950/5 backdrop-blur sm:rounded-3xl sm:bg-white/82 sm:p-5">
-                <p className="text-2xl font-extrabold text-red-500 sm:text-3xl">
-                  <CountUp target={24} duration={2000} />
-                </p>
-                <p className="mt-1 text-xs font-bold leading-5 text-slate-500">{t("partners")}</p>
-              </div>
-            </div>
+            </Reveal>
 
-            <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
-              {locations.map((location) => (
-                <span
-                  key={location.key}
-                  className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/78 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm shadow-blue-950/5 backdrop-blur sm:bg-white/82"
-                >
-                  <span className={`size-2 rounded-full ${location.key === "uzbekistan" ? "bg-red-500" : "bg-blue-600"}`} />
-                  {t(`locations.${location.key}.country`)}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+            <Reveal variant="up" delay={200}>
+              <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
+                {locations.map((location) => (
+                  <span
+                    key={location.key}
+                    className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/78 px-4 py-2 text-xs font-bold text-slate-600 shadow-sm shadow-blue-950/5 backdrop-blur sm:bg-white/82"
+                  >
+                    <span className={`size-2 rounded-full ${location.key === "uzbekistan" ? "bg-red-500" : "bg-blue-600"}`} />
+                    {t(`locations.${location.key}.country`)}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+          </div>
 
           <Reveal delay={120} variant="right">
             <div className="relative overflow-hidden rounded-[1.5rem] bg-[#080a4b] shadow-[0_30px_80px_-32px_rgba(8,10,75,0.65)] sm:rounded-[2rem]">
