@@ -37,7 +37,7 @@ export function ManufacturingGallery() {
   return (
     <section className="bg-white py-20 sm:py-28">
       <div className="container-shell">
-        <Reveal>
+        <Reveal variant="clip">
           <SectionHeading
             eyebrow={t("eyebrow")}
             title={t("title")}
@@ -45,14 +45,16 @@ export function ManufacturingGallery() {
           />
         </Reveal>
 
-        <Reveal className="mt-10 sm:mt-12">
+        <div className="mt-10 sm:mt-12">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-12 sm:grid-rows-2 sm:gap-4">
             {galleryItems.map((item, index) => {
               const isCompact = item.variant === "compact";
 
               return (
-                <article
+                <Reveal
                   key={item.key}
+                  variant="spring"
+                  delay={index * 90}
                   className={`group relative isolate overflow-hidden bg-[#080a4b] text-left ${item.layout}`}
                 >
                   <Image
@@ -82,11 +84,11 @@ export function ManufacturingGallery() {
                     </h3>
                     <p className="mt-3 hidden text-xs font-bold uppercase tracking-[0.14em] text-white/60 sm:block">{t("view")}</p>
                   </div>
-                </article>
+                </Reveal>
               );
             })}
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

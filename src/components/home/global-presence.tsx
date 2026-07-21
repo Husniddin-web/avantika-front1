@@ -31,7 +31,7 @@ export function GlobalPresence() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_80%_15%,rgba(37,99,235,0.28),transparent_32%),radial-gradient(circle_at_12%_88%,rgba(8,10,75,0.16),transparent_30%)]" />
       <div className="container-shell">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center xl:gap-16">
-          <Reveal>
+          <Reveal variant="clip">
             <SectionHeading
               eyebrow={t("eyebrow")}
               title={t("title")}
@@ -62,7 +62,7 @@ export function GlobalPresence() {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
+          <Reveal delay={120} variant="right">
             <div className="relative overflow-hidden rounded-[1.5rem] bg-[#080a4b] shadow-[0_30px_80px_-32px_rgba(8,10,75,0.65)] sm:rounded-[2rem]">
               <div className="relative min-h-[560px] sm:min-h-[460px] lg:min-h-[520px]">
                 <Image
