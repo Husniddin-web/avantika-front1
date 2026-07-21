@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {Building2, Factory, Globe2, MapPin} from "lucide-react";
 import {useTranslations} from "next-intl";
