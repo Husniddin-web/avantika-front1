@@ -28,7 +28,6 @@ import {localize} from "@/lib/localized";
 import {imageSrc} from "@/lib/image-src";
 
 import {HeroSlider} from "./hero-slider";
-import {GlobalPresenceMap} from "./global-presence-map";
 import {TeamCarousel} from "./team-carousel";
 import {GlobalPresence} from "./global-presence";
 import {ManufacturingGallery} from "./manufacturing-gallery";
@@ -318,8 +317,6 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
           </div>
         </Reveal>
       </section>
-
-      <GlobalPresenceMap locale={locale} />
 
       <ManufacturingGallery />
 
