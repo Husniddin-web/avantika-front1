@@ -184,7 +184,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
       <section className="section-space bg-[#f3f6fc]">
         <div className="container-shell">
-          <Reveal><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
+          <Reveal variant="clip"><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
           <Reveal className="category-slider mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3">
             <div className="category-track flex w-max gap-3 sm:gap-5">
               {[false, true].map((isDuplicate) => (
@@ -224,8 +224,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-white">
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
-            <Reveal><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
+            <Reveal variant="clip"><SectionHeading eyebrow={t("products.eyebrow")} title={t("products.title")} description={t("products.description")} /></Reveal>
+            <Reveal variant="right" delay={120}><ArrowLink href="/products">{t("products.all")}</ArrowLink></Reveal>
           </div>
           <Reveal className="mt-8 space-y-4 sm:mt-12 sm:space-y-6">
             <ProductSliderRow items={productItems.slice(0, 5)} />
@@ -241,10 +241,10 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#05072f]/95 via-[#080a4b]/78 to-[#080a4b]/35" />
         <div className="absolute inset-0 z-0 bg-[#080a4b]/20" />
         <div className="container-shell relative z-10">
-          <Reveal><SectionHeading eyebrow={t("directions.eyebrow")} title={t("directions.title")} description={t("directions.description")} inverse /></Reveal>
+          <Reveal variant="clip"><SectionHeading eyebrow={t("directions.eyebrow")} title={t("directions.title")} description={t("directions.description")} inverse /></Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {directions.map(({key, icon: Icon}, index) => (
-              <Reveal key={key} delay={index * 80}>
+              <Reveal key={key} variant="spring" delay={index * 110}>
                 <article className="group h-full rounded-[1.75rem] border border-white/10 bg-white/[0.07] p-6 transition duration-300 hover:-translate-y-1 hover:border-blue-300/40 hover:bg-white/[0.11]">
                   <div className="flex items-start justify-between">
                     <span className="grid size-13 place-items-center rounded-2xl bg-[#9aa7f5] text-[#080a4b]"><Icon className="size-6" /></span>
@@ -283,7 +283,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         <div className="hero-dot-grid absolute left-0 top-16 -z-10 hidden h-32 w-44 opacity-60 lg:block" />
 
         <div className="container-shell flex min-h-[680px] items-center py-16 sm:min-h-[720px]">
-          <Reveal className="max-w-[570px]">
+          <Reveal variant="left" className="max-w-[570px]">
             <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("advantages.eyebrow")}</p>
             <h2 className="mt-5 max-w-xl text-balance text-4xl font-extrabold leading-[1.05] tracking-[-0.045em] text-[#10172b] sm:text-5xl lg:text-6xl">{t("advantages.title")}</h2>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-600 sm:text-lg">{t("advantages.description")}</p>
@@ -298,19 +298,19 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
           </Reveal>
         </div>
 
-        <Reveal delay={120} className="absolute left-[52%] top-[20%] hidden xl:block">
+        <Reveal delay={120} variant="right" className="absolute left-[52%] top-[20%] hidden xl:block">
           <div className="flex min-w-52 items-center gap-4 rounded-3xl border border-white/80 bg-white/88 p-5 premium-shadow backdrop-blur-xl">
             <span className="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-700"><BadgeCheck className="size-6" /></span>
             <div><p className="text-lg font-extrabold text-blue-800">{t("advantages.items.gmp.value")}</p><p className="mt-1 text-xs text-slate-500">{t("advantages.items.gmp.label")}</p></div>
           </div>
         </Reveal>
-        <Reveal delay={180} className="absolute left-[49%] top-[45%] hidden xl:block">
+        <Reveal delay={180} variant="right" className="absolute left-[49%] top-[45%] hidden xl:block">
           <div className="flex min-w-52 items-center gap-4 rounded-3xl border border-white/80 bg-white/88 p-5 premium-shadow backdrop-blur-xl">
             <span className="grid size-12 place-items-center rounded-2xl bg-blue-50 text-blue-700"><CalendarDays className="size-6" /></span>
             <div><p className="text-2xl font-extrabold text-blue-800">{t("advantages.items.experience.value")}</p><p className="mt-1 text-xs text-slate-500">{t("advantages.items.experience.label")}</p></div>
           </div>
         </Reveal>
-        <Reveal delay={240} className="absolute bottom-[12%] left-[51%] hidden xl:block">
+        <Reveal delay={240} variant="right" className="absolute bottom-[12%] left-[51%] hidden xl:block">
           <div className="flex min-w-60 items-center gap-4 rounded-3xl bg-gradient-to-br from-blue-600 to-blue-900 p-5 text-white shadow-2xl shadow-blue-900/25">
             <span className="grid size-12 place-items-center rounded-2xl bg-white/15"><Users className="size-6" /></span>
             <div><p className="text-2xl font-extrabold">{t("advantages.items.specialists.value")}</p><p className="mt-1 text-xs text-blue-100">{t("advantages.items.specialists.label")}</p></div>
@@ -337,7 +337,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         </svg>
 
         <div className="container-shell relative z-20">
-          <Reveal className="max-w-2xl">
+          <Reveal variant="left" className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-[9px] font-extrabold uppercase tracking-[0.16em] text-blue-100 sm:backdrop-blur sm:px-4 sm:text-[10px] sm:tracking-[0.2em]">
               <Factory className="size-4" />
               {t("manufacturing.eyebrow")}
@@ -364,7 +364,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-[#f4f7fb]">
         <div className="container-shell">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
-            <Reveal>
+            <Reveal variant="left">
               <div className="relative isolate flex h-full min-h-[420px] overflow-hidden rounded-[1.5rem] bg-[#071036] p-6 text-white sm:p-8 lg:rounded-[1.75rem] lg:p-10">
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(65,105,225,0.42),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
                 <div className="absolute -right-16 bottom-10 -z-10 size-56 rounded-full border border-white/10" />
@@ -402,7 +402,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
             <div className="grid gap-4">
               {certificates.map(({key, icon: Icon}, index) => (
-                <Reveal key={key} delay={index * 90}>
+                <Reveal key={key} variant="right" delay={index * 110}>
                   <article className="group grid gap-5 rounded-[1.25rem] border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
                     <span className="grid size-16 place-items-center rounded-2xl bg-[#eef3ff] text-blue-800 transition duration-300 group-hover:bg-blue-700 group-hover:text-white">
                       <Icon className="size-7" />
@@ -434,12 +434,12 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-white">
         <div className="container-shell">
           <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
-            <Reveal><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
-            <Reveal><ArrowLink href="/news">{t("news.all")}</ArrowLink></Reveal>
+            <Reveal variant="clip"><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
+            <Reveal variant="right" delay={120}><ArrowLink href="/news">{t("news.all")}</ArrowLink></Reveal>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {newsItems.map((article, index) => (
-              <Reveal key={article.id} delay={index * 90}>
+              <Reveal key={article.id} variant="spring" delay={index * 130}>
                 <article className="group flex flex-col h-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
                   <Link href={`/news/${article.slug}`} className="relative aspect-[4/3] overflow-hidden bg-slate-100 block">
                     <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" unoptimized />
@@ -462,7 +462,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
 
       <section className="bg-white py-16 sm:py-20">
         <div className="container-shell">
-          <Reveal>
+          <Reveal variant="scale">
             <div className="relative overflow-hidden rounded-[2rem] bg-[#10172b] px-7 py-12 text-white sm:px-12 lg:flex lg:items-center lg:justify-between lg:px-16 lg:py-14">
               <div className="absolute -right-20 -top-28 size-80 rounded-full bg-[#2948c8] blur-3xl" />
               <div className="relative max-w-2xl">
