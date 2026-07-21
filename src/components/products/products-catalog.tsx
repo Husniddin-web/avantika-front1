@@ -10,6 +10,7 @@ import type {Locale} from "@/i18n/routing";
 import type {Category, Product} from "@/lib/admin/api";
 import {imageSrc} from "@/lib/image-src";
 import {localize} from "@/lib/localized";
+import {ProductCardSkeleton} from "@/components/ui/product-card-skeleton";
 
 type ProductsCatalogProps = {
   products: Product[];
@@ -22,12 +23,18 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(12);
+  const [isFiltering, setIsFiltering] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [dragged, setDragged] = useState(false);
+
+  const triggerShimmer = () => {
+    setIsFiltering(true);
+    setTimeout(() => setIsFiltering(false), 220);
+  };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDown(true);
@@ -59,11 +66,13 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
       e.preventDefault();
       return;
     }
+    triggerShimmer();
     setSelectedCategory(id);
     setVisibleCount(12);
   };
 
   const handleQueryChange = (val: string) => {
+    triggerShimmer();
     setQuery(val);
     setVisibleCount(12);
   };
@@ -154,29 +163,33 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
       ) : null}
 
       <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-        {visibleProducts.length ? visibleProducts.map((product) => (
-          <Link 
-            key={product.id} 
-            href={`/products/${product.id}`}
-            className="group block overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-3xl"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
-              <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-300 group-hover:scale-105" unoptimized />
-            </div>
-            <div className="p-3 sm:p-6">
-              <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">
-                {product.categories && product.categories.length > 0 
-                  ? product.categories.map(c => localize(c.title, locale)).join(", ") 
-                  : (localize(product.category?.title, locale) || product.slug)}
-              </p>
-              <h3 className="mt-2 line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-xl">{localize(product.title, locale)}</h3>
-              <p className="mt-1 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 transition-transform group-hover:translate-x-1 sm:mt-5 sm:gap-2 sm:text-sm">
-                {t("details")} <ArrowRight className="size-3.5 sm:size-4" />
-              </span>
-            </div>
-          </Link>
-        )) : (
+        {isFiltering ? (
+          Array.from({length: 6}).map((_, i) => <ProductCardSkeleton key={i} />)
+        ) : visibleProducts.length ? (
+          visibleProducts.map((product) => (
+            <Link 
+              key={product.id} 
+              href={`/products/${product.id}`}
+              className="group block overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-3xl"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
+                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-300 group-hover:scale-105" unoptimized />
+              </div>
+              <div className="p-3 sm:p-6">
+                <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">
+                  {product.categories && product.categories.length > 0 
+                    ? product.categories.map(c => localize(c.title, locale)).join(", ") 
+                    : (localize(product.category?.title, locale) || product.slug)}
+                </p>
+                <h3 className="mt-2 line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-xl">{localize(product.title, locale)}</h3>
+                <p className="mt-1 line-clamp-1 text-xs font-semibold text-slate-500 sm:text-sm">{localize(product.dosageForm, locale)}</p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 transition-transform group-hover:translate-x-1 sm:mt-5 sm:gap-2 sm:text-sm">
+                  {t("details")} <ArrowRight className="size-3.5 sm:size-4" />
+                </span>
+              </div>
+            </Link>
+          ))
+        ) : (
           <p className="col-span-full rounded-3xl border border-slate-200 bg-white p-10 text-center text-sm font-bold text-slate-400">{t("empty")}</p>
         )}
       </div>
