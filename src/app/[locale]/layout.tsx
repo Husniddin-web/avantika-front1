@@ -9,7 +9,6 @@ import {SiteHeader} from "@/components/layout/site-header";
 import {routing} from "@/i18n/routing";
 import {ScrollProgressBar} from "@/components/ui/scroll-progress-bar";
 import {BackToTop} from "@/components/ui/back-to-top";
-import {CustomCursor} from "@/components/ui/custom-cursor";
 
 import "flag-icons/css/flag-icons.min.css";
 import "../globals.css";
@@ -65,7 +64,6 @@ export default async function LocaleLayout({
       <body className="min-h-full bg-white text-[#10172b]">
         <NextIntlClientProvider messages={messages}>
           <ScrollProgressBar />
-          <CustomCursor />
           <div className="flex min-h-screen flex-col">
             <SiteHeader locale={locale} />
             {children}
