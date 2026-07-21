@@ -185,7 +185,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-[#f3f6fc]">
         <div className="container-shell">
           <Reveal variant="clip"><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
-          <Reveal className="category-slider mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3">
+          <div className="category-fog relative mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3" style={{"--fog-color": "#f3f6fc"} as React.CSSProperties}>
+          <Reveal className="category-slider">
             <div className="category-track flex w-max gap-3 sm:gap-5">
               {[false, true].map((isDuplicate) => (
                 <div
@@ -218,6 +219,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
               ))}
             </div>
           </Reveal>
+          </div>
         </div>
       </section>
 
@@ -245,7 +247,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {directions.map(({key, icon: Icon}, index) => (
               <Reveal key={key} variant="spring" delay={index * 110}>
-                <article className="group h-full rounded-[1.75rem] border border-white/10 bg-white/[0.07] p-6 transition duration-300 hover:-translate-y-1 hover:border-blue-300/40 hover:bg-white/[0.11]">
+                <article className="direction-card group h-full rounded-[1.75rem] border border-white/10 bg-white/[0.07] p-6 transition duration-300 hover:-translate-y-1">
                   <div className="flex items-start justify-between">
                     <span className="grid size-13 place-items-center rounded-2xl bg-[#9aa7f5] text-[#080a4b]"><Icon className="size-6" /></span>
                     <span className="text-xs font-bold text-white/25">0{index + 1}</span>
@@ -437,40 +439,64 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
             <Reveal variant="clip"><SectionHeading eyebrow={t("news.eyebrow")} title={t("news.title")} description={t("news.description")} /></Reveal>
             <Reveal variant="right" delay={120}><ArrowLink href="/news">{t("news.all")}</ArrowLink></Reveal>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {newsItems.map((article, index) => (
-              <Reveal key={article.id} variant="spring" delay={index * 130}>
-                <article className="group flex flex-col h-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
-                  <Link href={`/news/${article.slug}`} className="relative aspect-[4/3] overflow-hidden bg-slate-100 block">
-                    <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" unoptimized />
-                    <span className="absolute bottom-4 left-4 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800">{article.category}</span>
+          {/* Featured editorial layout: 1 big + 2 small */}
+          {newsItems.length > 0 && (
+            <div className="mt-12 grid gap-5 lg:grid-cols-[1.4fr_1fr] lg:grid-rows-2 lg:gap-6">
+              {/* Featured — katta karta */}
+              <Reveal variant="left" className="lg:row-span-2">
+                <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
+                  <Link href={`/news/${newsItems[0].slug}`} className="relative block flex-1 overflow-hidden bg-slate-100 min-h-[260px] sm:min-h-[340px] lg:min-h-0">
+                    <Image src={newsItems[0].image} alt={newsItems[0].imageAlt} fill sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover transition duration-700 group-hover:scale-105" unoptimized />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06122f]/80 via-[#06122f]/20 to-transparent" />
+                    <span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800 backdrop-blur-sm">{newsItems[0].category}</span>
+                    <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+                      <p className="text-[10px] font-semibold text-blue-200/80">{newsItems[0].date}</p>
+                      <h3 className="mt-2 text-xl font-extrabold leading-tight text-white transition group-hover:text-blue-200 sm:text-2xl lg:text-3xl">{newsItems[0].title}</h3>
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-blue-100/70">{newsItems[0].description}</p>
+                    </div>
                   </Link>
-                  <div className="p-6 flex flex-col flex-1">
-                    <p className="text-xs font-semibold text-slate-400">{article.date}</p>
-                    <Link href={`/news/${article.slug}`} className="block">
-                      <h3 className="mt-3 text-xl font-extrabold leading-7 text-[#10172b] group-hover:text-blue-700 transition duration-300 line-clamp-2 min-h-[56px]">{article.title}</h3>
-                    </Link>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-500 flex-1">{article.description}</p>
-                    <Link href={`/news/${article.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 hover:text-blue-800">{t("news.more")}<ArrowRight className="size-4" /></Link>
-                  </div>
                 </article>
               </Reveal>
-            ))}
-          </div>
+
+              {/* 2 kichik karta */}
+              {newsItems.slice(1, 3).map((article, index) => (
+                <Reveal key={article.id} variant="right" delay={index * 120}>
+                  <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white transition hover:shadow-2xl hover:shadow-blue-950/10">
+                    <Link href={`/news/${article.slug}`} className="relative aspect-[16/9] block overflow-hidden bg-slate-100">
+                      <Image src={article.image} alt={article.imageAlt} fill sizes="(max-width: 1024px) 100vw, 40vw" className="object-cover transition duration-700 group-hover:scale-105" unoptimized />
+                      <span className="absolute bottom-3 left-3 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-800">{article.category}</span>
+                    </Link>
+                    <div className="flex flex-col flex-1 p-5">
+                      <p className="text-xs font-semibold text-slate-400">{article.date}</p>
+                      <Link href={`/news/${article.slug}`} className="block flex-1">
+                        <h3 className="mt-2 text-base font-extrabold leading-6 text-[#10172b] group-hover:text-blue-700 transition duration-300 line-clamp-2">{article.title}</h3>
+                      </Link>
+                      <Link href={`/news/${article.slug}`} className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-blue-700 hover:text-blue-800">
+                        {t("news.more")}<ArrowRight className="size-4" />
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       <section className="bg-white py-16 sm:py-20">
         <div className="container-shell">
           <Reveal variant="scale">
-            <div className="relative overflow-hidden rounded-[2rem] bg-[#10172b] px-7 py-12 text-white sm:px-12 lg:flex lg:items-center lg:justify-between lg:px-16 lg:py-14">
-              <div className="absolute -right-20 -top-28 size-80 rounded-full bg-[#2948c8] blur-3xl" />
-              <div className="relative max-w-2xl">
-                <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-200">{t("cta.eyebrow")}</p>
-                <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
-                <p className="mt-4 text-sm leading-7 text-blue-100/65 sm:text-base">{t("cta.description")}</p>
+            <div className="cta-glow-border rounded-[2rem]">
+              <div className="relative overflow-hidden rounded-[2rem] bg-[#10172b] px-7 py-12 text-white sm:px-12 lg:flex lg:items-center lg:justify-between lg:px-16 lg:py-14">
+                <div className="absolute -right-20 -top-28 size-80 rounded-full bg-[#2948c8] blur-3xl" />
+                <div className="absolute right-0 bottom-0 size-64 rounded-full bg-indigo-800/30 blur-3xl" />
+                <div className="relative max-w-2xl">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-200">{t("cta.eyebrow")}</p>
+                  <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">{t("cta.title")}</h2>
+                  <p className="mt-4 text-sm leading-7 text-blue-100/65 sm:text-base">{t("cta.description")}</p>
+                </div>
+                <div className="relative mt-8 lg:mt-0"><ArrowLink href="/contacts" inverse>{t("cta.button")}</ArrowLink></div>
               </div>
-              <div className="relative mt-8 lg:mt-0"><ArrowLink href="/contacts" inverse>{t("cta.button")}</ArrowLink></div>
             </div>
           </Reveal>
         </div>

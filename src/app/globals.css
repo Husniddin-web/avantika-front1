@@ -198,6 +198,128 @@ summary {
   }
 }
 
+/* ── Ken Burns — hero image slow zoom ── */
+@keyframes ken-burns {
+  0%   { transform: scale(1)    translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-1.5%, -0.5%, 0); }
+}
+
+.hero-image-active {
+  animation: ken-burns 8s ease-out forwards;
+}
+
+/* ── Scroll indicator bounce ── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0) translateX(-50%); opacity: 0.7; }
+  50%       { transform: translateY(8px) translateX(-50%); opacity: 1; }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ── Category fade fog (chap/o'ng) ── */
+.category-fog::before,
+.category-fog::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  width: clamp(60px, 8vw, 120px);
+}
+
+.category-fog::before {
+  left: 0;
+  background: linear-gradient(to right, var(--fog-color, #f3f6fc), transparent);
+}
+
+.category-fog::after {
+  right: 0;
+  background: linear-gradient(to left, var(--fog-color, #f3f6fc), transparent);
+}
+
+/* ── Direction card glow + gradient sweep ── */
+.direction-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.direction-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  background: linear-gradient(135deg, rgba(154, 167, 245, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.direction-card:hover::before {
+  opacity: 1;
+}
+
+.direction-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  box-shadow: inset 0 0 0 1px rgba(154, 167, 245, 0.6), 0 0 28px rgba(99, 102, 241, 0.25);
+  pointer-events: none;
+}
+
+.direction-card:hover::after {
+  opacity: 1;
+}
+
+/* ── CTA rotating border ── */
+@keyframes cta-border-spin {
+  0%   { --cta-angle: 0deg; }
+  100% { --cta-angle: 360deg; }
+}
+
+@property --cta-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.cta-glow-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.cta-glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--cta-angle),
+    #3b82f6 0%,
+    #6366f1 25%,
+    #a855f7 40%,
+    transparent 50%,
+    transparent 75%,
+    #3b82f6 100%
+  );
+  animation: cta-border-spin 4s linear infinite;
+  z-index: -1;
+}
+
+.cta-glow-border::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(2rem - 2px);
+  background: #10172b;
+  z-index: -1;
+}
+
 /* ═══════════════════════════════════════════════
    REVEAL ANIMATION SYSTEM — multi-variant
    ═══════════════════════════════════════════════ */

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {ArrowRight} from "lucide-react";
+import {ArrowRight, ChevronDown} from "lucide-react";
 import {useTranslations} from "next-intl";
 import {useEffect, useState} from "react";
 
@@ -17,16 +17,24 @@ export function HeroSlider() {
   const t = useTranslations("Home.hero");
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  // Track previous slide to restart Ken Burns on each transition
+  const [slideKey, setSlideKey] = useState(0);
 
   useEffect(() => {
     if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const timer = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
+      setSlideKey((k) => k + 1);
     }, 6000);
 
     return () => window.clearInterval(timer);
   }, [isPaused]);
+
+  const handleDotClick = (index: number) => {
+    setActiveSlide(index);
+    setSlideKey((k) => k + 1);
+  };
 
   return (
     <section
@@ -47,9 +55,14 @@ export function HeroSlider() {
           priority={index === 0}
           sizes="100vw"
           aria-hidden={index !== activeSlide}
-          className={`-z-20 object-cover transition-opacity duration-1000 ease-out ${slide.position} ${
-            index === activeSlide ? "opacity-100" : "opacity-0"
+          className={`-z-20 object-cover ${slide.position} transition-opacity duration-1000 ease-out ${
+            index === activeSlide
+              // Re-key forces CSS animation restart on each slide change
+              ? `opacity-100 hero-image-active`
+              : "opacity-0"
           }`}
+          // Re-mount via key to restart Ken Burns animation
+          style={index === activeSlide ? {animationName: `ken-burns-${slideKey}`} : undefined}
         />
       ))}
 
@@ -58,7 +71,7 @@ export function HeroSlider() {
 
       <div className="container-shell flex min-h-[720px] items-center py-28 lg:min-h-[100svh]">
         <div className="max-w-[620px]">
-          <div key={slides[activeSlide].key} className="hero-copy-enter">
+          <div key={`${slides[activeSlide].key}-${slideKey}`} className="hero-copy-enter">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-extrabold text-white backdrop-blur">
               <span className="size-2 rounded-full bg-white" />
               {t(`slides.${slides[activeSlide].key}.badge`)}
@@ -84,12 +97,13 @@ export function HeroSlider() {
         </div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-[#071d38]/35 px-3 py-2 backdrop-blur-md">
+      {/* Dot indicators */}
+      <div className="absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-[#071d38]/35 px-3 py-2 backdrop-blur-md sm:bottom-10">
         {slides.map((slide, index) => (
           <button
             key={slide.src}
             type="button"
-            onClick={() => setActiveSlide(index)}
+            onClick={() => handleDotClick(index)}
             aria-label={`${t(`slides.${slide.key}.title`)} ${index + 1}`}
             aria-current={index === activeSlide ? "true" : undefined}
             className={`h-2 rounded-full transition-all duration-300 ${
@@ -97,6 +111,15 @@ export function HeroSlider() {
             }`}
           />
         ))}
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        aria-hidden="true"
+        className="scroll-indicator absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 sm:flex"
+      >
+        <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/50">Scroll</span>
+        <ChevronDown className="size-5 text-white/50" />
       </div>
     </section>
   );
