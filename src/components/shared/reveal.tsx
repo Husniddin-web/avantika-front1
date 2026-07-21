@@ -10,9 +10,11 @@ type RevealProps = {
   delay?: number;
   /** Animation variant. "up" by default. Directional variants only apply on desktop ≥768px. */
   variant?: RevealVariant;
+  /** If true, triggers immediately without waiting for scroll (for above-fold content) */
+  immediate?: boolean;
 };
 
-export function Reveal({children, className = "", delay = 0, variant = "up"}: RevealProps) {
+export function Reveal({children, className = "", delay = 0, variant = "up", immediate = false}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -26,8 +28,11 @@ export function Reveal({children, className = "", delay = 0, variant = "up"}: Re
       return;
     }
 
-    // On mobile, use a tighter threshold for faster triggers
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    // Above-fold content: show immediately after mount
+    if (immediate) {
+      const t = setTimeout(() => setIsVisible(true), 60);
+      return () => clearTimeout(t);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -37,14 +42,15 @@ export function Reveal({children, className = "", delay = 0, variant = "up"}: Re
         }
       },
       {
-        rootMargin: isMobile ? "0px 0px -40px 0px" : "0px 0px -70px 0px",
-        threshold: isMobile ? 0.06 : 0.1,
+        // rootMargin: positive bottom margin so elements trigger AS SOON as they enter viewport
+        rootMargin: "0px 0px 0px 0px",
+        threshold: 0.01,
       },
     );
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [immediate]);
 
   return (
     <div

@@ -185,7 +185,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <section className="section-space bg-[#f3f6fc]">
         <div className="container-shell">
           <Reveal variant="clip"><SectionHeading eyebrow={t("categories.eyebrow")} title={t("categories.title")} description={t("categories.description")} centered /></Reveal>
-          <div className="category-fog relative mt-8 overflow-hidden py-2 sm:mt-12 sm:py-3" style={{"--fog-color": "#f3f6fc"} as React.CSSProperties}>
+          <div className="category-fog relative mt-8 [overflow-x:clip] py-4 sm:mt-12 sm:py-5" style={{"--fog-color": "#f3f6fc"} as React.CSSProperties}>
           <Reveal className="category-slider">
             <div className="category-track flex w-max gap-3 sm:gap-5">
               {[false, true].map((isDuplicate) => (

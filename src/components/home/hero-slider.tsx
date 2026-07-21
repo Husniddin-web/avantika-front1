@@ -17,15 +17,12 @@ export function HeroSlider() {
   const t = useTranslations("Home.hero");
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  // Track previous slide to restart Ken Burns on each transition
-  const [slideKey, setSlideKey] = useState(0);
 
   useEffect(() => {
     if (isPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const timer = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % slides.length);
-      setSlideKey((k) => k + 1);
     }, 6000);
 
     return () => window.clearInterval(timer);
@@ -33,7 +30,6 @@ export function HeroSlider() {
 
   const handleDotClick = (index: number) => {
     setActiveSlide(index);
-    setSlideKey((k) => k + 1);
   };
 
   return (
@@ -55,14 +51,9 @@ export function HeroSlider() {
           priority={index === 0}
           sizes="100vw"
           aria-hidden={index !== activeSlide}
-          className={`-z-20 object-cover ${slide.position} transition-opacity duration-1000 ease-out ${
-            index === activeSlide
-              // Re-key forces CSS animation restart on each slide change
-              ? `opacity-100 hero-image-active`
-              : "opacity-0"
+          className={`-z-20 object-cover transition-opacity duration-1000 ease-out ${slide.position} ${
+            index === activeSlide ? "opacity-100 hero-image-active" : "opacity-0"
           }`}
-          // Re-mount via key to restart Ken Burns animation
-          style={index === activeSlide ? {animationName: `ken-burns-${slideKey}`} : undefined}
         />
       ))}
 
@@ -71,7 +62,7 @@ export function HeroSlider() {
 
       <div className="container-shell flex min-h-[720px] items-center py-28 lg:min-h-[100svh]">
         <div className="max-w-[620px]">
-          <div key={`${slides[activeSlide].key}-${slideKey}`} className="hero-copy-enter">
+          <div key={slides[activeSlide].key} className="hero-copy-enter">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-extrabold text-white backdrop-blur">
               <span className="size-2 rounded-full bg-white" />
               {t(`slides.${slides[activeSlide].key}.badge`)}
