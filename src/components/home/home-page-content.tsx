@@ -31,6 +31,7 @@ import {HeroSlider} from "./hero-slider";
 import {TeamCarousel} from "./team-carousel";
 import {GlobalPresence} from "./global-presence";
 import {ManufacturingGallery} from "./manufacturing-gallery";
+import {CertificatesSection} from "./certificates-section";
 import {Reveal} from "../shared/reveal";
 import {SectionHeading} from "../shared/section-heading";
 
@@ -363,71 +364,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
         </div>
       </section>
 
-      <section className="section-space bg-[#f4f7fb]">
-        <div className="container-shell">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
-            <Reveal variant="left">
-              <div className="relative isolate flex h-full min-h-[420px] overflow-hidden rounded-[1.5rem] bg-[#071036] p-6 text-white sm:p-8 lg:rounded-[1.75rem] lg:p-10">
-                <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_18%,rgba(65,105,225,0.42),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_42%)]" />
-                <div className="absolute -right-16 bottom-10 -z-10 size-56 rounded-full border border-white/10" />
-                <div className="absolute right-8 top-8 grid size-20 place-items-center rounded-full border border-white/15 bg-white/10 text-blue-100">
-                  <ShieldCheck className="size-9" />
-                </div>
-
-                <div className="flex max-w-md flex-col justify-between">
-                  <div>
-                    <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-blue-100">
-                      <BadgeCheck className="size-4" />
-                      {t("quality.verified")}
-                    </p>
-                    <h2 className="mt-7 text-balance text-3xl font-extrabold leading-tight tracking-[-0.035em] sm:text-5xl">
-                      {t("quality.title")}
-                    </h2>
-                    <p className="mt-5 text-sm leading-7 text-blue-100/72 sm:text-base">
-                      {t("quality.description")}
-                    </p>
-                  </div>
-
-                  <div className="mt-10 grid grid-cols-3 gap-3 border-t border-white/10 pt-6">
-                    {["GMP", "ISO", "QA"].map((label) => (
-                      <div key={label}>
-                        <p className="text-xl font-extrabold text-white sm:text-2xl">{label}</p>
-                        <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-100/48">
-                          {t("quality.verified")}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            <div className="grid gap-4">
-              {certificates.map(({key, icon: Icon}, index) => (
-                <Reveal key={key} variant="right" delay={index * 110}>
-                  <article className="group grid gap-5 rounded-[1.25rem] border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
-                    <span className="grid size-16 place-items-center rounded-2xl bg-[#eef3ff] text-blue-800 transition duration-300 group-hover:bg-blue-700 group-hover:text-white">
-                      <Icon className="size-7" />
-                    </span>
-                    <div>
-                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-red-500">
-                        {t("quality.verified")}
-                      </p>
-                      <h3 className="mt-2 text-xl font-extrabold text-[#10172b] sm:text-2xl">
-                        {t(`quality.items.${key}.title`)}
-                      </h3>
-                      <p className="mt-2 text-sm leading-7 text-slate-600">
-                        {t(`quality.items.${key}.description`)}
-                      </p>
-                    </div>
-                    <span className="hidden h-12 w-px bg-slate-100 sm:block" />
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CertificatesSection />
 
       <GlobalPresence />
 
