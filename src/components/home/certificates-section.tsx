@@ -15,15 +15,6 @@ const CERTS = [
     file: "/certificates/gmp-uzbekistan.pdf",
   },
   {
-    id: "avantika-2024",
-    country: "Avantika Medex",
-    flag: "🏭",
-    authority: "Xalqaro GMP Sertifikat · 2024",
-    accent: "#4f46e5",
-    image: "/certificates/gmp-avantika-2024.png",
-    file: "/certificates/gmp-avantika-2024.pdf",
-  },
-  {
     id: "cambodia",
     country: "Kambodja",
     flag: "🇰🇭",
