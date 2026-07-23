@@ -24,6 +24,9 @@ const locations = [
   {key: "ethiopia", kind: "partner"},
   {key: "vietnam", kind: "partner"},
   {key: "yemen", kind: "partner"},
+  {key: "canada", kind: "partner"},
+  {key: "armenia", kind: "partner"},
+  {key: "turkmenistan", kind: "partner"},
 ] as const;
 
 export function GlobalPresence() {

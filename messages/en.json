@@ -188,7 +188,10 @@
         "ghana": {"country": "Ghana", "city": "Accra", "region": "West Africa"},
         "ethiopia": {"country": "Ethiopia", "city": "Addis Ababa", "region": "East Africa"},
         "vietnam": {"country": "Vietnam", "city": "Hanoi", "region": "Southeast Asia"},
-        "yemen": {"country": "Yemen", "city": "Sana'a", "region": "Middle East"}
+        "yemen": {"country": "Yemen", "city": "Sana'a", "region": "Middle East"},
+        "canada": {"country": "Canada", "city": "Ottawa", "region": "North America"},
+        "armenia": {"country": "Armenia", "city": "Yerevan", "region": "Caucasus"},
+        "turkmenistan": {"country": "Turkmenistan", "city": "Ashgabat", "region": "Central Asia"}
       }
     },
     "cta": {

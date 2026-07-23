@@ -46,7 +46,10 @@
         "ghana": {"country": "Gana", "city": "Akkra", "region": "G‘arbiy Afrika"},
         "ethiopia": {"country": "Efiopiya", "city": "Addis-Abeba", "region": "Sharqiy Afrika"},
         "vietnam": {"country": "Vyetnam", "city": "Xanoy", "region": "Janubi-Sharqiy Osiyo"},
-        "yemen": {"country": "Yaman", "city": "Sano", "region": "Yaqin Sharq"}
+        "yemen": {"country": "Yaman", "city": "Sano", "region": "Yaqin Sharq"},
+        "canada": {"country": "Kanada", "city": "Ottava", "region": "Shimoliy Amerika"},
+        "armenia": {"country": "Armaniston", "city": "Yerevan", "region": "Kavkaz"},
+        "turkmenistan": {"country": "Turkmaniston", "city": "Ashxobod", "region": "Markaziy Osiyo"}
       }
     },
     "cta": {"eyebrow": "Birgalikda ishlaylik", "title": "Ishonchli farmatsevtika hamkorini izlayapsizmi?", "description": "Bozoringiz va biznes maqsadlaringiz haqida yozing. So‘rovingizni tegishli mutaxassisga yo‘naltiramiz.", "button": "Biz bilan bog‘lanish"}

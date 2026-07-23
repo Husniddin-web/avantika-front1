@@ -84,9 +84,10 @@ export default async function NewsDetailPage({params}: PageProps<"/[locale]/news
             <div className="max-w-3xl mx-auto space-y-10">
               {/* Main Body text */}
               <div className="prose prose-slate max-w-none text-slate-800 leading-relaxed text-base sm:text-lg">
-                <div className="whitespace-pre-wrap font-medium">
-                  {content}
-                </div>
+                <div 
+                  className="font-medium"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
               </div>
 
               {/* Share block at the bottom */}
