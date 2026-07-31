@@ -91,8 +91,11 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
 
     return matchesCategory && (!normalizedQuery || haystack.includes(normalizedQuery));
   });
+  const sortedProducts = selectedCategory === "all"
+    ? [...filteredProducts].sort((a, b) => localize(a.title, locale).localeCompare(localize(b.title, locale), locale))
+    : filteredProducts;
 
-  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const visibleProducts = sortedProducts.slice(0, visibleCount);
 
   useEffect(() => {
     const target = observerTarget.current;
@@ -194,7 +197,7 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
         )}
       </div>
 
-      {visibleCount < filteredProducts.length ? (
+      {visibleCount < sortedProducts.length ? (
         <div ref={observerTarget} className="my-8 flex h-12 w-full items-center justify-center">
           <div className="size-6 animate-spin rounded-full border-2 border-blue-700 border-t-transparent" />
         </div>
