@@ -54,7 +54,7 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           <div className="relative min-h-[240px] sm:min-h-[350px] lg:min-h-[420px] bg-white">
             <div className="absolute left-0 top-0 hidden h-full w-24 border-r border-slate-100 bg-white lg:block">
               <div className="mx-auto mt-20 size-16 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} width={64} height={64} className="size-full object-cover" unoptimized />
+                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} width={64} height={64} className="size-full object-contain p-1.5" unoptimized />
               </div>
             </div>
             <div className="relative h-[240px] sm:h-[350px] lg:ml-24 lg:h-full">
