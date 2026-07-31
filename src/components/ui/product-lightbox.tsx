@@ -36,7 +36,7 @@ export function ProductLightbox({src, alt}: ProductLightboxProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group relative h-full w-full"
+        className="group relative h-full w-full overflow-hidden"
         aria-label="Rasmni kattalashtirish"
       >
         <Image
@@ -44,7 +44,7 @@ export function ProductLightbox({src, alt}: ProductLightboxProps) {
           alt={alt}
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-contain p-4 sm:p-8 transition duration-300 group-hover:scale-105"
+          className="object-contain p-0 transition duration-300 scale-150 lg:scale-[1.65] group-hover:scale-[1.72]"
           unoptimized
         />
         {/* Zoom hint overlay */}
