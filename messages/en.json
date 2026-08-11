@@ -199,6 +199,13 @@
       "title": "Looking for a reliable pharmaceutical partner?",
       "description": "Tell us about your market and business goals. Our team will route your enquiry to the right specialist.",
       "button": "Contact our team"
+    },
+    "gratitude": {
+      "eyebrow": "Recognition & Trust",
+      "title": "Letter of Gratitude",
+      "description": "This letter of gratitude, presented for our efficient operations and reliable partnership, serves as a high recognition of our services' quality.",
+      "view": "View Document",
+      "download": "Download (PDF)"
     }
   },
   "ProductsPage": {"heroTitle": "Products", "heroEyebrow": "Avantika catalog", "eyebrow": "Therapeutic portfolio", "title": "Medicines by category", "description": "Browse Avantika products with dosage forms and therapeutic information.", "searchPlaceholder": "Search products...", "allCategories": "All categories", "details": "Details", "empty": "No products found"},

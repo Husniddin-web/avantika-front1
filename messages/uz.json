@@ -52,7 +52,14 @@
         "turkmenistan": {"country": "Turkmaniston", "city": "Ashxobod", "region": "Markaziy Osiyo"}
       }
     },
-    "cta": {"eyebrow": "Birgalikda ishlaylik", "title": "Ishonchli farmatsevtika hamkorini izlayapsizmi?", "description": "Bozoringiz va biznes maqsadlaringiz haqida yozing. So‘rovingizni tegishli mutaxassisga yo‘naltiramiz.", "button": "Biz bilan bog‘lanish"}
+    "cta": {"eyebrow": "Birgalikda ishlaylik", "title": "Ishonchli farmatsevtika hamkorini izlayapsizmi?", "description": "Bozoringiz va biznes maqsadlaringiz haqida yozing. So‘rovingizni tegishli mutaxassisga yo‘naltiramiz.", "button": "Biz bilan bog‘lanish"},
+    "gratitude": {
+      "eyebrow": "E'tirof va ishonch",
+      "title": "Tashakkurnoma",
+      "description": "Bizning samarali faoliyatimiz va ishonchli hamkorligimiz uchun taqdim etilgan tashakkurnoma — bu xizmatlarimiz sifatining yuksak e'tirofidir.",
+      "view": "Hujjatni ko'rish",
+      "download": "Yuklab olish (PDF)"
+    }
   },
   "ProductsPage": {"heroTitle": "Preparatlar", "heroEyebrow": "Avantika katalogi", "eyebrow": "Terapevtik portfel", "title": "Kategoriya bo‘yicha preparatlar", "description": "Dori shakllari va terapevtik ma’lumotlari bilan Avantika preparatlarini ko‘ring.", "searchPlaceholder": "Preparat qidirish...", "allCategories": "Barcha kategoriyalar", "details": "Batafsil", "empty": "Preparatlar topilmadi"},
   "ProductDetailPage": {"product": "Preparat", "dosageForm": "Dori shakli", "category": "Kategoriya", "therapeuticIndication": "Terapevtik ko‘rsatma"},

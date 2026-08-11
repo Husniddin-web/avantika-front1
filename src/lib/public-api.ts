@@ -145,6 +145,24 @@ async function publicFetch<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+export function normalizeProductTitles(product: Product): Product {
+  if (!product) return product;
+  const format = (text: string) => {
+    if (!text) return "";
+    return text
+      .toLowerCase()
+      .replace(/(^|[\s\-\/\(\)])([a-zа-яёўқғҳ])/g, (m, sep, letter) => sep + letter.toUpperCase());
+  };
+  return {
+    ...product,
+    title: {
+      uz: format(product.title?.uz),
+      ru: format(product.title?.ru),
+      en: format(product.title?.en),
+    }
+  };
+}
+
 export async function fetchPublicHomeData(): Promise<PublicHomeData> {
   try {
     const [categories, products, news, workers] = await Promise.all([
@@ -156,14 +174,14 @@ export async function fetchPublicHomeData(): Promise<PublicHomeData> {
 
     return {
       categories: categories.length ? categories : mockCategories,
-      products: products.length ? products : mockProducts,
+      products: (products.length ? products : mockProducts).map(normalizeProductTitles),
       news,
       workers,
     };
   } catch {
     return {
       categories: mockCategories,
-      products: mockProducts,
+      products: mockProducts.map(normalizeProductTitles),
       news: [],
       workers: [],
     };
@@ -173,17 +191,19 @@ export async function fetchPublicHomeData(): Promise<PublicHomeData> {
 export async function fetchPublicProducts() {
   try {
     const products = await publicFetch<Product[]>("/products");
-    return products.length ? products : mockProducts;
+    return (products.length ? products : mockProducts).map(normalizeProductTitles);
   } catch {
-    return mockProducts;
+    return mockProducts.map(normalizeProductTitles);
   }
 }
 
 export async function fetchPublicProduct(id: string) {
   try {
-    return await publicFetch<Product>(`/products/${id}`);
+    const product = await publicFetch<Product>(`/products/${id}`);
+    return normalizeProductTitles(product);
   } catch {
-    return mockProducts.find((product) => product.id === id || product.slug === id) ?? null;
+    const mockProduct = mockProducts.find((product) => product.id === id || product.slug === id) ?? null;
+    return mockProduct ? normalizeProductTitles(mockProduct) : null;
   }
 }
 

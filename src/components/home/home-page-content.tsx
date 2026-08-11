@@ -32,6 +32,7 @@ import {TeamCarousel} from "./team-carousel";
 import {GlobalPresence} from "./global-presence";
 import {ManufacturingGallery} from "./manufacturing-gallery";
 import {CertificatesSection} from "./certificates-section";
+import {GratitudeSection} from "./gratitude-section";
 import {Reveal} from "../shared/reveal";
 import {SectionHeading} from "../shared/section-heading";
 
@@ -367,6 +368,8 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
       <CertificatesSection />
 
       <GlobalPresence />
+
+      <GratitudeSection />
 
       <TeamCarousel workers={cmsData?.workers ?? []} locale={locale} />
 
