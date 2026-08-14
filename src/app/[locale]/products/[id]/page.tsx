@@ -135,16 +135,16 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
                     href={`/products/${p.id}`}
                     className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10"
                   >
-                    <div className="relative aspect-[4/3] bg-[#f6f8fc]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-white border-b border-slate-100">
                       <Image
                         src={imageSrc(p.images[0]?.url, "/d1.jpeg")}
                         alt={pTitle}
                         fill
                         sizes="(max-width: 640px) 100vw, 25vw"
-                        className="object-contain p-4 transition duration-500 group-hover:scale-105"
+                        className="object-contain p-4 transition duration-500 group-hover:scale-105 mix-blend-multiply"
                       />
                     </div>
-                    <div className="border-t border-slate-100 p-4">
+                    <div className="p-4">
                       <h3 className="text-base font-extrabold text-slate-950 line-clamp-1">{pTitle}</h3>
                       <p className="mt-1 text-xs font-semibold text-slate-400 line-clamp-1">{localize(p.dosageForm, currentLocale)}</p>
                     </div>
