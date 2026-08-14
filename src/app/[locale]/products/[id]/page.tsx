@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ChevronRight, Info} from "lucide-react";
+import {ChevronRight, Info, ArrowRight} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
@@ -129,11 +129,16 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((p) => {
                 const pTitle = localize(p.title, currentLocale);
+                const pCategory = p.categories && p.categories.length > 0 
+                  ? localize(p.categories[0].title, currentLocale)
+                  : (localize(p.category?.title, currentLocale) || "");
+                const categoryIcon = imageSrc(p.categories?.[0]?.image?.url || p.category?.image?.url, "/cat-2.png");
+
                 return (
                   <Link
                     key={p.id}
                     href={`/products/${p.id}`}
-                    className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10"
+                    className="group block overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
                       <Image
@@ -145,9 +150,26 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
                         unoptimized
                       />
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-base font-extrabold text-slate-950 line-clamp-1">{pTitle}</h3>
-                      <p className="mt-1 text-xs font-semibold text-slate-400 line-clamp-1">{localize(p.dosageForm, currentLocale)}</p>
+                    <div className="p-3 sm:p-5">
+                      <h3 className="line-clamp-1 text-base font-extrabold text-slate-900 transition-colors group-hover:text-blue-700 sm:text-lg">{pTitle}</h3>
+                      <p className="mt-1 line-clamp-1 text-xs text-slate-500">{localize(p.dosageForm, currentLocale)}</p>
+                      <div className="mt-4 border-t border-slate-100 pt-3">
+                        <span className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-2 text-blue-700 sm:min-h-12">
+                          <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-full sm:size-11">
+                            <Image
+                              src={categoryIcon}
+                              alt=""
+                              fill
+                              sizes="44px"
+                              className="object-contain transition duration-300 group-hover:opacity-80"
+                            />
+                          </span>
+                          <span className="line-clamp-2 min-w-0 flex-1 text-left text-[8px] font-extrabold uppercase leading-4 tracking-[0.08em] sm:text-[9px] sm:tracking-[0.1em]">
+                            {pCategory}
+                          </span>
+                          <ArrowRight className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5 sm:size-4" />
+                        </span>
+                      </div>
                     </div>
                   </Link>
                 );
