@@ -93,7 +93,7 @@ export function GratitudeSection() {
                   {/* Paper aspect-ratio wrapper (A4 proportion is 1:1.414) */}
                   <div className="relative w-full overflow-hidden rounded-xl bg-slate-100 shadow-sm" style={{aspectRatio: "1/1.414"}}>
                     <Image
-                      src="/gratitude-preview.png"
+                      src="/gratitude-letter-v2.png"
                       alt={t("title")}
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"
