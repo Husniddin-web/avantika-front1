@@ -3,9 +3,37 @@ import {BadgeCheck, ClipboardCheck, Factory, FlaskConical, Globe2, Microscope, P
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import type {Metadata} from "next";
 
 import {PageHero} from "@/components/shared/page-hero";
 import {routing} from "@/i18n/routing";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/about">): Promise<Metadata> {
+  const {locale} = await params;
+  const t = await getTranslations({locale: locale as "uz" | "ru" | "en", namespace: "AboutPage"});
+  const title = t("heroTitle");
+  const description = t("introP1");
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/about`,
+      languages: Object.fromEntries(
+        routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}/about`])
+      ),
+    },
+    openGraph: {
+      url: `${SITE_URL}/${locale}/about`,
+      title,
+      description,
+      images: [{url: `${SITE_URL}/og-image.png`, width: 1200, height: 630}],
+    },
+  };
+}
 
 const stats = ["experience", "products", "markets"] as const;
 

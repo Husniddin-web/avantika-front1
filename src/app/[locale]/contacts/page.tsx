@@ -2,10 +2,33 @@ import {ExternalLink, Mail, MapPin, Phone, Send} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import type {Metadata} from "next";
 
 import {PageHero} from "@/components/shared/page-hero";
 import {routing} from "@/i18n/routing";
 import {InquiryForm} from "@/components/forms/inquiry-form";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/contacts">): Promise<Metadata> {
+  const {locale} = await params;
+  const t = await getTranslations({locale: locale as "uz" | "ru" | "en", namespace: "ContactPage"});
+  const title = t("heroTitle");
+  const description = t("description");
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/contacts`,
+      languages: Object.fromEntries(
+        routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}/contacts`])
+      ),
+    },
+    openGraph: {url: `${SITE_URL}/${locale}/contacts`, title, description},
+  };
+}
 
 const contacts = [
   {icon: Phone, key: "phone", value: "+998 93 388 88 72", href: "tel:+998933888872"},

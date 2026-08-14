@@ -3,6 +3,7 @@ import {ChevronRight, Info, ArrowRight} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import type {Metadata} from "next";
 
 import {Link} from "@/i18n/navigation";
 import {routing, type Locale} from "@/i18n/routing";
@@ -11,6 +12,51 @@ import {localize} from "@/lib/localized";
 import {fetchPublicProduct, fetchPublicProducts} from "@/lib/public-api";
 import {ProductTabs} from "@/components/products/product-tabs";
 import {ProductLightbox} from "@/components/ui/product-lightbox";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/products/[id]">): Promise<Metadata> {
+  const {locale, id} = await params;
+  const currentLocale = locale as Locale;
+  const product = await fetchPublicProduct(id);
+  if (!product) return {};
+  const title = localize(product.title, currentLocale);
+  const description =
+    localize(product.therapeuticIndication, currentLocale) ||
+    localize(product.indications, currentLocale) ||
+    localize(product.dosageForm, currentLocale) ||
+    title;
+  const imageUrl = product.images[0]?.url
+    ? imageSrc(product.images[0].url, "/og-image.png")
+    : `${SITE_URL}/og-image.png`;
+  return {
+    title,
+    description: description.slice(0, 160),
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/products/${id}`,
+      languages: Object.fromEntries(
+        routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}/products/${id}`])
+      ),
+    },
+    openGraph: {
+      type: "website",
+      url: `${SITE_URL}/${locale}/products/${id}`,
+      title,
+      description: description.slice(0, 160),
+      images: [{url: imageUrl, width: 1200, height: 630, alt: title}],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: description.slice(0, 160),
+      images: [imageUrl],
+    },
+  };
+}
+
+
 
 export default async function ProductDetailPage({params}: PageProps<"/[locale]/products/[id]">) {
   const {locale, id} = await params;

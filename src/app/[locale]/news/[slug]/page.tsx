@@ -3,6 +3,7 @@ import {CalendarDays, ChevronRight, ArrowLeft} from "lucide-react";
 import {hasLocale} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import type {Metadata} from "next";
 
 import {Link} from "@/i18n/navigation";
 import {routing, type Locale} from "@/i18n/routing";
@@ -10,6 +11,50 @@ import {imageSrc} from "@/lib/image-src";
 import {localize} from "@/lib/localized";
 import {fetchPublicNews, fetchPublicNewsArticle} from "@/lib/public-api";
 import {ShareButtons} from "@/components/news/share-buttons";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/news/[slug]">): Promise<Metadata> {
+  const {locale, slug} = await params;
+  const currentLocale = locale as Locale;
+  const article = await fetchPublicNewsArticle(slug);
+  if (!article) return {};
+  const title = localize(article.title, currentLocale);
+  const content = localize(article.content, currentLocale)
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 160);
+  const imageUrl = article.images[0]?.url
+    ? imageSrc(article.images[0].url, "/og-image.png")
+    : `${SITE_URL}/og-image.png`;
+  return {
+    title,
+    description: content,
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/news/${slug}`,
+      languages: Object.fromEntries(
+        routing.locales.map((loc) => [loc, `${SITE_URL}/${loc}/news/${slug}`])
+      ),
+    },
+    openGraph: {
+      type: "article",
+      url: `${SITE_URL}/${locale}/news/${slug}`,
+      title,
+      description: content,
+      publishedTime: article.createdAt,
+      images: [{url: imageUrl, width: 1200, height: 630, alt: title}],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: content,
+      images: [imageUrl],
+    },
+  };
+}
 
 export default async function NewsDetailPage({params}: PageProps<"/[locale]/news/[slug]">) {
   const {locale, slug} = await params;
