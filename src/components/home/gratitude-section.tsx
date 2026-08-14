@@ -173,7 +173,7 @@ export function GratitudeSection() {
 
                     {/* Download Button */}
                     <a
-                      href="/gratitude.pdf"
+                      href="/gratitude-v2.pdf"
                       download
                       className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-8 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
                     >
@@ -191,7 +191,7 @@ export function GratitudeSection() {
       {/* PDF Viewer Lightbox */}
       {open && (
         <PdfModal
-          file="/gratitude.pdf"
+          file="/gratitude-v2.pdf"
           title={t("title")}
           onClose={() => setOpen(false)}
         />
