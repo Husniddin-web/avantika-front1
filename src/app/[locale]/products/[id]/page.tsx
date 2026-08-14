@@ -135,13 +135,14 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
                     href={`/products/${p.id}`}
                     className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-white border-b border-slate-100">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
                       <Image
                         src={imageSrc(p.images[0]?.url, "/d1.jpeg")}
                         alt={pTitle}
                         fill
                         sizes="(max-width: 640px) 100vw, 25vw"
-                        className="object-contain p-4 transition duration-500 group-hover:scale-105 mix-blend-multiply"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                        unoptimized
                       />
                     </div>
                     <div className="p-4">

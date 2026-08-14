@@ -175,8 +175,8 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
               href={`/products/${product.id}`}
               className="group block overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-3xl"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-white border-b border-slate-100">
-                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-contain p-4 transition duration-300 group-hover:scale-105 mix-blend-multiply" unoptimized />
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#f6f8fc]">
+                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={localize(product.title, locale)} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-300 group-hover:scale-105" unoptimized />
               </div>
               <div className="p-3 sm:p-6">
                 <p className="line-clamp-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-blue-700 sm:text-[10px] sm:tracking-[0.18em]">

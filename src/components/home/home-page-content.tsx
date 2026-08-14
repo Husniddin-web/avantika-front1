@@ -548,13 +548,13 @@ function ProductSliderRow({ items, reverse = false }: { items: ProductSliderItem
             }}
             className="group w-[210px] sm:w-[260px] shrink-0 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-950/5 sm:rounded-[1.35rem]"
           >
-            <div className="relative h-32 overflow-hidden bg-white border-b border-slate-100 sm:h-44">
+            <div className="relative h-32 overflow-hidden bg-[#f6f8fc] sm:h-44">
               <Image
                 src={product.image}
                 alt={product.imageAlt}
                 fill
                 sizes="(max-width: 640px) 50vw, 285px"
-                className="object-contain p-3 transition duration-300 group-hover:scale-105 mix-blend-multiply"
+                className="object-cover transition duration-300 group-hover:scale-105"
               />
             </div>
             <div className="p-3 sm:p-5">
