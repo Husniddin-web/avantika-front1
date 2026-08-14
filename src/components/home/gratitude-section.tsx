@@ -1,19 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import {Download, Eye, FileText, X} from "lucide-react";
-import {useEffect, useState} from "react";
-import {useTranslations} from "next-intl";
+import { Download, Eye, FileText, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
-import {Reveal} from "../shared/reveal";
+import { Reveal } from "../shared/reveal";
 
 /* ── PDF Modal ── */
-function PdfModal({file, title, onClose}: {file: string; title: string; onClose: () => void}) {
+function PdfModal({
+  file,
+  title,
+  onClose,
+}: {
+  file: string;
+  title: string;
+  onClose: () => void;
+}) {
   useEffect(() => {
-    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const fn = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", fn);
     document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", fn); document.body.style.overflow = ""; };
+    return () => {
+      window.removeEventListener("keydown", fn);
+      document.body.style.overflow = "";
+    };
   }, [onClose]);
 
   return (
@@ -34,7 +47,9 @@ function PdfModal({file, title, onClose}: {file: string; title: string; onClose:
               <FileText className="size-5 text-blue-300" />
             </span>
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400">Hujjat</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400">
+                Hujjat
+              </p>
               <h2 className="text-sm font-extrabold">{title}</h2>
             </div>
           </div>
@@ -82,7 +97,6 @@ export function GratitudeSection() {
 
         <div className="container-shell">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center xl:gap-16">
-            
             {/* Left side: PDF Image Preview */}
             <div className="lg:col-span-5">
               <Reveal variant="left">
@@ -91,9 +105,12 @@ export function GratitudeSection() {
                   className="group relative mx-auto max-w-[340px] cursor-pointer rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-blue-950/10 lg:max-w-none"
                 >
                   {/* Paper aspect-ratio wrapper (A4 proportion is 1:1.414) */}
-                  <div className="relative w-full overflow-hidden rounded-xl bg-white shadow-sm" style={{aspectRatio: "1/1.414"}}>
+                  <div
+                    className="relative w-full overflow-hidden rounded-xl bg-white shadow-sm"
+                    style={{ aspectRatio: "1/1.414" }}
+                  >
                     <Image
-                      src="/gratitude-letter-v2.png"
+                      src="/letter.png"
                       alt={t("title")}
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"
@@ -167,7 +184,6 @@ export function GratitudeSection() {
                 </div>
               </Reveal>
             </div>
-
           </div>
         </div>
       </section>
