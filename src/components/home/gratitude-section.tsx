@@ -91,7 +91,7 @@ export function GratitudeSection() {
                   className="group relative mx-auto max-w-[340px] cursor-pointer rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-md transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-blue-950/10 lg:max-w-none"
                 >
                   {/* Paper aspect-ratio wrapper (A4 proportion is 1:1.414) */}
-                  <div className="relative w-full overflow-hidden rounded-xl bg-slate-100 shadow-sm" style={{aspectRatio: "1/1.414"}}>
+                  <div className="relative w-full overflow-hidden rounded-xl bg-white shadow-sm" style={{aspectRatio: "1/1.414"}}>
                     <Image
                       src="/gratitude-letter-v2.png"
                       alt={t("title")}
