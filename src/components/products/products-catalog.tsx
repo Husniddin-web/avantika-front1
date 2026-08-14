@@ -84,6 +84,10 @@ export function ProductsCatalog({products, categories, locale}: ProductsCatalogP
     triggerShimmer();
     setSelectedCategory(id);
     setVisibleCount(12);
+    // "Barcha kategoriyalar" tanlaganda qidiruvni tozala
+    if (id === "all") {
+      setQuery("");
+    }
   };
 
   const handleQueryChange = (val: string) => {
