@@ -1,6 +1,6 @@
+import {Suspense} from "react";
 import {hasLocale} from "next-intl";
-import {getTranslations} from "next-intl/server";
-import {setRequestLocale} from "next-intl/server";
+import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import type {Metadata} from "next";
 
@@ -8,6 +8,7 @@ import {ProductsCatalog} from "@/components/products/products-catalog";
 import {PageHero} from "@/components/shared/page-hero";
 import {routing, type Locale} from "@/i18n/routing";
 import {fetchPublicCategories, fetchPublicProducts} from "@/lib/public-api";
+import {ProductCardSkeleton} from "@/components/ui/product-card-skeleton";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
 
@@ -32,7 +33,6 @@ export async function generateMetadata({
   };
 }
 
-
 export default async function ProductsPage({params}: PageProps<"/[locale]/products">) {
   const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
@@ -46,7 +46,17 @@ export default async function ProductsPage({params}: PageProps<"/[locale]/produc
     <main className="bg-white">
       <PageHero title={t("heroTitle")} eyebrow={t("heroEyebrow")} image="/hero-slide5.png" />
       <section className="section-space">
-        <ProductsCatalog products={products} categories={categories} locale={currentLocale} />
+        <Suspense
+          fallback={
+            <div className="container-shell mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+              {Array.from({length: 6}).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
+            </div>
+          }
+        >
+          <ProductsCatalog products={products} categories={categories} locale={currentLocale} />
+        </Suspense>
       </section>
     </main>
   );

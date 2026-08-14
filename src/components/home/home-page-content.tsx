@@ -199,7 +199,7 @@ export function HomePageContent({cmsData, locale}: {cmsData?: PublicHomeData; lo
                   {categoryItems.map(({id, title, icon}) => (
                     <Link
                       key={`${isDuplicate ? "duplicate" : "original"}-${id}`}
-                      href="/products"
+                      href={`/products?category=${id}`}
                       tabIndex={isDuplicate ? -1 : undefined}
                       className="group flex min-h-36 w-[calc((100vw-2rem-0.75rem)/2)] shrink-0 flex-col items-center justify-center rounded-[1.15rem] border border-slate-200 bg-white p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-950/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 sm:min-h-60 sm:w-64 sm:rounded-[1.5rem] sm:p-7 lg:w-[280px]"
                     >

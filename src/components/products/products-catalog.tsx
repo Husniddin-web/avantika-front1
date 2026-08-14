@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {ArrowRight, Search} from "lucide-react";
 import {useEffect, useRef, useState} from "react";
+import {useSearchParams} from "next/navigation";
 import {useTranslations} from "next-intl";
 
 import {Link} from "@/i18n/navigation";
@@ -20,11 +21,25 @@ type ProductsCatalogProps = {
 
 export function ProductsCatalog({products, categories, locale}: ProductsCatalogProps) {
   const t = useTranslations("ProductsPage");
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    // initialized lazily so SSR doesn't break; will sync via useEffect on client
+    return "all";
+  });
   const [visibleCount, setVisibleCount] = useState(12);
   const [isFiltering, setIsFiltering] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
+
+  // Read ?category=ID from URL and set the filter on mount / URL change
+  useEffect(() => {
+    const catParam = searchParams.get("category");
+    if (catParam && catParam !== selectedCategory) {
+      setSelectedCategory(catParam);
+      setVisibleCount(12);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
