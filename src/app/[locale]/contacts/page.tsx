@@ -93,8 +93,8 @@ export default async function ContactsPage({params}: PageProps<"/[locale]/contac
 
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-blue-950/5 flex flex-col justify-between sm:rounded-[2.2rem]">
             <div
-              className="min-h-[250px] bg-cover bg-center p-6 text-white flex-1 flex flex-col justify-end sm:min-h-[300px] sm:p-8"
-              style={{backgroundImage: "linear-gradient(135deg,rgba(8,10,75,0.92),rgba(41,72,200,0.76)),url('/hero-slide-4.webp')"}}
+              className="min-h-[250px] bg-cover bg-top p-6 text-white flex-1 flex flex-col justify-end sm:min-h-[300px] sm:p-8"
+              style={{backgroundImage: "linear-gradient(135deg,rgba(8,10,75,0.84),rgba(15,23,42,0.72)),url('/news-avantika.jpg')"}}
             >
               <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.22em] text-blue-100">{t("officeEyebrow")}</p>
               <h3 className="mt-3 max-w-sm text-xl font-extrabold sm:text-2xl">{t("officeTitle")}</h3>
