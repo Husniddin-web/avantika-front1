@@ -146,46 +146,78 @@ export default async function AboutPage({params}: PageProps<"/[locale]/about">) 
               <h2 className="mt-4 text-3xl font-extrabold text-slate-950 sm:text-5xl">{t("manufacturingTitle")}</h2>
               <p className="mt-5 text-base leading-8 text-slate-600">{t("manufacturingDescription")}</p>
             </div>
-            <div className="group relative min-h-[380px] sm:min-h-[480px] overflow-hidden rounded-[2.2rem] border border-slate-100 shadow-2xl shadow-blue-950/10">
-              <Image 
-                src="/news-avantika.jpg" 
-                alt={t("manufacturingEyebrow")} 
-                fill 
-                sizes="(max-width: 1024px) 100vw, 50vw" 
-                className="object-cover object-center transition duration-700 ease-out group-hover:scale-105" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-blue-900 shadow-md">
-                  <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-                  Avantika Medex Headquarters
-                </span>
-              </div>
+            <div className="relative min-h-[360px] overflow-hidden rounded-[2rem]">
+              <Image src="/2026-07-06 15.00.21.jpg" alt={t("manufacturingEyebrow")} fill sizes="50vw" className="object-cover" />
             </div>
           </div>
-
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="group relative min-h-[380px] sm:min-h-[480px] overflow-hidden rounded-[2.2rem] border border-slate-100 shadow-2xl shadow-blue-950/10 lg:order-first">
-              <Image 
-                src="/new-avantika2.jpg" 
-                alt={t("qualityEyebrow")} 
-                fill 
-                sizes="(max-width: 1024px) 100vw, 50vw" 
-                className="object-cover object-center transition duration-700 ease-out group-hover:scale-105" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-slate-900 shadow-md">
-                  <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Modern Office & Infrastructure
-                </span>
-              </div>
+            <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] lg:order-first">
+              <Image src="/2026-07-06 15.00.31.jpg" alt={t("qualityEyebrow")} fill sizes="50vw" className="object-cover" />
             </div>
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-red-500">{t("qualityEyebrow")}</p>
               <h2 className="mt-4 text-3xl font-extrabold text-slate-950 sm:text-5xl">{t("qualityTitle")}</h2>
               <p className="mt-5 text-base leading-8 text-slate-600">{t("qualityDescription")}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dedicated Company Gallery Section for real company photos */}
+      <section className="bg-[#f4f7fb] py-16 sm:py-24">
+        <div className="container-shell">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700">{t("companyGallery.eyebrow")}</p>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-5xl">{t("companyGallery.title")}</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">{t("companyGallery.description")}</p>
+          </div>
+
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            <article className="group relative overflow-hidden rounded-[2.2rem] border border-slate-200/80 bg-white p-3.5 shadow-lg transition duration-500 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.6rem] bg-slate-100 sm:aspect-[16/11]">
+                <Image
+                  src="/news-avantika.jpg"
+                  alt={t("companyGallery.hqTitle")}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <div className="absolute left-5 top-5">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-md">
+                    <span className="size-2 rounded-full bg-white animate-pulse" />
+                    HQ Building
+                  </span>
+                </div>
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <h3 className="text-xl font-extrabold drop-shadow-sm">{t("companyGallery.hqTitle")}</h3>
+                  <p className="mt-1 text-xs text-blue-100/90 drop-shadow-sm">{t("companyGallery.hqDesc")}</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="group relative overflow-hidden rounded-[2.2rem] border border-slate-200/80 bg-white p-3.5 shadow-lg transition duration-500 hover:-translate-y-1 hover:shadow-2xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.6rem] bg-slate-100 sm:aspect-[16/11]">
+                <Image
+                  src="/new-avantika2.jpg"
+                  alt={t("companyGallery.officeTitle")}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                <div className="absolute left-5 top-5">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-md">
+                    <span className="size-2 rounded-full bg-white animate-pulse" />
+                    Office Interior
+                  </span>
+                </div>
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <h3 className="text-xl font-extrabold drop-shadow-sm">{t("companyGallery.officeTitle")}</h3>
+                  <p className="mt-1 text-xs text-emerald-100/90 drop-shadow-sm">{t("companyGallery.officeDesc")}</p>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
