@@ -148,10 +148,16 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...init,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...init,
+      headers,
+    });
+  } catch (err) {
+    console.error("API Fetch Error:", err);
+    throw new Error(`Serverga ulanishda xatolik yuz berdi (${API_URL}${path}). Backend server ishlayotganligini tekshiring.`);
+  }
 
   if (!response.ok) {
     throw new Error(await getErrorMessage(response));

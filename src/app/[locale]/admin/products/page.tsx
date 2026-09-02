@@ -125,9 +125,23 @@ export default function ProductsPage() {
     event.preventDefault();
     setSaving(true);
     setError("");
+    const cleanImages = (form.images || []).map((img) => ({
+      url: img.url,
+      filename: img.filename || "",
+      mimetype: img.mimetype || "image/jpeg",
+      size: typeof img.size === "number" ? img.size : 0,
+    }));
+
+    const cleanPdf = form.instructionPdf && form.instructionPdf.url ? {
+      url: form.instructionPdf.url,
+      filename: form.instructionPdf.filename || "",
+      mimetype: form.instructionPdf.mimetype || "application/pdf",
+      size: typeof form.instructionPdf.size === "number" ? form.instructionPdf.size : 0,
+    } : null;
+
     const payload = {
       title: form.title,
-      categoryIds: form.categoryIds,
+      categoryIds: (form.categoryIds || []).filter(Boolean),
       dosageForm: form.dosageForm,
       therapeuticIndication: form.therapeuticIndication,
       prescriptionType: form.prescriptionType,
@@ -139,9 +153,9 @@ export default function ProductsPage() {
       usageInstructions: form.usageInstructions,
       storageConditions: form.storageConditions,
       packageDescription: form.packageDescription,
-      instructionPdf: form.instructionPdf,
+      instructionPdf: cleanPdf,
       status: form.status,
-      images: form.images,
+      images: cleanImages,
     };
     try {
       if (form.id) {
