@@ -80,7 +80,7 @@ export default async function AboutPage({params}: PageProps<"/[locale]/about">) 
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden rounded-[1.8rem] border border-slate-200/80 shadow-md">
-              <Image src="/news-avantika.jpg" alt="Avantika Building" fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover object-center" />
+              <Image src="/news-avantika.jpg" alt="Avantika Building" fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover object-top" />
             </div>
             <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden rounded-[1.8rem] border border-slate-200/80 shadow-md">
               <Image src="/new-avantika2.jpg" alt="Avantika Office" fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover object-center" />
