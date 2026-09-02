@@ -146,13 +146,40 @@ export default async function AboutPage({params}: PageProps<"/[locale]/about">) 
               <h2 className="mt-4 text-3xl font-extrabold text-slate-950 sm:text-5xl">{t("manufacturingTitle")}</h2>
               <p className="mt-5 text-base leading-8 text-slate-600">{t("manufacturingDescription")}</p>
             </div>
-            <div className="relative min-h-[380px] sm:min-h-[440px] overflow-hidden rounded-[2rem]">
-              <Image src="/news-avantika.jpg" alt={t("manufacturingEyebrow")} fill sizes="50vw" className="object-cover object-center" />
+            <div className="group relative min-h-[380px] sm:min-h-[480px] overflow-hidden rounded-[2.2rem] border border-slate-100 shadow-2xl shadow-blue-950/10">
+              <Image 
+                src="/news-avantika.jpg" 
+                alt={t("manufacturingEyebrow")} 
+                fill 
+                sizes="(max-width: 1024px) 100vw, 50vw" 
+                className="object-cover object-center transition duration-700 ease-out group-hover:scale-105" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-blue-900 shadow-md">
+                  <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+                  Avantika Medex Headquarters
+                </span>
+              </div>
             </div>
           </div>
+
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div className="relative min-h-[380px] sm:min-h-[440px] overflow-hidden rounded-[2rem] lg:order-first">
-              <Image src="/new-avantika2.jpg" alt={t("qualityEyebrow")} fill sizes="50vw" className="object-cover object-center" />
+            <div className="group relative min-h-[380px] sm:min-h-[480px] overflow-hidden rounded-[2.2rem] border border-slate-100 shadow-2xl shadow-blue-950/10 lg:order-first">
+              <Image 
+                src="/new-avantika2.jpg" 
+                alt={t("qualityEyebrow")} 
+                fill 
+                sizes="(max-width: 1024px) 100vw, 50vw" 
+                className="object-cover object-center transition duration-700 ease-out group-hover:scale-105" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-slate-900 shadow-md">
+                  <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Modern Office & Infrastructure
+                </span>
+              </div>
             </div>
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-red-500">{t("qualityEyebrow")}</p>
