@@ -11,6 +11,7 @@ import {LanguageTabs, type AdminLanguage} from "@/components/admin/language-tabs
 import {LocalizedField} from "@/components/admin/localized-field";
 import {FileUploader} from "@/components/admin/file-uploader";
 import {PaginationControls} from "@/components/admin/pagination-controls";
+import {RichTextEditor} from "@/components/admin/rich-text-editor";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -292,20 +293,20 @@ export default function ProductsPage() {
                   </select>
                 </div>
               </div>
-              <LocalizedField
-                label="Qo'llanilishi (Indications)"
-                value={form.therapeuticIndication}
-                language={activeLanguage}
-                onChange={(therapeuticIndication) =>
-                  setForm({
-                    ...form,
-                    therapeuticIndication,
-                    indications: therapeuticIndication,
-                  })
-                }
-                textarea
-                rowsClassName="min-h-[110px]"
-              />
+              <div className="space-y-2">
+                <Label>Qo&apos;llanilishi (Indications)</Label>
+                <RichTextEditor
+                  value={form.therapeuticIndication[activeLanguage]}
+                  onChange={(val) => {
+                    const updated = {...form.therapeuticIndication, [activeLanguage]: val};
+                    setForm({
+                      ...form,
+                      therapeuticIndication: updated,
+                      indications: updated,
+                    });
+                  }}
+                />
+              </div>
 
               {/* Localized inputs for detailed information */}
               <div className="border-t border-slate-100 pt-4 space-y-4">
