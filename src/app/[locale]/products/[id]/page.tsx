@@ -96,22 +96,28 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           <span className="text-slate-900 line-clamp-1">{title}</span>
         </nav>
 
-        <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <div className="relative min-h-[240px] sm:min-h-[350px] lg:min-h-[420px] bg-white lg:sticky lg:top-28">
-            <div className="absolute left-0 top-0 hidden h-full w-24 border-r border-slate-100 bg-white lg:block">
-              <div className="mx-auto mt-20 size-16 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-                <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} width={64} height={64} className="size-full object-contain p-1.5" unoptimized />
-              </div>
-            </div>
-            <div className="relative h-[240px] sm:h-[350px] lg:ml-24 lg:h-full">
+        <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start">
+          {/* Left Column: Product Image Gallery */}
+          <div className="p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center lg:sticky lg:top-28">
+            <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[460px] rounded-2xl bg-slate-50/70 border border-slate-100 flex items-center justify-center overflow-hidden">
               <ProductLightbox
                 src={imageSrc(product.images[0]?.url, "/d1.jpeg")}
                 alt={title}
               />
             </div>
+            {product.images && product.images.length > 1 && (
+              <div className="mt-3 flex items-center justify-center gap-2 overflow-x-auto p-1 max-w-full">
+                {product.images.map((img, idx) => (
+                  <div key={idx} className="size-14 overflow-hidden rounded-xl border border-slate-200 bg-white p-1 hover:border-blue-500 transition">
+                    <Image src={imageSrc(img.url, "/d1.jpeg")} alt={title} width={56} height={56} className="size-full object-contain" unoptimized />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="border-t border-slate-100 p-4 sm:p-7 lg:border-l lg:border-t-0 lg:p-12">
+          {/* Right Column: Product Information & Details */}
+          <div className="border-t border-slate-100 p-4 sm:p-7 lg:border-l lg:border-t-0 lg:p-10">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-blue-700">
                 {product.categories && product.categories.length > 0 
