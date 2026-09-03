@@ -11,7 +11,7 @@ import {imageSrc} from "@/lib/image-src";
 import {localize} from "@/lib/localized";
 import {fetchPublicProduct, fetchPublicProducts} from "@/lib/public-api";
 import {ProductTabs} from "@/components/products/product-tabs";
-import {ProductLightbox} from "@/components/ui/product-lightbox";
+import {ProductGallery} from "@/components/products/product-gallery";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://avantikamedex.com";
 
@@ -99,21 +99,7 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
         <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start">
           {/* Left Column: Product Image Gallery */}
           <div className="p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center lg:sticky lg:top-28">
-            <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[460px] rounded-2xl bg-slate-50/70 border border-slate-100 flex items-center justify-center overflow-hidden">
-              <ProductLightbox
-                src={imageSrc(product.images[0]?.url, "/d1.jpeg")}
-                alt={title}
-              />
-            </div>
-            {product.images && product.images.length > 1 && (
-              <div className="mt-3 flex items-center justify-center gap-2 overflow-x-auto p-1 max-w-full">
-                {product.images.map((img, idx) => (
-                  <div key={idx} className="size-14 overflow-hidden rounded-xl border border-slate-200 bg-white p-1 hover:border-blue-500 transition">
-                    <Image src={imageSrc(img.url, "/d1.jpeg")} alt={title} width={56} height={56} className="size-full object-contain" unoptimized />
-                  </div>
-                ))}
-              </div>
-            )}
+            <ProductGallery images={product.images || []} title={title} />
           </div>
 
           {/* Right Column: Product Information & Details */}
