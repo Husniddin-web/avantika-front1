@@ -11,7 +11,6 @@ import {LanguageTabs, type AdminLanguage} from "@/components/admin/language-tabs
 import {LocalizedField} from "@/components/admin/localized-field";
 import {FileUploader} from "@/components/admin/file-uploader";
 import {PaginationControls} from "@/components/admin/pagination-controls";
-import {RichTextEditor} from "@/components/admin/rich-text-editor";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -148,7 +147,7 @@ export default function ProductsPage() {
       activeIngredient: form.activeIngredient,
       composition: form.composition,
       dosage: form.dosage,
-      indications: form.indications,
+      indications: form.therapeuticIndication,
       contraindications: form.contraindications,
       usageInstructions: form.usageInstructions,
       storageConditions: form.storageConditions,
@@ -183,17 +182,22 @@ export default function ProductsPage() {
 
   function openEditModal(item: Product) {
     setError("");
+    const initialIndication = toLocalizedText(
+      item.therapeuticIndication?.uz || item.therapeuticIndication?.ru || item.therapeuticIndication?.en
+        ? item.therapeuticIndication
+        : (item.indications || item.therapeuticIndication)
+    );
     setForm({
       id: item.id,
       title: toLocalizedText(item.title),
       categoryIds: item.categoryIds || (item.categoryId ? [item.categoryId] : []),
       dosageForm: toLocalizedText(item.dosageForm),
-      therapeuticIndication: toLocalizedText(item.therapeuticIndication),
+      therapeuticIndication: initialIndication,
       prescriptionType: item.prescriptionType || "otc",
       activeIngredient: toLocalizedText(item.activeIngredient),
       composition: toLocalizedText(item.composition),
       dosage: toLocalizedText(item.dosage),
-      indications: toLocalizedText(item.indications),
+      indications: initialIndication,
       contraindications: toLocalizedText(item.contraindications),
       usageInstructions: toLocalizedText(item.usageInstructions),
       storageConditions: toLocalizedText(item.storageConditions),
@@ -288,13 +292,20 @@ export default function ProductsPage() {
                   </select>
                 </div>
               </div>
-              <div className="space-y-2">
-                <Label>Therapeutic Indication</Label>
-                <RichTextEditor
-                  value={form.therapeuticIndication[activeLanguage]}
-                  onChange={(therapeuticIndication) => setForm({...form, therapeuticIndication: {...form.therapeuticIndication, [activeLanguage]: therapeuticIndication}})}
-                />
-              </div>
+              <LocalizedField
+                label="Qo'llanilishi (Indications)"
+                value={form.therapeuticIndication}
+                language={activeLanguage}
+                onChange={(therapeuticIndication) =>
+                  setForm({
+                    ...form,
+                    therapeuticIndication,
+                    indications: therapeuticIndication,
+                  })
+                }
+                textarea
+                rowsClassName="min-h-[110px]"
+              />
 
               {/* Localized inputs for detailed information */}
               <div className="border-t border-slate-100 pt-4 space-y-4">
@@ -304,14 +315,13 @@ export default function ProductsPage() {
                   <LocalizedField label="Dosage (Dozalash)" value={form.dosage} language={activeLanguage} onChange={(dosage) => setForm({...form, dosage})} />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <LocalizedField label="Indications (Qo'llanilishi)" value={form.indications} language={activeLanguage} onChange={(indications) => setForm({...form, indications})} />
                   <LocalizedField label="Contraindications (Qarshi ko'rsatmalar)" value={form.contraindications} language={activeLanguage} onChange={(contraindications) => setForm({...form, contraindications})} />
+                  <LocalizedField label="Usage Instructions (Qo'llash usuli)" value={form.usageInstructions} language={activeLanguage} onChange={(usageInstructions) => setForm({...form, usageInstructions})} />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <LocalizedField label="Usage Instructions (Qo'llash usuli)" value={form.usageInstructions} language={activeLanguage} onChange={(usageInstructions) => setForm({...form, usageInstructions})} />
                   <LocalizedField label="Storage Conditions (Saqlash sharoiti)" value={form.storageConditions} language={activeLanguage} onChange={(storageConditions) => setForm({...form, storageConditions})} />
+                  <LocalizedField label="Package Description (Qadoq tavsifi)" value={form.packageDescription} language={activeLanguage} onChange={(packageDescription) => setForm({...form, packageDescription})} />
                 </div>
-                <LocalizedField label="Package Description (Qadoq tavsifi)" value={form.packageDescription} language={activeLanguage} onChange={(packageDescription) => setForm({...form, packageDescription})} />
               </div>
 
               <div className="border-t border-slate-100 pt-4 space-y-2">

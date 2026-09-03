@@ -116,22 +116,36 @@ export function ProductTabs({
       {/* Tab Panels */}
       <div className="min-h-[140px] sm:min-h-[220px]">
         {/* Tab 1: Description & Indications */}
-        {activeTab === 0 && (
-          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
-            {therapeuticIndication && (
-              <div>
-                <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-400">Therapeutic Indication</p>
-                <div className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 prose prose-blue max-w-none" dangerouslySetInnerHTML={{__html: therapeuticIndication}} />
-              </div>
-            )}
-            {indications && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.indications}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{indications}</p>
-              </div>
-            )}
-          </div>
-        )}
+        {activeTab === 0 && (() => {
+          const mainIndication = therapeuticIndication || indications;
+          return (
+            <div className="space-y-4 sm:space-y-5 animate-fadeIn">
+              {mainIndication ? (
+                <div>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.indications}</h4>
+                  {mainIndication.includes("<") && mainIndication.includes(">") ? (
+                    <div
+                      className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 prose prose-blue max-w-none"
+                      dangerouslySetInnerHTML={{__html: mainIndication}}
+                    />
+                  ) : (
+                    <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 whitespace-pre-line">
+                      {mainIndication}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-xs sm:text-sm text-slate-400 italic">
+                  {locale === "uz"
+                    ? "Qo'llanilishi bo'yicha ma'lumot kiritilmagan."
+                    : locale === "ru"
+                    ? "Информация о применении не указана."
+                    : "No indication details provided."}
+                </p>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Tab 2: Composition & Dosage */}
         {activeTab === 1 && (
