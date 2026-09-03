@@ -1,7 +1,6 @@
 "use client";
 
-import {FileDown, FileText} from "lucide-react";
-import {useState} from "react";
+import {FileDown, FileText, Pill, ShieldAlert} from "lucide-react";
 
 type ProductTabsProps = {
   therapeuticIndication: string;
@@ -30,61 +29,61 @@ export function ProductTabs({
   instructionPdf,
   locale,
 }: ProductTabsProps) {
-  const [activeTab, setActiveTab] = useState(0);
-
   const tUz = {
-    desc: "Tavsif va Ko'rsatmalar",
-    composition: "Tarkib va Doza",
-    usage: "Qo'llash va Saqlash",
-    docs: "Hujjatlar",
+    indications: "Qo'llanilishi",
+    composition: "Tarkibi va Faol modda",
     activeIngredient: "Faol modda:",
-    indications: "Qo'llanilishi:",
+    compositionLabel: "Tarkibi:",
+    dosageAndUsage: "Dozalash va Qo'llash usuli",
     dosage: "Dozalash:",
-    contra: "Qarshi ko'rsatmalar:",
+    usageInstructions: "Qo'llash usuli:",
+    contra: "Qarshi ko'rsatmalar",
+    storageAndPkg: "Saqlash va Qadoq",
     storage: "Saqlash sharoiti:",
     package: "Qadoq tavsifi:",
-    noDoc: "Yo'riqnoma yuklanmagan.",
-    download: "Tibbiy yo'riqnomani yuklab olish (PDF)",
+    officialDoc: "Rasmiy tibbiy yo'riqnoma",
+    pdfSubtitle: "Tasdiqlangan PDF yo'riqnoma • To'liq ma'lumotlar",
+    openPdf: "Yo'riqnomani ochish (PDF)",
+    noDoc: "Ushbu preparat uchun PDF yo'riqnoma yuklanmagan.",
   };
 
   const tRu = {
-    desc: "Описание и Показания",
-    composition: "Состав и Дозировка",
-    usage: "Применение и Хранение",
-    docs: "Документы",
+    indications: "Показания к применению",
+    composition: "Состав и Активное вещество",
     activeIngredient: "Активное вещество:",
-    indications: "Показания к применению:",
+    compositionLabel: "Состав:",
+    dosageAndUsage: "Дозировка и Способ применения",
     dosage: "Дозировка:",
-    contra: "Противопоказания:",
+    usageInstructions: "Способ применения:",
+    contra: "Противопоказания",
+    storageAndPkg: "Хранение и Упаковка",
     storage: "Условия хранения:",
-    package: "Описание упаковки:",
-    noDoc: "Инструкция не загружена.",
-    download: "Скачать медицинскую инструкцию (PDF)",
+    package: "Форма упаковки:",
+    officialDoc: "Официальная медицинская инструкция",
+    pdfSubtitle: "Утвержденная PDF инструкция • Полная информация",
+    openPdf: "Открыть инструкцию (PDF)",
+    noDoc: "Медицинская инструкция в формате PDF не загружена.",
   };
 
   const tEn = {
-    desc: "Description & Indications",
-    composition: "Composition & Dosage",
-    usage: "Usage & Storage",
-    docs: "Documents",
+    indications: "Indications for Use",
+    composition: "Composition & Active Ingredient",
     activeIngredient: "Active Ingredient:",
-    indications: "Indications for Use:",
+    compositionLabel: "Composition:",
+    dosageAndUsage: "Dosage & Administration",
     dosage: "Dosage:",
-    contra: "Contraindications:",
+    usageInstructions: "Usage Instructions:",
+    contra: "Contraindications",
+    storageAndPkg: "Storage & Packaging",
     storage: "Storage Conditions:",
     package: "Package Description:",
-    noDoc: "No instruction PDF uploaded.",
-    download: "Download medical instruction (PDF)",
+    officialDoc: "Official Medical Leaflet",
+    pdfSubtitle: "Approved PDF Document • Complete Prescribing Info",
+    openPdf: "Open Medical Leaflet (PDF)",
+    noDoc: "No official instruction PDF uploaded.",
   };
 
   const t = locale === "uz" ? tUz : locale === "ru" ? tRu : tEn;
-
-  const tabs = [
-    {id: 0, label: t.desc},
-    {id: 1, label: t.composition},
-    {id: 2, label: t.usage},
-    {id: 3, label: t.docs},
-  ];
 
   // Helper to construct PDF URL
   const pdfUrl = instructionPdf?.url
@@ -93,144 +92,139 @@ export function ProductTabs({
       : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ?? "http://localhost:3001"}/uploads/${instructionPdf.url}`)
     : "";
 
+  const mainIndication = therapeuticIndication || indications;
+  const hasComposition = activeIngredient || composition;
+  const hasUsage = dosage || usageInstructions;
+  const hasStorage = storageConditions || packageDescription;
+
   return (
-    <div className="mt-4 sm:mt-8 space-y-4 sm:space-y-6">
-      {/* Tab Selectors */}
-      <div className="flex rounded-xl bg-slate-100/90 p-1 gap-1 overflow-x-auto scrollbar-none">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 min-w-max py-2 px-3 sm:px-5 text-xs sm:text-sm font-bold rounded-lg transition-all duration-200 ${
-              activeTab === tab.id
-                ? "bg-white text-blue-700 shadow-sm"
-                : "text-slate-500 hover:text-slate-900"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+    <div className="mt-5 max-h-[520px] sm:max-h-[600px] overflow-y-auto pr-2 space-y-5 scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300">
+      {/* 1. Qo'llanilishi (Indications) */}
+      {mainIndication ? (
+        <div className="rounded-2xl bg-slate-50/70 p-4 sm:p-5 border border-slate-200/80">
+          <div className="flex items-center gap-2 text-blue-700">
+            <span className="grid size-6 place-items-center rounded-md bg-blue-100/70 text-blue-700">
+              <Pill className="size-3.5" />
+            </span>
+            <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider">{t.indications}</h3>
+          </div>
+          {mainIndication.includes("<") && mainIndication.includes(">") ? (
+            <div
+              className="mt-3 text-xs sm:text-sm leading-6 text-slate-600 prose prose-blue max-w-none"
+              dangerouslySetInnerHTML={{__html: mainIndication}}
+            />
+          ) : (
+            <p className="mt-3 text-xs sm:text-sm leading-6 text-slate-600 whitespace-pre-line">
+              {mainIndication}
+            </p>
+          )}
+        </div>
+      ) : null}
 
-      {/* Tab Panels */}
-      <div className="min-h-[140px] sm:min-h-[220px]">
-        {/* Tab 1: Description & Indications */}
-        {activeTab === 0 && (() => {
-          const mainIndication = therapeuticIndication || indications;
-          return (
-            <div className="space-y-4 sm:space-y-5 animate-fadeIn">
-              {mainIndication ? (
-                <div>
-                  <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.indications}</h4>
-                  {mainIndication.includes("<") && mainIndication.includes(">") ? (
-                    <div
-                      className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 prose prose-blue max-w-none"
-                      dangerouslySetInnerHTML={{__html: mainIndication}}
-                    />
-                  ) : (
-                    <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600 whitespace-pre-line">
-                      {mainIndication}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <p className="text-xs sm:text-sm text-slate-400 italic">
-                  {locale === "uz"
-                    ? "Qo'llanilishi bo'yicha ma'lumot kiritilmagan."
-                    : locale === "ru"
-                    ? "Информация о применении не указана."
-                    : "No indication details provided."}
-                </p>
-              )}
+      {/* 2. Tarkibi va Faol modda (Composition & Active Ingredient) */}
+      {hasComposition ? (
+        <div className="rounded-2xl bg-white p-4 sm:p-5 border border-slate-200/80 shadow-sm space-y-3">
+          <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">
+            {t.composition}
+          </h3>
+          {activeIngredient ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.activeIngredient} </span>
+              <span className="font-semibold text-slate-800">{activeIngredient}</span>
             </div>
-          );
-        })()}
+          ) : null}
+          {composition ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.compositionLabel} </span>
+              <span className="text-slate-700 leading-relaxed">{composition}</span>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
-        {/* Tab 2: Composition & Dosage */}
-        {activeTab === 1 && (
-          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
-            {activeIngredient && (
-              <div>
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.activeIngredient}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{activeIngredient}</p>
-              </div>
-            )}
-            {composition && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">Composition</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{composition}</p>
-              </div>
-            )}
-            {dosage && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.dosage}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{dosage}</p>
-              </div>
-            )}
-          </div>
-        )}
+      {/* 3. Dozalash va Qo'llash usuli (Dosage & Usage) */}
+      {hasUsage ? (
+        <div className="rounded-2xl bg-white p-4 sm:p-5 border border-slate-200/80 shadow-sm space-y-3">
+          <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">
+            {t.dosageAndUsage}
+          </h3>
+          {dosage ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.dosage} </span>
+              <span className="text-slate-700 leading-relaxed">{dosage}</span>
+            </div>
+          ) : null}
+          {usageInstructions ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.usageInstructions} </span>
+              <span className="text-slate-700 leading-relaxed">{usageInstructions}</span>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
-        {/* Tab 3: Usage & Storage */}
-        {activeTab === 2 && (
-          <div className="space-y-4 sm:space-y-5 animate-fadeIn">
-            {usageInstructions && (
-              <div>
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">Usage Instructions</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{usageInstructions}</p>
-              </div>
-            )}
-            {contraindications && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-red-600">{t.contra}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{contraindications}</p>
-              </div>
-            )}
-            {storageConditions && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.storage}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{storageConditions}</p>
-              </div>
-            )}
-            {packageDescription && (
-              <div className="border-t border-slate-100 pt-3 sm:pt-4">
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-800">{t.package}</h4>
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 sm:leading-7 text-slate-600">{packageDescription}</p>
-              </div>
-            )}
+      {/* 4. Qarshi ko'rsatmalar (Contraindications) */}
+      {contraindications ? (
+        <div className="rounded-2xl bg-red-50/40 p-4 sm:p-5 border border-red-200/80">
+          <div className="flex items-center gap-2 text-red-700">
+            <span className="grid size-6 place-items-center rounded-md bg-red-100 text-red-700">
+              <ShieldAlert className="size-3.5" />
+            </span>
+            <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider">{t.contra}</h3>
           </div>
-        )}
+          <p className="mt-2.5 text-xs sm:text-sm leading-6 text-red-950/85">
+            {contraindications}
+          </p>
+        </div>
+      ) : null}
 
-        {/* Tab 4: Documents (Instruction PDF) */}
-        {activeTab === 3 && (
-          <div className="animate-fadeIn">
-            {pdfUrl ? (
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-slate-200 p-3.5 sm:p-5 bg-slate-50/50">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-10 sm:size-12 place-items-center rounded-xl bg-red-50 text-red-600 shadow-sm">
-                    <FileText className="size-5 sm:size-6" />
-                  </span>
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold text-slate-900">{instructionPdf?.filename || "Instruction.pdf"}</p>
-                    <p className="text-[10px] sm:text-xs text-slate-400">PDF Document • Instruction for use</p>
-                  </div>
-                </div>
-                <a
-                  href={pdfUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-10 sm:min-h-12 items-center justify-center gap-2 rounded-full bg-blue-700 px-5 sm:px-6 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-800/10 transition hover:-translate-y-0.5 hover:bg-blue-800 focus-visible:outline-blue-700"
-                >
-                  <FileDown className="size-4" />
-                  {t.download}
-                </a>
+      {/* 5. Saqlash va Qadoq (Storage & Packaging) */}
+      {hasStorage ? (
+        <div className="rounded-2xl bg-white p-4 sm:p-5 border border-slate-200/80 shadow-sm space-y-3">
+          <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">
+            {t.storageAndPkg}
+          </h3>
+          {storageConditions ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.storage} </span>
+              <span className="text-slate-700 leading-relaxed">{storageConditions}</span>
+            </div>
+          ) : null}
+          {packageDescription ? (
+            <div className="text-xs sm:text-sm">
+              <span className="font-bold text-slate-500">{t.package} </span>
+              <span className="text-slate-700 leading-relaxed">{packageDescription}</span>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+
+      {/* 6. Rasmiy tibbiy yo'riqnoma PDF Card */}
+      {pdfUrl ? (
+        <div className="group relative overflow-hidden rounded-2xl border border-red-200/90 bg-gradient-to-r from-red-50/50 via-white to-slate-50/60 p-4 sm:p-5 shadow-sm transition hover:border-red-300 hover:shadow-md">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="relative flex size-12 shrink-0 flex-col items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-md shadow-red-500/20">
+                <FileText className="size-5" />
+                <span className="mt-0.5 text-[9px] font-black uppercase tracking-wider leading-none">PDF</span>
               </div>
-            ) : (
-              <p className="text-xs sm:text-sm text-slate-400 italic">{t.noDoc}</p>
-            )}
+              <div className="min-w-0">
+                <h4 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-1">{t.officialDoc}</h4>
+                <p className="mt-0.5 text-[11px] sm:text-xs text-slate-500">{t.pdfSubtitle}</p>
+              </div>
+            </div>
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-10 sm:min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-red-600 px-5 text-xs sm:text-sm font-bold text-white shadow-md shadow-red-600/20 transition duration-200 hover:-translate-y-0.5 hover:bg-red-700 active:translate-y-0"
+            >
+              <FileDown className="size-4" />
+              {t.openPdf}
+            </a>
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

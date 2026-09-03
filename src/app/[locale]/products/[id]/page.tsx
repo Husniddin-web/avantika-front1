@@ -96,8 +96,8 @@ export default async function ProductDetailPage({params}: PageProps<"/[locale]/p
           <span className="text-slate-900 line-clamp-1">{title}</span>
         </nav>
 
-        <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative min-h-[240px] sm:min-h-[350px] lg:min-h-[420px] bg-white">
+        <section className="overflow-hidden rounded-2xl sm:rounded-[2rem] bg-white shadow-xl shadow-blue-950/5 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+          <div className="relative min-h-[240px] sm:min-h-[350px] lg:min-h-[420px] bg-white lg:sticky lg:top-28">
             <div className="absolute left-0 top-0 hidden h-full w-24 border-r border-slate-100 bg-white lg:block">
               <div className="mx-auto mt-20 size-16 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
                 <Image src={imageSrc(product.images[0]?.url, "/d1.jpeg")} alt={title} width={64} height={64} className="size-full object-contain p-1.5" unoptimized />
